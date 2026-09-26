@@ -111,10 +111,11 @@ body { -webkit-font-smoothing: antialiased; }
 .md-footer { margin-top: 3rem; }
 
 /* Landing page */
+.md-main__inner:has(.asif-home) { margin-top: .8rem; }
 .md-content:has(.asif-home) { min-width: 0; }
 .asif-home { margin: 0 1.2rem; }
 .asif-home .asif-eyebrow, .asif-section-number, .asif-link-kicker { font-family: var(--md-code-font); font-size: .56rem; font-weight: 500; letter-spacing: .11em; text-transform: uppercase; color: var(--asif-accent); }
-.asif-hero { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); align-items: center; gap: 4rem; padding: 3.4rem 0 4rem; }
+.asif-hero { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); align-items: center; gap: 4rem; padding: 1.6rem 0 4rem; }
 .asif-hero-copy { max-width: 29rem; }
 .asif-home h1 { margin: 1.1rem 0 1.4rem; font-size: clamp(2.4rem, 4.4vw, 3.45rem); font-weight: 650; letter-spacing: -.055em; line-height: 1.08; }
 .asif-home h1 .headerlink { display: none; }
