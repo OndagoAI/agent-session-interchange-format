@@ -74,6 +74,7 @@ nav:
       - Home: docs/home.md
       - Benefits and use cases: docs/use-cases.md
       - Getting started: docs/getting-started.md
+      - Compatibility and evidence: docs/compatibility.md
       - Reference CLIs: REFERENCE.md
   - Specification:
       - Introduction: SPEC.md
@@ -93,6 +94,8 @@ nav:
       - Continuation scenarios: examples/continuation/README.md
   - Project:
       - Project overview: README.md
+      - Contributing: CONTRIBUTING.md
+      - Building an adapter: docs/adapters.md
       - Gaps and priorities: GAPS.md
       - Conformance: CONFORMANCE.md
       - Implementation evidence: IMPLEMENTERS.md

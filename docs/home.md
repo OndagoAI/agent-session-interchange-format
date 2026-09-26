@@ -13,20 +13,20 @@ hide:
 
 <p class="asif-eyebrow">Agent Session Interchange Format</p>
 
-# Good work<br>should travel.
+# Your agent's work<br>shouldn't be locked<br>inside one tool.
 
-<p class="asif-lead">Take an agent's work to another computer, another cloud, or another agent. Bring the context with it.</p>
+<p class="asif-lead">Changing computers, clouds or providers can mean rebuilding context by hand. The work should be able to come with you.</p>
 
-ASIF is a proposed open format for the conversation, inputs, files and decisions that make a session useful beyond its original environment.
+ASIF records the conversation, selected inputs, files, decisions and unfinished work, together with the prerequisites another environment needs to assess before continuing.
 
 <div class="asif-actions" markdown="1">
 
-[Get started <span aria-hidden="true">↗</span>](getting-started.md){ .asif-button .asif-button-primary }
-[Read the specification <span aria-hidden="true">→</span>](../SPEC.md){ .asif-text-link }
+[Try ASIF <span aria-hidden="true">↗</span>](getting-started.md){ .asif-button .asif-button-primary }
+[Contribute on GitHub <span aria-hidden="true">→</span>](https://github.com/OndagoAI/agent-session-interchange-format){ .asif-text-link }
 
 </div>
 
-<p class="asif-hero-note">Open specification <span aria-hidden="true">·</span> JSON <span aria-hidden="true">·</span> Python &amp; TypeScript</p>
+<p class="asif-hero-note">Open proposal <span aria-hidden="true">·</span> MIT licensed <span aria-hidden="true">·</span> Python &amp; TypeScript</p>
 
 </div>
 
@@ -64,6 +64,29 @@ ASIF is a proposed open format for the conversation, inputs, files and decisions
 <div class="asif-travel-path"><span>Laptop</span><span aria-hidden="true">⟷</span><span>Cloud</span><span aria-hidden="true">⟷</span><span>Another agent</span></div>
 <p class="asif-demo-disclaimer">Illustrative workflow · no agents are running here</p>
 </div>
+</section>
+
+<section class="asif-handoff" aria-labelledby="from-one-environment-to-the-next" markdown="1">
+<div class="asif-section-heading" markdown="1">
+
+<p class="asif-eyebrow">How a handoff fits together</p>
+
+## From one environment to the next.
+
+</div>
+<figure class="asif-handoff-flow" aria-label="A local agent exports an ASIF record; a compatible destination assesses it before import" markdown="0">
+<div class="asif-flow-stages">
+<div class="asif-flow-node"><span class="asif-flow-label">SOURCE</span><strong>Local agent</strong><p>Conversation, decisions<br>and working files</p></div>
+<div class="asif-flow-edge"><span>Export</span><span aria-hidden="true">→</span></div>
+<div class="asif-flow-node asif-flow-record"><span class="asif-flow-label">PORTABLE RECORD</span><strong>ASIF</strong><p>Inputs · events · checkpoints<br>Resources · dependencies</p></div>
+<div class="asif-flow-edge"><span>Assess &amp; import</span><span aria-hidden="true">→</span></div>
+<div class="asif-flow-destinations"><div class="asif-flow-node"><span class="asif-flow-label">DESTINATION</span><strong>Cloud worker</strong><p>Resolve the environment</p></div><div class="asif-flow-node"><span class="asif-flow-label">DESTINATION</span><strong>Another agent</strong><p>Account for context adaptations</p></div></div>
+</div>
+<figcaption>Conceptual flow. Compatible adapters and destination authorization are required; live provider handoffs are not yet demonstrated.</figcaption>
+</figure>
+
+[Inspect the synthetic handoff scenario <span aria-hidden="true">→</span>](../examples/continuation/README.md)
+
 </section>
 
 <section class="asif-benefits" aria-labelledby="your-next-step-shouldnt-need-a-fresh-start" markdown="1">
@@ -141,6 +164,48 @@ node asif.ts request \
 </div>
 </section>
 
+<section class="asif-evidence" aria-labelledby="what-you-can-test-today" markdown="1">
+<div class="asif-section-heading" markdown="1">
+
+<p class="asif-eyebrow">Progress you can verify</p>
+
+## What you can test today.
+
+</div>
+
+| Capability | Current evidence |
+|---|---|
+| Validate documents, inspect selected inputs, package resources | Local Python and TypeScript reference checks for a documented subset |
+| Describe a move to another computer or agent | Synthetic continuation scenarios with explicit prerequisite assessments |
+| Import a native session and continue on a real destination | Integration work; no live handoff demonstrated by this repository |
+
+[See the compatibility and evidence matrix <span aria-hidden="true">→</span>](compatibility.md)
+
+</section>
+
+<section class="asif-contribute" aria-labelledby="bring-a-sessionfind-a-gap" markdown="1">
+<div class="asif-contribute-copy" markdown="1">
+
+<p class="asif-eyebrow">Build with us</p>
+
+## Bring a session.<br>Find a gap.
+
+Building an agent, a coding tool or a cloud runtime? Help test whether ASIF captures the information your application needs for a useful handoff.
+
+[Start contributing <span aria-hidden="true">↗</span>](../CONTRIBUTING.md){ .asif-button .asif-button-primary }
+
+</div>
+<div class="asif-contribution-paths" markdown="1">
+
+[<strong>Share a missing-state example</strong><span>Show what your next agent would need to know.</span><span aria-hidden="true">↗</span>](../CONTRIBUTING.md#share-a-use-case)
+
+[<strong>Try an adapter</strong><span>Map a real source and make its limits explicit.</span><span aria-hidden="true">↗</span>](adapters.md)
+
+[<strong>Provide exchange evidence</strong><span>Reproduce a handoff outside the local reference tools.</span><span aria-hidden="true">↗</span>](adapters.md#the-first-live-handoff)
+
+</div>
+</section>
+
 <section class="asif-explore" aria-labelledby="find-your-way-in" markdown="1">
 <div class="asif-section-heading" markdown="1">
 
@@ -162,8 +227,8 @@ node asif.ts request \
 
 <aside class="asif-draft-note" markdown="1">
 
-<span class="asif-draft-label">A proposal you can inspect.</span>
+<span class="asif-draft-label">Started at Ondago.<br>Open to every implementer.</span>
 
-ASIF 0.3 includes schemas, synthetic examples and local reference tools. Live adapters and independent interoperability remain open work. [See the current scope](../REFERENCE.md) and [help close the gaps](../GAPS.md).
+The team behind Ondago initiated ASIF as a vendor-neutral proposal. Implementing the format requires no Ondago product or account. The code and specification are MIT licensed, and external implementers are invited to shape the draft. [Read the proposed governance](../GOVERNANCE.md).
 
 </aside>

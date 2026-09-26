@@ -1,10 +1,12 @@
 # Agent Session Interchange Format (ASIF)
 
-**Carry an agent's work across computers, clouds, and providers. Let other agents join with the context they need.**
+**Your agent's work should be portable across tools, computers and clouds.**
+
+Changing environments can mean manually rebuilding the brief, finding the right files and explaining decisions an agent already made. Another agent needs those details to make a useful next step.
 
 ASIF is a proposed open format for agent sessions. It records the conversation together with selected model inputs, instructions, files, tool results, decisions and unfinished work. The goal is to make that work portable and understandable to another implementation, so people can change environments or bring in another agent without rebuilding the session by hand.
 
-[Documentation website](https://ondagoai.github.io/agent-session-interchange-format/) · [Getting started](docs/getting-started.md) · [Use cases](docs/use-cases.md) · [Specification](SPEC.md)
+[Documentation website](https://ondagoai.github.io/agent-session-interchange-format/) · [Try ASIF](docs/getting-started.md) · [Compatibility](docs/compatibility.md) · [Contribute](CONTRIBUTING.md) · [Specification](SPEC.md)
 
 ## Why ASIF?
 
@@ -44,7 +46,15 @@ See the [use-case walkthroughs](docs/use-cases.md) for the handoff steps and wha
 
 ASIF **0.3** is a session data-model proposal. This repository includes schemas, checked synthetic examples, and locally authored **Python and TypeScript CLIs** for validation, neutral request projection, selected file-tree restoration, packaging/signatures and redaction auditing.
 
-The workflows above are integration goals. Real source/destination adapters, provider request encoding, live multi-agent coordination and independent interoperability evidence remain outstanding. ASIF describes shared session data; an application must implement agent scheduling, access control, synchronization and import. A valid session or a synthetic `ready` report does not establish that a destination can execute it. See [implementation scope](REFERENCE.md) and [remaining gaps](GAPS.md).
+The workflows above are integration goals. Real source/destination adapters, provider request encoding, live multi-agent coordination and independent interoperability evidence remain outstanding. ASIF describes shared session data; an application must implement agent scheduling, access control, synchronization and import. A valid session or a synthetic `ready` report does not establish that a destination can execute it. See the [compatibility and evidence matrix](docs/compatibility.md), [implementation scope](REFERENCE.md) and [remaining gaps](GAPS.md).
+
+## Help test the handoff
+
+If you build agents, coding tools, cloud runtimes or orchestration systems, bring a session that exposes a missing requirement. Useful contributions include a small sanitized example, a documented adapter limitation, or reproducible exchange results from an independent implementation. Start with the [contribution guide](CONTRIBUTING.md) or [adapter guide](docs/adapters.md).
+
+The next integration milestone is a real source export, destination assessment, authorized next interaction and return export with recorded losses. It remains unproven; the [live-handoff checklist](docs/adapters.md#the-first-live-handoff) defines the evidence to collect.
+
+The team behind Ondago started ASIF as a vendor-neutral proposal. You can implement it without an Ondago product or account. External implementers can contribute through this repository; the [governance charter](GOVERNANCE.md) remains proposed.
 
 ## Explore the format
 

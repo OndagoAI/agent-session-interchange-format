@@ -7,12 +7,14 @@ ASIF describes an agent session as a portable JSON document. Start by validating
 | Goal | Start with |
 |---|---|
 | See what ASIF is for | [Benefits and use cases](use-cases.md) |
+| Check demonstrated support | [Compatibility and evidence](compatibility.md) |
 | Understand the format | [Specification](../SPEC.md) and [session semantics](../SEMANTICS.md) |
 | Find a field or object | [Core object reference](objects.md) and [JSON schemas](schemas.md) |
 | Run local checks | [Reference CLI installation and commands](../REFERENCE.md) |
-| Build an adapter | [Field mapping](field-mapping.md), [conformance cases](../CONFORMANCE.md) and [implementation evidence](../IMPLEMENTERS.md) |
+| Build an adapter | [Adapter guide](adapters.md), [field mapping](field-mapping.md) and [conformance cases](../CONFORMANCE.md) |
 | Understand continuation | [Portable-continuation profile](../CONTINUATION.md) and [worked scenarios](../examples/continuation/README.md) |
 | Help close the remaining gaps | [Gaps and priorities](../GAPS.md) |
+| Share a use case or contribute | [Contribution guide](../CONTRIBUTING.md) |
 
 ## Run a first validation
 
