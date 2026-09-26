@@ -18,7 +18,7 @@ subprocess.run([sys.executable,str(ROOT/'docs/build_reference.py'),'--check'],ch
 sys.path.insert(0,str(ROOT))
 from reference.core import validate_document
 validate_document(samples['session:'],ROOT/'examples')
-files=[p for p in ROOT.rglob('*.md') if not any(x in p.parts for x in ('.venv','node_modules','__pycache__'))]
+files=[p for p in ROOT.rglob('*.md') if not any(x in p.relative_to(ROOT).parts for x in ('.git','.venv','node_modules','__pycache__','site'))]
 def anchors(text):
  text=re.sub(r'```.*?```','',text,flags=re.S)
  out=set(re.findall(r'<a\s+id="([^"]+)"',text));seen={}

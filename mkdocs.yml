@@ -1,0 +1,91 @@
+site_name: ASIF Documentation
+site_description: Agent Session Interchange Format — a vendor-neutral model for agent sessions.
+site_url: https://ondagoai.github.io/agent-session-interchange-format/
+repo_url: https://github.com/OndagoAI/agent-session-interchange-format
+repo_name: OndagoAI/agent-session-interchange-format
+edit_uri: edit/main/
+docs_dir: docs
+site_dir: site
+strict: true
+
+theme:
+  name: material
+  custom_dir: docs/site/overrides
+  font: false
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+
+plugins:
+  - search
+hooks:
+  - docs/site/hooks.py
+extra_css:
+  - docs/site/assets/styles.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+validation:
+  nav:
+    omitted_files: warn
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+
+nav:
+  - Start here:
+      - Overview: README.md
+      - Getting started: docs/getting-started.md
+      - Reference CLIs: REFERENCE.md
+  - Specification:
+      - Introduction: SPEC.md
+      - Session semantics: SEMANTICS.md
+      - Profiles: PROFILES.md
+      - Portable continuation: CONTINUATION.md
+      - Streaming and external bindings: STREAMING.md
+      - Package transport: TRANSPORT.md
+  - Object reference:
+      - Core objects: docs/objects.md
+      - Continuation objects: docs/continuation-objects.md
+      - Destination reports: docs/report-objects.md
+      - JSON schemas: docs/schemas.md
+      - Field mapping: docs/field-mapping.md
+  - Examples:
+      - Sessions and attachments: examples/README.md
+      - Continuation scenarios: examples/continuation/README.md
+  - Project:
+      - Gaps and priorities: GAPS.md
+      - Conformance: CONFORMANCE.md
+      - Implementation evidence: IMPLEMENTERS.md
+      - Governance: GOVERNANCE.md
+      - Documentation maintenance: docs/site.md
+      - Third-party notices: THIRD-PARTY-NOTICES.md

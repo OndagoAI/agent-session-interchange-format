@@ -2,6 +2,8 @@
 
 ASIF defines what an agent session contains and what another implementation must preserve and understand. The current design is **0.3**, a session data-model proposal.
 
+New to ASIF? Follow the [getting started guide](docs/getting-started.md). The documentation includes a searchable GitHub Pages site; see [preview and publishing instructions](docs/site.md).
+
 Start with the [specification](SPEC.md). It defines identity, participants, conversation, branches, executions, effective context, configuration, tool activity, decisions/tasks, memory, resources, environment, checkpoints, and coverage/losses.
 
 The central distinction is between recorded history, selected branch history, and actual model input. Interchange preserves those distinctions; continuation additionally needs known state, supported capabilities, available resources and destination authorization.
