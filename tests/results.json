@@ -1,0 +1,147 @@
+{
+  "asif_version": "0.3",
+  "scope": "JSON Schema structure only",
+  "schema_valid": true,
+  "checks": 27,
+  "passed": 27,
+  "semantic_conformance_tested": false,
+  "interoperability_tested": false,
+  "continuation_tested": false,
+  "results": [
+    {
+      "case": "awaiting-approval-example",
+      "expected_shape": "valid",
+      "passed": true
+    },
+    {
+      "case": "unknown-optional-property",
+      "expected_shape": "valid",
+      "passed": true
+    },
+    {
+      "case": "previous-version-rejected",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-state-declaration",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-coverage-domain",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "duplicate-coverage-domain",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "unknown-coverage-status",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-event-actor",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "unknown-core-kind",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-message-parts",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-call-correlation",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-argument-completeness",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "synthetic-without-method",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "synthetic-without-inputs",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "incomplete-external-reference",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "no-branch",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "duplicate-event-in-branch",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "no-head-checkpoint",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "invented-open-call-state",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "exact-context-without-settings",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-context-input-provenance",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-tool-contract",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "unavailable-resource-explained",
+      "expected_shape": "valid",
+      "passed": true
+    },
+    {
+      "case": "unavailable-resource-unexplained",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "embedded-resource-missing-integrity",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "embedded-two-encodings",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "external-with-embedded-content",
+      "expected_shape": "invalid",
+      "passed": true
+    }
+  ]
+}

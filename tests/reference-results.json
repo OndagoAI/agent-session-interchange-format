@@ -1,0 +1,250 @@
+{
+  "asif_version": "0.3",
+  "scope": "Local vendor-neutral reference implementation checks",
+  "checks": 60,
+  "passed": 60,
+  "independent_implementations": 0,
+  "real_runtime_tests": 0,
+  "results": [
+    {
+      "case": "validate-attachment-availability.session",
+      "passed": true
+    },
+    {
+      "case": "validate-audio-and-transcript.session",
+      "passed": true
+    },
+    {
+      "case": "validate-awaiting-approval.session",
+      "passed": true
+    },
+    {
+      "case": "validate-compaction-with-attachment.session",
+      "passed": true
+    },
+    {
+      "case": "validate-another-agent.session",
+      "passed": true
+    },
+    {
+      "case": "validate-another-computer.session",
+      "passed": true
+    },
+    {
+      "case": "validate-pending-remote-operation.session",
+      "passed": true
+    },
+    {
+      "case": "validate-image-and-document.session",
+      "passed": true
+    },
+    {
+      "case": "validate-redacted-attachment.session",
+      "passed": true
+    },
+    {
+      "case": "validate-tool-generated-files.session",
+      "passed": true
+    },
+    {
+      "case": "strict-duplicate-key",
+      "passed": true
+    },
+    {
+      "case": "strict-nonfinite",
+      "passed": true
+    },
+    {
+      "case": "bounded-depth",
+      "passed": true
+    },
+    {
+      "case": "unknown-number-preservation",
+      "passed": true
+    },
+    {
+      "case": "pointer-escaped-keys",
+      "passed": true
+    },
+    {
+      "case": "pointer-invalid-escape",
+      "passed": true
+    },
+    {
+      "case": "path-../a",
+      "passed": true
+    },
+    {
+      "case": "path-/tmp/a",
+      "passed": true
+    },
+    {
+      "case": "path-a\\b",
+      "passed": true
+    },
+    {
+      "case": "path-C:a",
+      "passed": true
+    },
+    {
+      "case": "path-NUL",
+      "passed": true
+    },
+    {
+      "case": "path-a/../b",
+      "passed": true
+    },
+    {
+      "case": "path-a.",
+      "passed": true
+    },
+    {
+      "case": "request-typed-inputs",
+      "passed": true
+    },
+    {
+      "case": "configuration-order",
+      "passed": true
+    },
+    {
+      "case": "predicate-component-prefix",
+      "passed": true
+    },
+    {
+      "case": "predicate-combination",
+      "passed": true
+    },
+    {
+      "case": "predicate-unknown",
+      "passed": true
+    },
+    {
+      "case": "policy-deny-precedence",
+      "passed": true
+    },
+    {
+      "case": "policy-default-ask",
+      "passed": true
+    },
+    {
+      "case": "contradictory-decisions",
+      "passed": true
+    },
+    {
+      "case": "explicit-decision-amendment",
+      "passed": true
+    },
+    {
+      "case": "unexplained-task-reopen",
+      "passed": true
+    },
+    {
+      "case": "explained-task-reopen",
+      "passed": true
+    },
+    {
+      "case": "terminal-result-final",
+      "passed": true
+    },
+    {
+      "case": "missing-actor",
+      "passed": true
+    },
+    {
+      "case": "provenance-span",
+      "passed": true
+    },
+    {
+      "case": "causal-self-cycle",
+      "passed": true
+    },
+    {
+      "case": "stream-assembled-arguments",
+      "passed": true
+    },
+    {
+      "case": "stream-missing-fragment",
+      "passed": true
+    },
+    {
+      "case": "external-call-binding",
+      "passed": true
+    },
+    {
+      "case": "restore-selected-tree",
+      "passed": true
+    },
+    {
+      "case": "restored-bytes-inventory.csv",
+      "passed": true
+    },
+    {
+      "case": "restored-bytes-totals.csv",
+      "passed": true
+    },
+    {
+      "case": "restored-bytes-summary.md",
+      "passed": true
+    },
+    {
+      "case": "restore-no-overwrite",
+      "passed": true
+    },
+    {
+      "case": "restore-rollback",
+      "passed": true
+    },
+    {
+      "case": "rollback-cleaned",
+      "passed": true
+    },
+    {
+      "case": "delta-deletion",
+      "passed": true
+    },
+    {
+      "case": "delta-absent-deletion",
+      "passed": true
+    },
+    {
+      "case": "restore-case-collision",
+      "passed": true
+    },
+    {
+      "case": "deterministic-package",
+      "passed": true
+    },
+    {
+      "case": "package-raw-document",
+      "passed": true
+    },
+    {
+      "case": "signature-verification",
+      "passed": true
+    },
+    {
+      "case": "signature-wrong-key",
+      "passed": true
+    },
+    {
+      "case": "package-content-tamper",
+      "passed": true
+    },
+    {
+      "case": "package-traversal",
+      "passed": true
+    },
+    {
+      "case": "package-unlisted-member",
+      "passed": true
+    },
+    {
+      "case": "package-compression-refused",
+      "passed": true
+    },
+    {
+      "case": "redaction-duplicates-base64-no-value-leak",
+      "passed": true
+    }
+  ]
+}

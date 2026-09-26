@@ -1,0 +1,359 @@
+{
+  "asif_version": "0.3",
+  "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
+  "checks": 87,
+  "passed": 87,
+  "node_version": "v24.21.0",
+  "independent_implementations": 0,
+  "real_runtime_tests": 0,
+  "results": [
+    {
+      "case": "core fixture attachment-availability.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture audio-and-transcript.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture awaiting-approval.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture compaction-with-attachment.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture image-and-document.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture redacted-attachment.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture tool-generated-files.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture another-agent.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture another-computer.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture pending-remote-operation.session.json",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-1",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-2",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-3",
+      "passed": true
+    },
+    {
+      "case": "Python parity: profile-not-gated",
+      "passed": true
+    },
+    {
+      "case": "Python parity: profile-declaration-without-data",
+      "passed": true
+    },
+    {
+      "case": "Python parity: untyped-context",
+      "passed": true
+    },
+    {
+      "case": "Python parity: orphan-tool-result",
+      "passed": true
+    },
+    {
+      "case": "Python parity: changed-tool-result",
+      "passed": true
+    },
+    {
+      "case": "Python parity: stale-context",
+      "passed": true
+    },
+    {
+      "case": "Python parity: wrong-checkpoint-config",
+      "passed": true
+    },
+    {
+      "case": "Python parity: mixed-workspace-boundary",
+      "passed": true
+    },
+    {
+      "case": "Python parity: workspace-traversal",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-path-selector",
+      "passed": true
+    },
+    {
+      "case": "Python parity: dependency-cycle",
+      "passed": true
+    },
+    {
+      "case": "Python parity: incomplete-dependency-closure",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-skill-resource",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-instruction-rule",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-policy-binding",
+      "passed": true
+    },
+    {
+      "case": "Python parity: incomplete-context-accounting",
+      "passed": true
+    },
+    {
+      "case": "Python parity: corrupt-resource",
+      "passed": true
+    },
+    {
+      "case": "Python parity: replacement-without-baseline",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unsafe-operation-restart",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unbound-open-call",
+      "passed": true
+    },
+    {
+      "case": "Python parity: undeclared-secret",
+      "passed": true
+    },
+    {
+      "case": "Python parity: changed-source-digest",
+      "passed": true
+    },
+    {
+      "case": "Python parity: expired-assessment",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-assessment",
+      "passed": true
+    },
+    {
+      "case": "Python parity: optional-downgrade",
+      "passed": true
+    },
+    {
+      "case": "Python parity: context-overflow",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unknown-tokenizer",
+      "passed": true
+    },
+    {
+      "case": "Python parity: silent-model-substitution",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unverified-dependency-version",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unsupported-platform",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-root-binding",
+      "passed": true
+    },
+    {
+      "case": "Python parity: partial-capture-marked-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: partial-configuration-marked-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unknown-authority-marked-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unavailable-resource-marked-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: adaptation-without-mapping",
+      "passed": true
+    },
+    {
+      "case": "Python parity: pending-operation-marked-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: synthetic-import-claim",
+      "passed": true
+    },
+    {
+      "case": "Python parity: wrong-service-account",
+      "passed": true
+    },
+    {
+      "case": "Python parity: destination-case-collision",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-44",
+      "passed": true
+    },
+    {
+      "case": "strict parser duplicate keys",
+      "passed": true
+    },
+    {
+      "case": "strict parser invalid syntax and constants",
+      "passed": true
+    },
+    {
+      "case": "strict UTF-8",
+      "passed": true
+    },
+    {
+      "case": "bounded parser nesting and bytes",
+      "passed": true
+    },
+    {
+      "case": "lossy number refusal is explicit",
+      "passed": true
+    },
+    {
+      "case": "prototype names are inert",
+      "passed": true
+    },
+    {
+      "case": "pointer escape validation",
+      "passed": true
+    },
+    {
+      "case": "portable path refusal",
+      "passed": true
+    },
+    {
+      "case": "Unicode case folding",
+      "passed": true
+    },
+    {
+      "case": "typed request preserves model input",
+      "passed": true
+    },
+    {
+      "case": "configuration effective order",
+      "passed": true
+    },
+    {
+      "case": "predicates and unsupported dialect",
+      "passed": true
+    },
+    {
+      "case": "policy deny and default ask",
+      "passed": true
+    },
+    {
+      "case": "decision corrections preserve evidence",
+      "passed": true
+    },
+    {
+      "case": "task reopen requires reason",
+      "passed": true
+    },
+    {
+      "case": "terminal result cannot reopen",
+      "passed": true
+    },
+    {
+      "case": "stream assembly and missing fragment refusal",
+      "passed": true
+    },
+    {
+      "case": "missing actor and provenance span",
+      "passed": true
+    },
+    {
+      "case": "restore bytes modes and no overwrite",
+      "passed": true
+    },
+    {
+      "case": "restore failure rolls back",
+      "passed": true
+    },
+    {
+      "case": "workspace delta explicit deletion",
+      "passed": true
+    },
+    {
+      "case": "restore case and normalization collision",
+      "passed": true
+    },
+    {
+      "case": "symlink input refusal",
+      "passed": true
+    },
+    {
+      "case": "deterministic package matches Python fixture",
+      "passed": true
+    },
+    {
+      "case": "Python signature verifies in TypeScript",
+      "passed": true
+    },
+    {
+      "case": "TypeScript signature matches Python signature",
+      "passed": true
+    },
+    {
+      "case": "wrong key and tampered signature rejected",
+      "passed": true
+    },
+    {
+      "case": "package tamper and traversal rejected",
+      "passed": true
+    },
+    {
+      "case": "ZIP bounds, flags, CRC and duplicate names rejected",
+      "passed": true
+    },
+    {
+      "case": "redaction duplicates and base64 do not echo values",
+      "passed": true
+    },
+    {
+      "case": "all nine CLI commands and exit statuses",
+      "passed": true
+    },
+    {
+      "case": "CLI works outside the project directory",
+      "passed": true
+    },
+    {
+      "case": "prototype-like entity IDs remain valid",
+      "passed": true
+    }
+  ]
+}

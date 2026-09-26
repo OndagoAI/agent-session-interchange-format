@@ -1,0 +1,198 @@
+{
+  "session:/$defs/resource": [
+    {
+      "title": "Embedded UTF-8 attachment",
+      "description": "The three embedded examples represent the same decoded bytes and therefore use the same length and digest. The path example assumes those bytes are supplied at `assets/items.csv`.",
+      "value": {
+        "id": "attachment-csv",
+        "media_type": "text/csv",
+        "purpose": "input",
+        "availability": "embedded",
+        "bytes": 19,
+        "sha256": "de0c9962d43f7e783381c9f07d89c60589342163340cb53a55c2e0cf3f9859b6",
+        "text": "item,count\nbooks,3\n"
+      }
+    },
+    {
+      "title": "Embedded base64 attachment",
+      "description": "The three embedded examples represent the same decoded bytes and therefore use the same length and digest. The path example assumes those bytes are supplied at `assets/items.csv`.",
+      "value": {
+        "id": "attachment-csv",
+        "media_type": "text/csv",
+        "purpose": "input",
+        "availability": "embedded",
+        "bytes": 19,
+        "sha256": "de0c9962d43f7e783381c9f07d89c60589342163340cb53a55c2e0cf3f9859b6",
+        "data": "aXRlbSxjb3VudApib29rcywzCg=="
+      }
+    },
+    {
+      "title": "File-backed attachment",
+      "description": "The three embedded examples represent the same decoded bytes and therefore use the same length and digest. The path example assumes those bytes are supplied at `assets/items.csv`.",
+      "value": {
+        "id": "attachment-csv",
+        "media_type": "text/csv",
+        "purpose": "input",
+        "availability": "embedded",
+        "bytes": 19,
+        "sha256": "de0c9962d43f7e783381c9f07d89c60589342163340cb53a55c2e0cf3f9859b6",
+        "path": "assets/items.csv"
+      }
+    },
+    {
+      "title": "External attachment",
+      "description": "The missing bytes are not replaced with invented text. The referring Resource Part retains this resource ID.",
+      "value": {
+        "id": "attachment-original",
+        "media_type": "application/pdf",
+        "purpose": "input",
+        "availability": "external",
+        "explanation": "The source only retained a remote locator.",
+        "locator": "https://example.invalid/report.pdf"
+      }
+    },
+    {
+      "title": "Unavailable attachment",
+      "description": "The missing bytes are not replaced with invented text. The referring Resource Part retains this resource ID.",
+      "value": {
+        "id": "attachment-original",
+        "media_type": "application/pdf",
+        "purpose": "input",
+        "availability": "unavailable",
+        "explanation": "The source attachment was deleted before capture."
+      }
+    },
+    {
+      "title": "Excluded attachment",
+      "description": "The missing bytes are not replaced with invented text. The referring Resource Part retains this resource ID.",
+      "value": {
+        "id": "attachment-original",
+        "media_type": "application/pdf",
+        "purpose": "input",
+        "availability": "excluded",
+        "explanation": "The producer intentionally excluded these bytes."
+      }
+    },
+    {
+      "title": "Redacted attachment",
+      "description": "The missing bytes are not replaced with invented text. The referring Resource Part retains this resource ID.",
+      "value": {
+        "id": "attachment-original",
+        "media_type": "application/pdf",
+        "purpose": "input",
+        "availability": "redacted",
+        "explanation": "The original contains withheld content; sanitized content is a separate resource."
+      }
+    },
+    {
+      "title": "Unknown attachment",
+      "description": "The missing bytes are not replaced with invented text. The referring Resource Part retains this resource ID.",
+      "value": {
+        "id": "attachment-original",
+        "media_type": "application/pdf",
+        "purpose": "input",
+        "availability": "unknown",
+        "explanation": "The producer could not determine availability."
+      }
+    }
+  ],
+  "session:/$defs/external_binding": [
+    {
+      "title": "External decision request",
+      "description": "A later capture may contain the answer without including the original request event.",
+      "value": {
+        "kind": "request",
+        "id": "question-earlier",
+        "source": {
+          "session_id": "session-1",
+          "capture_id": "capture-earlier",
+          "event_id": "e-question"
+        },
+        "descriptor": {
+          "decision_kind": "question",
+          "prompt": [
+            {
+              "kind": "text",
+              "text": "Which report should I summarize?"
+            }
+          ],
+          "options": [
+            {
+              "id": "annual",
+              "label": "Annual report"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "session:/$defs/context_input": [
+    {
+      "title": "Message input",
+      "description": "This is one resolved input from the complete another-computer example. Source references provide provenance, not instructions to guess the input.",
+      "value": {
+        "id": "input-instruction",
+        "kind": "message",
+        "role": "system",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Use the declared workspace for file operations."
+          }
+        ],
+        "source_events": []
+      }
+    },
+    {
+      "title": "Tool Call input",
+      "description": "This is one resolved input from the complete another-computer example. Source references provide provenance, not instructions to guess the input.",
+      "value": {
+        "id": "input-e2",
+        "kind": "tool_call",
+        "role": "assistant",
+        "parts": [],
+        "source_events": [
+          {
+            "event_id": "e2"
+          }
+        ],
+        "call_id": "call-1",
+        "tool_id": "summarize",
+        "arguments": {
+          "resource_id": "source-csv"
+        },
+        "arguments_status": "complete"
+      }
+    },
+    {
+      "title": "Tool Result input",
+      "description": "This is one resolved input from the complete another-computer example. Source references provide provenance, not instructions to guess the input.",
+      "value": {
+        "id": "input-e3",
+        "kind": "tool_result",
+        "role": "tool",
+        "parts": [
+          {
+            "kind": "resource",
+            "resource_id": "output-csv",
+            "description": "CSV with total row."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "report",
+            "description": "Markdown report."
+          }
+        ],
+        "source_events": [
+          {
+            "event_id": "e3"
+          }
+        ],
+        "call_id": "call-1",
+        "result_index": 0,
+        "terminal": true,
+        "outcome": "success"
+      }
+    }
+  ]
+}

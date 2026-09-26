@@ -1,0 +1,383 @@
+{
+  "report_version": "0.1",
+  "evaluation_mode": "synthetic",
+  "id": "assessment-another-agent",
+  "source": {
+    "session_id": "session-another-agent",
+    "capture_id": "capture-another-agent",
+    "plan_id": "continue-main",
+    "document_sha256": "0a0684e757513cd81b7bbf5f92901ba745a50c0e6442aca7cf9b9a7a9fbc9f91"
+  },
+  "destination": {
+    "id": "example-agent-b-runtime",
+    "runtime": {
+      "agent": {
+        "id": "example-agent-b",
+        "version": "2",
+        "state_format": "example-b/2"
+      },
+      "adapter": {
+        "id": "example-a-to-b",
+        "version": "1"
+      },
+      "os": "linux",
+      "architecture": "x86_64"
+    },
+    "capabilities_sha256": "53ed9bdbb19f79e9237aec78918633f31252cc2d1b339ac38dd29a451dfcf60c"
+  },
+  "assessed_at": "2026-09-26T12:00:00Z",
+  "expires_at": "2026-09-26T13:00:00Z",
+  "outcome": "adaptation_required",
+  "assessments": [
+    {
+      "subject": {
+        "kind": "plan",
+        "id": "continue-main"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "context",
+        "id": "continue-context"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "model",
+        "id": "continue-main"
+      },
+      "status": "adapted",
+      "required": true,
+      "detail": "Substitute the target model after measuring its input budget; no identical-output guarantee.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "configuration",
+        "id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "feature",
+        "id": "asif.portable-continuation/0.1"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "workspace",
+        "id": "workspace-head"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "agent-runtime"
+      },
+      "status": "adapted",
+      "required": true,
+      "detail": "Translate runtime requirements to the destination agent with an explicit compatibility mapping.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example-agent-a",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "summary-tool"
+      },
+      "status": "adapted",
+      "required": true,
+      "detail": "Map CSV resource input and output references while preserving call/result identity and side effects.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example.inventory.summarize",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "summary-skill"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example.inventory-summary",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "instruction",
+        "id": "workspace-rule",
+        "owner_id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "capability",
+        "id": "summary-skill",
+        "owner_id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "policy",
+        "id": "workspace-only",
+        "owner_id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "native_import",
+        "id": "native"
+      },
+      "status": "adapted",
+      "required": true,
+      "detail": "Create a target-native representation with mapped identities and target ordering/index rules.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "native-state"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "output-csv"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "report"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "skill-template"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "source-csv"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    }
+  ],
+  "path_bindings": [
+    {
+      "root_id": "project",
+      "destination_path": "/work/project",
+      "case_sensitive": true,
+      "unicode_normalization": "none"
+    }
+  ],
+  "identity_mappings": [
+    {
+      "entity_type": "native_session",
+      "source_id": "source-native",
+      "target_id": "target-native-b",
+      "target_namespace": "example-agent-b-runtime"
+    }
+  ],
+  "transformations": [
+    {
+      "id": "adapt-dependency-agent-runtime",
+      "subject": {
+        "kind": "dependency",
+        "id": "agent-runtime"
+      },
+      "target": "example-agent-b/2",
+      "rule": "Translate runtime requirements to the destination agent with an explicit compatibility mapping.",
+      "losses": [
+        "Behavioral equivalence remains an explicit acceptance decision."
+      ],
+      "accepted": false,
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "id": "adapt-dependency-summary-tool",
+      "subject": {
+        "kind": "dependency",
+        "id": "summary-tool"
+      },
+      "target": "example-b.inventory/2",
+      "rule": "Map CSV resource input and output references while preserving call/result identity and side effects.",
+      "losses": [
+        "Behavioral equivalence remains an explicit acceptance decision."
+      ],
+      "accepted": false,
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "id": "adapt-model-continue-main",
+      "subject": {
+        "kind": "model",
+        "id": "continue-main"
+      },
+      "target": "example/model-b/2",
+      "rule": "Substitute the target model after measuring its input budget; no identical-output guarantee.",
+      "losses": [
+        "Behavioral equivalence remains an explicit acceptance decision."
+      ],
+      "accepted": false,
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "id": "adapt-native_import-native",
+      "subject": {
+        "kind": "native_import",
+        "id": "native"
+      },
+      "target": "example-b/2",
+      "rule": "Create a target-native representation with mapped identities and target ordering/index rules.",
+      "losses": [
+        "Behavioral equivalence remains an explicit acceptance decision."
+      ],
+      "accepted": false,
+      "evidence_ids": [
+        "scenario"
+      ]
+    }
+  ],
+  "model_assessment": {
+    "source": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "target": {
+      "provider": "example",
+      "id": "model-b",
+      "revision": "2"
+    },
+    "tokenizer": "example-tokenizer/1",
+    "input_tokens": 700,
+    "input_limit": 8000,
+    "output_reserve": 1000,
+    "fit": "fits"
+  },
+  "blocking_reasons": [],
+  "evidence": [
+    {
+      "id": "scenario",
+      "producer": "asif-examples",
+      "time": "2026-09-26T12:00:00Z",
+      "kind": "synthetic",
+      "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+    }
+  ],
+  "import_result": {
+    "status": "not_attempted",
+    "evidence_ids": [],
+    "detail": "No import was executed."
+  },
+  "continuation_result": {
+    "status": "not_tested",
+    "evidence_ids": [],
+    "detail": "No agent was started."
+  }
+}

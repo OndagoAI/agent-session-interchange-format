@@ -1,0 +1,1729 @@
+{
+  "session:": {
+    "asif_version": "0.3",
+    "capture": {
+      "id": "capture-hello",
+      "producer": {
+        "name": "ASIF examples",
+        "version": "0.3"
+      },
+      "consistency": "consistent",
+      "boundary": "One authored greeting; no agent request was captured."
+    },
+    "session": {
+      "id": "session-hello",
+      "title": "Greeting",
+      "native_ids": [],
+      "lineage": []
+    },
+    "participants": [
+      {
+        "id": "human-1",
+        "kind": "human"
+      }
+    ],
+    "events": [
+      {
+        "id": "e1",
+        "sequence": 0,
+        "actor_id": "human-1",
+        "kind": "message",
+        "causes": [],
+        "provenance": {
+          "mode": "synthetic",
+          "producer": "ASIF examples",
+          "method": "Authored greeting example.",
+          "inputs": []
+        },
+        "data": {
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Hello."
+            }
+          ]
+        }
+      }
+    ],
+    "branches": [
+      {
+        "id": "main",
+        "event_ids": [
+          "e1"
+        ],
+        "head_event_id": "e1"
+      }
+    ],
+    "executions": [],
+    "contexts": [],
+    "configurations": [],
+    "tools": [],
+    "resources": [],
+    "environments": [],
+    "checkpoints": [
+      {
+        "id": "checkpoint-1",
+        "branch_id": "main",
+        "at_event_id": "e1",
+        "knowledge": "unknown",
+        "status": "unknown",
+        "context_id": null,
+        "configuration_id": null,
+        "open_calls": [],
+        "open_decisions": [],
+        "tasks": [],
+        "requirements": []
+      }
+    ],
+    "coverage": [
+      {
+        "scope": "participants",
+        "status": "complete",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "conversation",
+        "status": "complete",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "branches",
+        "status": "complete",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "executions",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "contexts",
+        "status": "not_inspected",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "configuration",
+        "status": "not_inspected",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "tools",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "decisions",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "tasks",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "resources",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "environment",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "native",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      },
+      {
+        "scope": "usage",
+        "status": "known_empty",
+        "detail": "Scope of this authored example."
+      }
+    ],
+    "losses": [],
+    "required_features": []
+  },
+  "session:/properties/capture": {
+    "id": "capture-image-and-document",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e2; no real model or tool ran."
+  },
+  "session:/properties/capture/properties/producer": {
+    "name": "asif-example",
+    "version": "1"
+  },
+  "session:/properties/session": {
+    "id": "session-image-and-document",
+    "title": "Image and PDF attachments",
+    "native_ids": [],
+    "lineage": []
+  },
+  "session:/properties/session/properties/native_ids/items": {
+    "provider": "example-agent-a",
+    "namespace": "source-runtime",
+    "value": "source-native"
+  },
+  "session:/properties/session/properties/lineage/items": {
+    "relation": "fork",
+    "session_id": "session-parent",
+    "capture_id": "capture-parent",
+    "event_id": "e2",
+    "inclusive": true
+  },
+  "session:/$defs/event_ref": {
+    "event_id": "e1"
+  },
+  "session:/$defs/part/oneOf/0": {
+    "kind": "text",
+    "text": "The total is 5."
+  },
+  "session:/$defs/part/oneOf/1": {
+    "kind": "resource",
+    "resource_id": "image",
+    "description": "Original image."
+  },
+  "session:/$defs/part/oneOf/2": {
+    "kind": "structured",
+    "schema": "example.table/1",
+    "value": {
+      "columns": [
+        "item",
+        "count"
+      ],
+      "rows": [
+        [
+          "books",
+          3
+        ]
+      ]
+    }
+  },
+  "session:/$defs/part/oneOf/3": {
+    "kind": "opaque",
+    "resource_id": "native-state",
+    "semantic_type": "example.agent-state/1",
+    "reason": "No portable decoder is defined."
+  },
+  "session:/$defs/provenance": {
+    "mode": "reported",
+    "producer": "example-meter"
+  },
+  "session:/$defs/provenance/properties/sources/items": {
+    "resource_id": "audio"
+  },
+  "session:/$defs/provenance/properties/sources/items/properties/locator": {
+    "syntax": "bytes",
+    "offset": 0,
+    "length": 19
+  },
+  "session:/$defs/participant": {
+    "id": "agent",
+    "kind": "agent"
+  },
+  "session:/$defs/participant/properties/child_session": {
+    "session_id": "session-1",
+    "capture_id": "capture-1"
+  },
+  "session:/$defs/execution": {
+    "id": "run-1",
+    "participant_id": "agent",
+    "status": "running",
+    "context_ids": [
+      "context-1"
+    ]
+  },
+  "session:/$defs/execution/properties/model": {
+    "provider": "example",
+    "id": "model-1",
+    "temperature": 0.2
+  },
+  "session:/$defs/tool": {
+    "id": "read-notes",
+    "name": "example.notes.read",
+    "description": "Read a meeting document by logical identifier.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "document_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "session:/$defs/instruction": {
+    "id": "workspace-rule",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "Use the declared workspace for file operations."
+      }
+    ],
+    "scope": {
+      "dialect": "example.scope/1",
+      "value": "workspace"
+    },
+    "activation": {
+      "dialect": "example.activation/1",
+      "value": "always"
+    },
+    "provenance": {
+      "mode": "synthetic",
+      "producer": "asif-examples",
+      "method": "Authored configuration fixture.",
+      "inputs": []
+    }
+  },
+  "session:/$defs/instruction/properties/scope": {
+    "dialect": "example.scope/1",
+    "value": "workspace"
+  },
+  "session:/$defs/instruction/properties/activation": {
+    "dialect": "example.scope/1",
+    "value": "workspace"
+  },
+  "session:/$defs/capability": {
+    "id": "summary-skill",
+    "type": "example.skill",
+    "definition": {
+      "id": "inventory-summary",
+      "version": "1"
+    },
+    "resource_ids": [
+      "skill-template"
+    ],
+    "required": true
+  },
+  "session:/$defs/policy": {
+    "id": "workspace-only",
+    "type": "example.policy/1",
+    "definition": {
+      "file_access": "declared-workspace"
+    },
+    "enforcing": true
+  },
+  "session:/$defs/configuration": {
+    "id": "config-1",
+    "instructions": [],
+    "capabilities": [],
+    "policies": [],
+    "secret_requirements": [],
+    "knowledge": "partial"
+  },
+  "session:/$defs/configuration/properties/secret_requirements/items": {
+    "handle": "publisher-login",
+    "purpose": "Authenticate to the target publishing account."
+  },
+  "session:/$defs/configuration/properties/model": {
+    "provider": "example",
+    "id": "model-1",
+    "temperature": 0.2
+  },
+  "session:/$defs/requirement": {
+    "id": "req-1",
+    "kind": "asif.decision",
+    "description": "Resolve approval-1 under destination policy before any tool execution.",
+    "required_for": [
+      "continue"
+    ],
+    "status": "unresolved"
+  },
+  "session:/$defs/environment": {
+    "id": "project-env",
+    "kind": "workspace",
+    "description": "Synthetic project directory at the captured boundary.",
+    "resource_ids": [
+      "source-csv",
+      "output-csv",
+      "report"
+    ],
+    "requirements": [],
+    "definition": {
+      "dialect": "example.workspace/1",
+      "value": {
+        "cwd": "/Users/example/project"
+      }
+    }
+  },
+  "session:/$defs/environment/properties/definition": {
+    "dialect": "example.scope/1",
+    "value": "workspace"
+  },
+  "session:/$defs/resource": {
+    "id": "unknown",
+    "media_type": "image/png",
+    "purpose": "input",
+    "availability": "unknown",
+    "explanation": "The exporter did not inspect attachment availability."
+  },
+  "session:/$defs/context_input": {
+    "id": "input-1",
+    "role": "user",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "Summarize the selected meeting notes."
+      }
+    ],
+    "source_events": [
+      {
+        "event_id": "e1"
+      }
+    ],
+    "kind": "message"
+  },
+  "session:/$defs/context": {
+    "id": "context-1",
+    "branch_id": "main",
+    "at_event_id": "e1",
+    "purpose": "model_request",
+    "fidelity": "reconstructed",
+    "inputs": [
+      {
+        "id": "input-1",
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Summarize the selected meeting notes."
+          }
+        ],
+        "source_events": [
+          {
+            "event_id": "e1"
+          }
+        ],
+        "kind": "message"
+      }
+    ],
+    "tool_ids": [
+      "read-notes"
+    ],
+    "configuration_id": "config-1"
+  },
+  "session:/$defs/context/properties/model": {
+    "provider": "example",
+    "id": "model-1",
+    "temperature": 0.2
+  },
+  "session:/$defs/context/properties/request_parameters": {
+    "max_output_tokens": 1024
+  },
+  "session:/$defs/branch": {
+    "id": "main",
+    "event_ids": [
+      "e1"
+    ],
+    "head_event_id": "e1"
+  },
+  "session:/$defs/branch/properties/fork": {
+    "session_id": "session-parent",
+    "capture_id": "capture-parent",
+    "branch_id": "main",
+    "event_id": "e2",
+    "inclusive": true
+  },
+  "session:/$defs/checkpoint": {
+    "id": "head",
+    "branch_id": "main",
+    "at_event_id": "e4",
+    "knowledge": "observed",
+    "status": "idle",
+    "context_id": "continue-context",
+    "configuration_id": "effective",
+    "open_calls": [],
+    "open_decisions": [],
+    "tasks": [],
+    "requirements": []
+  },
+  "session:/$defs/checkpoint/properties/open_calls/items": {
+    "call_id": "call-1",
+    "state": "outcome_unknown"
+  },
+  "session:/$defs/checkpoint/properties/open_decisions/items": {
+    "request_id": "approval-1",
+    "state": "pending"
+  },
+  "session:/$defs/checkpoint/properties/tasks/items": {
+    "task_id": "summary",
+    "revision": 1
+  },
+  "session:/$defs/usage": {
+    "scope": "execution",
+    "scope_id": "execution-1",
+    "unit": "tokens",
+    "value": 120,
+    "counter": "delta",
+    "provenance": {
+      "mode": "reported",
+      "producer": "example-meter"
+    }
+  },
+  "session:/$defs/event": {
+    "id": "e1",
+    "sequence": 0,
+    "actor_id": "person",
+    "kind": "message",
+    "causes": [],
+    "provenance": {
+      "mode": "synthetic",
+      "producer": "asif-example",
+      "method": "authored conformance example",
+      "inputs": []
+    },
+    "data": {
+      "role": "user",
+      "parts": [
+        {
+          "kind": "text",
+          "text": "Summarize the selected meeting notes."
+        }
+      ]
+    }
+  },
+  "session:/$defs/event/properties/data": {
+    "role": "user",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "Summarize the attachment."
+      }
+    ]
+  },
+  "session:/$defs/event/properties/extensions": {
+    "example.annotation/1": {
+      "label": "reviewed"
+    }
+  },
+  "session:/$defs/event/allOf/0/then/properties/data": {
+    "role": "user",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "Summarize the selected meeting notes."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/1/then/properties/data": {
+    "call_id": "call-1",
+    "tool_id": "summarize",
+    "arguments": {
+      "resource_id": "source-csv"
+    },
+    "arguments_status": "complete"
+  },
+  "session:/$defs/event/allOf/2/then/properties/data": {
+    "call_id": "call-1",
+    "result_index": 0,
+    "terminal": true,
+    "outcome": "success",
+    "parts": [
+      {
+        "kind": "resource",
+        "resource_id": "output-csv",
+        "description": "CSV with total row."
+      },
+      {
+        "kind": "resource",
+        "resource_id": "report",
+        "description": "Markdown report."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/3/then/properties/data": {
+    "request_id": "approval-1",
+    "decision_kind": "approval",
+    "prompt": [
+      {
+        "kind": "text",
+        "text": "Allow access to meeting-42?"
+      }
+    ],
+    "options": [
+      {
+        "id": "allow",
+        "label": "Allow"
+      },
+      {
+        "id": "deny",
+        "label": "Deny"
+      }
+    ],
+    "call_id": "call-1"
+  },
+  "session:/$defs/event/allOf/3/then/properties/data/properties/options/items": {
+    "id": "deny",
+    "label": "Deny"
+  },
+  "session:/$defs/event/allOf/4/then/properties/data": {
+    "request_id": "question-1",
+    "outcome": "answered",
+    "answer": [
+      {
+        "kind": "text",
+        "text": "Use the attached CSV."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/5/then/properties/data": {
+    "task_id": "task-1",
+    "revision": 1,
+    "status": "pending",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "Summarize the attached report."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/6/then/properties/data": {
+    "context_id": "compacted",
+    "reason": "compaction",
+    "replaced_context_id": "before"
+  },
+  "session:/$defs/event/allOf/7/then/properties/data": {
+    "configuration_id": "configuration-1"
+  },
+  "session:/$defs/event/allOf/8/then/properties/data": {
+    "execution_id": "execution-1",
+    "status": "completed",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "The response was recorded."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/9/then/properties/data": {
+    "resource_id": "resource-1",
+    "operation": "created"
+  },
+  "session:/$defs/event/allOf/10/then/properties/data": {
+    "category": "redaction",
+    "parts": [
+      {
+        "kind": "text",
+        "text": "A sanitized replacement is supplied."
+      },
+      {
+        "kind": "resource",
+        "resource_id": "sanitized",
+        "description": "Distinct replacement resource."
+      }
+    ]
+  },
+  "session:/$defs/event/allOf/11/then/properties/data": {
+    "type": "example.annotation/1",
+    "value": {
+      "label": "reviewed"
+    },
+    "interpretation_required": false
+  },
+  "session:/$defs/coverage": {
+    "scope": "resources",
+    "status": "complete",
+    "detail": "All modeled input resources included."
+  },
+  "session:/$defs/loss": {
+    "id": "context-compaction",
+    "stage": "normalization",
+    "kind": "summarization",
+    "scope": "contexts",
+    "explanation": "The compacted input loses original detail; history and original attachment remain preserved."
+  },
+  "session:/$defs/loss/properties/references/items": {
+    "type": "resource",
+    "id": "missing"
+  },
+  "session:/$defs/stream_segment": {
+    "index": 0,
+    "resource_id": "argument-fragment",
+    "offset": 0,
+    "length": 19,
+    "terminal": true
+  },
+  "session:/$defs/stream": {
+    "id": "stream-1",
+    "kind": "tool_arguments",
+    "event_id": "e-call",
+    "call_id": "call-read",
+    "status": "complete",
+    "segments": [
+      {
+        "index": 0,
+        "resource_id": "argument-fragment",
+        "offset": 0,
+        "length": 19,
+        "terminal": true
+      }
+    ]
+  },
+  "session:/$defs/external_binding": {
+    "kind": "call",
+    "id": "call-previous",
+    "source": {
+      "session_id": "session-parent",
+      "capture_id": "capture-parent",
+      "event_id": "e2"
+    },
+    "descriptor": {
+      "tool_id": "tool-read",
+      "arguments": {
+        "path": "notes.md"
+      },
+      "arguments_status": "complete"
+    }
+  },
+  "session:/$defs/external_binding/properties/source": {
+    "event_id": "e2",
+    "session_id": "session-parent",
+    "capture_id": "capture-parent"
+  },
+  "session:/$defs/external_binding/properties/descriptor": {
+    "tool_id": "tool-read",
+    "arguments": {
+      "path": "notes.md"
+    },
+    "arguments_status": "complete"
+  },
+  "session:/$defs/external_binding/allOf/0/then/properties/descriptor": {
+    "tool_id": "tool-read",
+    "arguments": {
+      "path": "notes.md"
+    },
+    "arguments_status": "complete"
+  },
+  "session:/$defs/external_binding/allOf/1/then/properties/descriptor": {
+    "decision_kind": "approval",
+    "prompt": [],
+    "options": []
+  },
+  "session:/$defs/external_binding/allOf/1/then/properties/descriptor/properties/options/items": {
+    "id": "deny",
+    "label": "Deny"
+  },
+  "continuation:": {
+    "profile_version": "0.1",
+    "source_runtime": {
+      "agent": {
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
+      },
+      "adapter": {
+        "id": "example-adapter",
+        "version": "1"
+      },
+      "os": "macos",
+      "architecture": "arm64"
+    },
+    "workspaces": [
+      {
+        "id": "workspace-head",
+        "environment_id": "project-env",
+        "root_id": "project",
+        "at_event_id": "e4",
+        "source_root": "/Users/example/project",
+        "mode": "snapshot",
+        "selection": {
+          "include": [
+            "inventory.csv",
+            "totals.csv",
+            "summary.md"
+          ],
+          "exclude": [
+            ".cache/"
+          ],
+          "complete_for_selection": true
+        },
+        "entries": [
+          {
+            "path": "inventory.csv",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "source-csv"
+          },
+          {
+            "path": "totals.csv",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "output-csv"
+          },
+          {
+            "path": "summary.md",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "report"
+          }
+        ],
+        "deletions": [],
+        "base_snapshot_id": null
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "agent-runtime",
+        "kind": "agent_runtime",
+        "identity": "example-agent-a",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [],
+        "resource_ids": [],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example-agent-a"
+        }
+      },
+      {
+        "id": "summary-tool",
+        "kind": "tool",
+        "identity": "example.inventory.summarize",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [],
+        "resource_ids": [],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example.inventory.summarize"
+        },
+        "tool_id": "summarize",
+        "behavior": {
+          "id": "example.inventory.summarize",
+          "revision": "1",
+          "effects": "local",
+          "replay": "never"
+        }
+      },
+      {
+        "id": "summary-skill",
+        "kind": "skill",
+        "identity": "example.inventory-summary",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [
+          "summary-tool"
+        ],
+        "resource_ids": [
+          "skill-template"
+        ],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example.inventory-summary"
+        }
+      }
+    ],
+    "configuration_bindings": [
+      {
+        "configuration_id": "effective",
+        "effective_order": [
+          "workspace-rule"
+        ],
+        "instruction_rules": [
+          {
+            "instruction_id": "workspace-rule",
+            "authority": "system",
+            "merge_behavior": "append",
+            "group_id": "workspace-rules",
+            "priority": 0,
+            "scope": {
+              "kind": "root",
+              "root_id": "project"
+            },
+            "activation": {
+              "kind": "always"
+            }
+          }
+        ],
+        "policy_ids": [
+          "workspace-only"
+        ]
+      }
+    ],
+    "service_bindings": [],
+    "operations": [],
+    "native_imports": [
+      {
+        "id": "native",
+        "adapter": {
+          "id": "example-adapter",
+          "version": "1"
+        },
+        "source_state_format": "example-native/1",
+        "accepted_target_agent_versions": [
+          "1"
+        ],
+        "resource_ids": [
+          "native-state"
+        ],
+        "mode": "continue",
+        "identity_policy": "preserve_if_safe",
+        "ordering_contract": "example.ordinal-order/1",
+        "index_contract": "example.native-index/1",
+        "conflict_policy": "reject"
+      }
+    ],
+    "plans": [
+      {
+        "id": "continue-main",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill"
+        ],
+        "service_binding_ids": [],
+        "operation_ids": [],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "await_user"
+        }
+      }
+    ]
+  },
+  "continuation:/$defs/agent": {
+    "id": "example-agent-b",
+    "version": "2",
+    "state_format": "example-b/2"
+  },
+  "continuation:/$defs/runtime": {
+    "agent": {
+      "id": "example-agent-b",
+      "version": "2",
+      "state_format": "example-b/2"
+    },
+    "adapter": {
+      "id": "example-a-to-b",
+      "version": "1"
+    },
+    "os": "linux",
+    "architecture": "x86_64"
+  },
+  "continuation:/$defs/runtime/properties/adapter": {
+    "id": "example-a-to-b",
+    "version": "1"
+  },
+  "continuation:/$defs/model": {
+    "provider": "example",
+    "id": "model-a",
+    "revision": "1"
+  },
+  "continuation:/$defs/entry": {
+    "path": "summary.md",
+    "kind": "file",
+    "mode": 420,
+    "resource_id": "report"
+  },
+  "continuation:/$defs/git": {
+    "object_format": "example",
+    "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "branch": "main",
+    "bundle_resource_ids": [],
+    "prerequisites": [],
+    "index_entries": [],
+    "submodules": [],
+    "lfs_dependency_ids": []
+  },
+  "continuation:/$defs/git/properties/prerequisites/items": {
+    "object_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "availability": "external"
+  },
+  "continuation:/$defs/git/properties/index_entries/items": {
+    "path": "notes.md",
+    "stage": 0,
+    "mode": "100644",
+    "resource_id": "notes",
+    "object_id": null
+  },
+  "continuation:/$defs/git/properties/submodules/items": {
+    "path": "vendor/library",
+    "object_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "dependency_id": "dependency-library"
+  },
+  "continuation:/$defs/workspace": {
+    "id": "workspace-head",
+    "environment_id": "project-env",
+    "root_id": "project",
+    "at_event_id": "e4",
+    "source_root": "/Users/example/project",
+    "mode": "snapshot",
+    "selection": {
+      "include": [
+        "inventory.csv",
+        "totals.csv",
+        "summary.md"
+      ],
+      "exclude": [
+        ".cache/"
+      ],
+      "complete_for_selection": true
+    },
+    "entries": [
+      {
+        "path": "inventory.csv",
+        "kind": "file",
+        "mode": 420,
+        "resource_id": "source-csv"
+      },
+      {
+        "path": "totals.csv",
+        "kind": "file",
+        "mode": 420,
+        "resource_id": "output-csv"
+      },
+      {
+        "path": "summary.md",
+        "kind": "file",
+        "mode": 420,
+        "resource_id": "report"
+      }
+    ],
+    "deletions": [],
+    "base_snapshot_id": null
+  },
+  "continuation:/$defs/workspace/properties/selection": {
+    "include": [
+      "inventory.csv",
+      "totals.csv",
+      "summary.md"
+    ],
+    "exclude": [
+      ".cache/"
+    ],
+    "complete_for_selection": true
+  },
+  "continuation:/$defs/behavior": {
+    "id": "example.inventory.summarize",
+    "revision": "1",
+    "effects": "local",
+    "replay": "never"
+  },
+  "continuation:/$defs/dependency": {
+    "id": "agent-runtime",
+    "kind": "agent_runtime",
+    "identity": "example-agent-a",
+    "accepted_versions": [
+      "1"
+    ],
+    "platform": {
+      "os": [
+        "macos",
+        "linux"
+      ],
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    "required_for": [
+      "continue"
+    ],
+    "depends_on": [],
+    "resource_ids": [],
+    "binding": {
+      "kind": "builtin",
+      "reference": "example-agent-a"
+    }
+  },
+  "continuation:/$defs/dependency/properties/platform": {
+    "os": [
+      "macos",
+      "linux"
+    ],
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ]
+  },
+  "continuation:/$defs/dependency/properties/binding": {
+    "kind": "builtin",
+    "reference": "example-agent-a"
+  },
+  "continuation:/$defs/scope": {
+    "kind": "root",
+    "root_id": "project"
+  },
+  "continuation:/$defs/activation": {
+    "kind": "always"
+  },
+  "continuation:/$defs/configuration_binding": {
+    "configuration_id": "effective",
+    "effective_order": [],
+    "instruction_rules": [],
+    "policy_ids": []
+  },
+  "continuation:/$defs/configuration_binding/properties/instruction_rules/items": {
+    "instruction_id": "workspace-rule",
+    "authority": "system",
+    "merge_behavior": "append",
+    "group_id": "workspace-rules",
+    "priority": 0,
+    "scope": {
+      "kind": "root",
+      "root_id": "project"
+    },
+    "activation": {
+      "kind": "always"
+    }
+  },
+  "continuation:/$defs/service": {
+    "id": "publisher-service",
+    "service": "example.publisher",
+    "endpoint": {
+      "kind": "https",
+      "locator": "https://publisher.example.invalid"
+    },
+    "account": {
+      "provider": "example",
+      "subject": "account-A"
+    },
+    "auth_method": "oauth",
+    "audience": "example.publisher",
+    "scopes": [
+      "reports:write"
+    ],
+    "secret_handles": [
+      "publisher-login"
+    ],
+    "dependency_ids": [
+      "publisher"
+    ]
+  },
+  "continuation:/$defs/service/properties/endpoint": {
+    "kind": "https",
+    "locator": "https://publisher.example.invalid"
+  },
+  "continuation:/$defs/service/properties/account": {
+    "provider": "example",
+    "subject": "account-A"
+  },
+  "continuation:/$defs/operation": {
+    "id": "publish-operation",
+    "call_id": "call-1",
+    "kind": "tool",
+    "external_identity": {
+      "namespace": "example.publisher/account-A",
+      "value": "operation-42"
+    },
+    "state": "outcome_unknown",
+    "effects": "remote",
+    "replay": "reconcile",
+    "evidence_resource_ids": [],
+    "recovery": {
+      "strategy": "reconcile",
+      "handler_dependency_id": "publisher",
+      "idempotency_ref": null,
+      "evidence_resource_ids": []
+    }
+  },
+  "continuation:/$defs/operation/properties/external_identity/anyOf/0": {
+    "namespace": "example.publisher/account-A",
+    "value": "operation-42"
+  },
+  "continuation:/$defs/operation/properties/recovery": {
+    "strategy": "reconcile",
+    "handler_dependency_id": "publisher",
+    "idempotency_ref": null,
+    "evidence_resource_ids": []
+  },
+  "continuation:/$defs/native": {
+    "id": "native",
+    "adapter": {
+      "id": "example-adapter",
+      "version": "1"
+    },
+    "source_state_format": "example-native/1",
+    "accepted_target_agent_versions": [
+      "2"
+    ],
+    "resource_ids": [
+      "native-state"
+    ],
+    "mode": "translate",
+    "identity_policy": "map",
+    "ordering_contract": "example.ordinal-order/1",
+    "index_contract": "example.native-index/1",
+    "conflict_policy": "reject"
+  },
+  "continuation:/$defs/native/properties/adapter": {
+    "id": "example-a-to-b",
+    "version": "1"
+  },
+  "continuation:/$defs/accounting": {
+    "event_id": "e1",
+    "disposition": "included",
+    "input_ids": [
+      "input-e1"
+    ],
+    "explanation": "Retained as a typed input in the reconstructed continuation context."
+  },
+  "continuation:/$defs/next_action": {
+    "kind": "await_user"
+  },
+  "continuation:/$defs/plan": {
+    "id": "continue-main",
+    "checkpoint_id": "head",
+    "context_id": "continue-context",
+    "configuration_id": "effective",
+    "workspace_ids": [],
+    "dependency_ids": [
+      "publisher"
+    ],
+    "service_binding_ids": [
+      "publisher-service"
+    ],
+    "operation_ids": [
+      "publish-operation"
+    ],
+    "native_import_id": null,
+    "boundary": {
+      "method": "quiesced",
+      "consistency": "consistent",
+      "evidence_resource_ids": [],
+      "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+    },
+    "context_accounting": [
+      {
+        "event_id": "e1",
+        "disposition": "included",
+        "input_ids": [
+          "input-e1"
+        ],
+        "explanation": "Retained as a typed input in the reconstructed continuation context."
+      },
+      {
+        "event_id": "e2",
+        "disposition": "included",
+        "input_ids": [
+          "input-e2"
+        ],
+        "explanation": "Retained as a typed input in the reconstructed continuation context."
+      }
+    ],
+    "cwd": null,
+    "path_references": [],
+    "model_requirements": {
+      "source_model": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "capabilities": [
+        "text",
+        "tool_calls"
+      ],
+      "media_types": [
+        "text/csv",
+        "text/markdown"
+      ],
+      "overflow_policy": "block"
+    },
+    "next_action": {
+      "kind": "reconcile_operation",
+      "operation_id": "publish-operation"
+    }
+  },
+  "continuation:/$defs/plan/properties/boundary": {
+    "method": "quiesced",
+    "consistency": "consistent",
+    "evidence_resource_ids": [],
+    "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+  },
+  "continuation:/$defs/plan/properties/cwd/anyOf/0": {
+    "root_id": "project",
+    "relative_path": ""
+  },
+  "continuation:/$defs/plan/properties/path_references/items": {
+    "entity_type": "environment",
+    "entity_id": "project-env",
+    "json_pointer": "/definition/value/cwd",
+    "root_id": "project",
+    "relative_path": ""
+  },
+  "continuation:/$defs/plan/properties/model_requirements": {
+    "source_model": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "capabilities": [
+      "text",
+      "tool_calls"
+    ],
+    "media_types": [
+      "text/csv",
+      "text/markdown"
+    ],
+    "overflow_policy": "block"
+  },
+  "continuation-report:": {
+    "report_version": "0.1",
+    "evaluation_mode": "synthetic",
+    "id": "assessment-pending-remote-operation",
+    "source": {
+      "session_id": "session-pending-remote-operation",
+      "capture_id": "capture-pending-remote-operation",
+      "plan_id": "continue-main",
+      "document_sha256": "966361de8e573d9c451c09f108e695de169d9a8736956b34ec9c93a0b3ed3837"
+    },
+    "destination": {
+      "id": "example-cloud-runtime",
+      "runtime": {
+        "agent": {
+          "id": "example-agent-a",
+          "version": "1",
+          "state_format": "example-native/1"
+        },
+        "adapter": {
+          "id": "example-adapter",
+          "version": "1"
+        },
+        "os": "linux",
+        "architecture": "x86_64"
+      },
+      "capabilities_sha256": "c65340514a2aa2fcddeb38c3fa589b94aa324245a18534cb92f5d9687bb55a54"
+    },
+    "assessed_at": "2026-09-26T12:00:00Z",
+    "expires_at": "2026-09-26T13:00:00Z",
+    "outcome": "blocked",
+    "assessments": [
+      {
+        "subject": {
+          "kind": "plan",
+          "id": "continue-main"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "context",
+          "id": "continue-context"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "model",
+          "id": "continue-main"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "configuration",
+          "id": "effective"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "feature",
+          "id": "asif.portable-continuation/0.1"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "dependency",
+          "id": "publisher"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ],
+        "resolved": {
+          "identity": "example.inventory.publish",
+          "version": "1"
+        }
+      },
+      {
+        "subject": {
+          "kind": "service",
+          "id": "publisher-service"
+        },
+        "status": "unresolved",
+        "required": true,
+        "detail": "Remote outcome or destination login must be verified before any continuation.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "operation",
+          "id": "publish-operation"
+        },
+        "status": "unresolved",
+        "required": true,
+        "detail": "Remote outcome or destination login must be verified before any continuation.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "resource",
+          "id": "source-csv"
+        },
+        "status": "supported",
+        "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      }
+    ],
+    "path_bindings": [],
+    "identity_mappings": [],
+    "transformations": [],
+    "model_assessment": {
+      "source": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "target": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "tokenizer": "example-tokenizer/1",
+      "input_tokens": 700,
+      "input_limit": 8000,
+      "output_reserve": 1000,
+      "fit": "fits"
+    },
+    "blocking_reasons": [
+      {
+        "subject": {
+          "kind": "service",
+          "id": "publisher-service"
+        },
+        "reason": "Remote outcome or destination login must be verified before any continuation."
+      },
+      {
+        "subject": {
+          "kind": "operation",
+          "id": "publish-operation"
+        },
+        "reason": "Remote outcome or destination login must be verified before any continuation."
+      }
+    ],
+    "evidence": [
+      {
+        "id": "scenario",
+        "producer": "asif-examples",
+        "time": "2026-09-26T12:00:00Z",
+        "kind": "synthetic",
+        "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+      }
+    ],
+    "import_result": {
+      "status": "not_attempted",
+      "evidence_ids": [],
+      "detail": "No import was executed."
+    },
+    "continuation_result": {
+      "status": "not_tested",
+      "evidence_ids": [],
+      "detail": "No agent was started."
+    }
+  },
+  "continuation-report:/properties/source": {
+    "session_id": "session-another-agent",
+    "capture_id": "capture-another-agent",
+    "plan_id": "continue-main",
+    "document_sha256": "0a0684e757513cd81b7bbf5f92901ba745a50c0e6442aca7cf9b9a7a9fbc9f91"
+  },
+  "continuation-report:/properties/destination": {
+    "id": "example-agent-b-runtime",
+    "runtime": {
+      "agent": {
+        "id": "example-agent-b",
+        "version": "2",
+        "state_format": "example-b/2"
+      },
+      "adapter": {
+        "id": "example-a-to-b",
+        "version": "1"
+      },
+      "os": "linux",
+      "architecture": "x86_64"
+    },
+    "capabilities_sha256": "53ed9bdbb19f79e9237aec78918633f31252cc2d1b339ac38dd29a451dfcf60c"
+  },
+  "continuation-report:/properties/path_bindings/items": {
+    "root_id": "project",
+    "destination_path": "/work/project",
+    "case_sensitive": true,
+    "unicode_normalization": "none"
+  },
+  "continuation-report:/properties/identity_mappings/items": {
+    "entity_type": "native_session",
+    "source_id": "source-native",
+    "target_id": "source-native",
+    "target_namespace": "example-cloud-runtime"
+  },
+  "continuation-report:/properties/model_assessment": {
+    "source": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "target": {
+      "provider": "example",
+      "id": "model-b",
+      "revision": "2"
+    },
+    "tokenizer": "example-tokenizer/1",
+    "input_tokens": 700,
+    "input_limit": 8000,
+    "output_reserve": 1000,
+    "fit": "fits"
+  },
+  "continuation-report:/properties/blocking_reasons/items": {
+    "subject": {
+      "kind": "service",
+      "id": "publisher-service"
+    },
+    "reason": "Remote outcome or destination login must be verified before any continuation."
+  },
+  "continuation-report:/properties/import_result": {
+    "status": "not_attempted",
+    "evidence_ids": [],
+    "detail": "No import was executed."
+  },
+  "continuation-report:/properties/continuation_result": {
+    "status": "not_tested",
+    "evidence_ids": [],
+    "detail": "No agent was started."
+  },
+  "continuation-report:/$defs/runtime": {
+    "agent": {
+      "id": "example-agent-b",
+      "version": "2",
+      "state_format": "example-b/2"
+    },
+    "adapter": {
+      "id": "example-a-to-b",
+      "version": "1"
+    },
+    "os": "linux",
+    "architecture": "x86_64"
+  },
+  "continuation-report:/$defs/runtime/properties/adapter": {
+    "id": "example-a-to-b",
+    "version": "1"
+  },
+  "continuation-report:/$defs/agent": {
+    "id": "example-agent-b",
+    "version": "2",
+    "state_format": "example-b/2"
+  },
+  "continuation-report:/$defs/model": {
+    "provider": "example",
+    "id": "model-a",
+    "revision": "1"
+  },
+  "continuation-report:/$defs/subject": {
+    "kind": "resource",
+    "id": "report"
+  },
+  "continuation-report:/$defs/assessment": {
+    "subject": {
+      "kind": "resource",
+      "id": "report"
+    },
+    "status": "supported",
+    "required": true,
+    "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+    "evidence_ids": [
+      "scenario"
+    ]
+  },
+  "continuation-report:/$defs/assessment/properties/resolved": {},
+  "continuation-report:/$defs/assessment/properties/resolved/properties/account": {
+    "provider": "example",
+    "subject": "account-A"
+  },
+  "continuation-report:/$defs/evidence": {
+    "id": "scenario",
+    "producer": "asif-examples",
+    "time": "2026-09-26T12:00:00Z",
+    "kind": "synthetic",
+    "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+  },
+  "continuation-report:/$defs/transformation": {
+    "id": "adapt-native_import-native",
+    "subject": {
+      "kind": "native_import",
+      "id": "native"
+    },
+    "target": "example-b/2",
+    "rule": "Create a target-native representation with mapped identities and target ordering/index rules.",
+    "losses": [
+      "Behavioral equivalence remains an explicit acceptance decision."
+    ],
+    "accepted": false,
+    "evidence_ids": [
+      "scenario"
+    ]
+  },
+  "continuation-report:/$defs/result": {
+    "status": "not_tested",
+    "evidence_ids": [],
+    "detail": "No agent was started."
+  }
+}

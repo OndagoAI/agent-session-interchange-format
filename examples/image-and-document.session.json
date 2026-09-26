@@ -1,0 +1,294 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-image-and-document",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e2; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-image-and-document",
+    "title": "Image and PDF attachments",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Review these two attachments."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "image",
+            "description": "Synthetic 16 × 16 color grid."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "document",
+            "description": "One-page invented meeting notes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "The notes schedule a draft review on Friday. The image is a color grid."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "image",
+            "description": "The same image, referenced again without another copy."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2"
+      ],
+      "head_event_id": "e2"
+    }
+  ],
+  "executions": [],
+  "contexts": [
+    {
+      "id": "request",
+      "branch_id": "main",
+      "at_event_id": "e1",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "i1",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Review these two attachments."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "image",
+              "description": "Original image."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "document-text",
+              "description": "Text extracted from the PDF."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            }
+          ],
+          "transformation": "Use the recorded extracted-text resource for the PDF; preserve the original PDF separately."
+        }
+      ],
+      "tool_ids": []
+    }
+  ],
+  "configurations": [],
+  "tools": [],
+  "resources": [
+    {
+      "id": "image",
+      "media_type": "image/png",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 90,
+      "sha256": "9f557d344ce3af594e132efb0015748c336fb2daf0df7bd364f868fe5362affe",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "path": "assets/color-grid.png",
+      "name": "color-grid.png"
+    },
+    {
+      "id": "document",
+      "media_type": "application/pdf",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 651,
+      "sha256": "f73e34811d4480589c693aaf98f630c5478f786992f9410eeac4cb1b8144ed22",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "path": "assets/meeting-notes.pdf",
+      "name": "meeting-notes.pdf"
+    },
+    {
+      "id": "document-text",
+      "media_type": "text/plain",
+      "availability": "embedded",
+      "purpose": "derived_input",
+      "bytes": 62,
+      "sha256": "ef56f7ec4525213f402bc7a235508dc59cc4c30b0bd173339e63594e193cdd3a",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": [],
+        "sources": [
+          {
+            "resource_id": "document"
+          }
+        ]
+      },
+      "text": "Synthetic meeting notes\nDecision: review the draft on Friday.\n"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e2",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": "request",
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "partial",
+      "detail": "Illustrative reconstructed inputs; effective runtime configuration is not captured."
+    },
+    {
+      "scope": "configuration",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

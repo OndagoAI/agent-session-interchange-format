@@ -1,0 +1,302 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-redacted-attachment",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e3; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-redacted-attachment",
+    "title": "Redacted original and separate sanitized replacement",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Review this request."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "original",
+            "description": "Original withheld document."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "note",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "category": "redaction",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "A sanitized replacement is supplied."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "sanitized",
+            "description": "Distinct replacement resource."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e3",
+      "sequence": 2,
+      "actor_id": "agent",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "e2"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "The supplied request asks for a draft review. Contact details are redacted."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "head_event_id": "e3"
+    }
+  ],
+  "executions": [],
+  "contexts": [
+    {
+      "id": "sanitized-context",
+      "branch_id": "main",
+      "at_event_id": "e2",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "i1",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Review this request."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "sanitized",
+              "description": "Sanitized content only."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            },
+            {
+              "event_id": "e2"
+            }
+          ],
+          "transformation": "Replace the unavailable original with the explicitly redacted derivative."
+        }
+      ],
+      "tool_ids": []
+    }
+  ],
+  "configurations": [],
+  "tools": [],
+  "resources": [
+    {
+      "id": "original",
+      "media_type": "text/plain",
+      "purpose": "input",
+      "availability": "redacted",
+      "explanation": "Original contact details intentionally not included in this fixture."
+    },
+    {
+      "id": "sanitized",
+      "media_type": "text/plain",
+      "availability": "embedded",
+      "purpose": "derived_input",
+      "bytes": 47,
+      "sha256": "0c2a88dd6726ac14832b2e1ac22456a92150482ec5a845809a86952991fcaa3d",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "text": "Contact: [REDACTED]\nRequest: review the draft.\n"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e3",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": "sanitized-context",
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "partial",
+      "detail": "Illustrative reconstructed inputs; effective runtime configuration is not captured."
+    },
+    {
+      "scope": "configuration",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "partial",
+      "detail": "References are represented; some original content is not embedded. See each resource and the losses."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [
+    {
+      "id": "redaction-1",
+      "stage": "redaction",
+      "kind": "redaction",
+      "scope": "resources",
+      "references": [
+        {
+          "type": "resource",
+          "id": "original"
+        },
+        {
+          "type": "resource",
+          "id": "sanitized"
+        }
+      ],
+      "explanation": "Contact details removed; original bytes cannot be recovered from this example. The replacement hash covers only sanitized bytes."
+    }
+  ],
+  "required_features": []
+}

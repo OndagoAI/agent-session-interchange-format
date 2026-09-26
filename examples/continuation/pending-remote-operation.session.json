@@ -1,0 +1,467 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-pending-remote-operation",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented capture through e2, with no result for the remote publication."
+  },
+  "session": {
+    "id": "session-pending-remote-operation",
+    "title": "pending remote operation",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    },
+    {
+      "id": "tool-runner",
+      "kind": "tool"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Publish this inventory report once."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "source-csv",
+            "description": "Input inventory."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "tool_call",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "tool_id": "summarize",
+        "arguments": {
+          "resource_id": "source-csv"
+        },
+        "arguments_status": "complete"
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2"
+      ],
+      "head_event_id": "e2"
+    }
+  ],
+  "executions": [],
+  "contexts": [
+    {
+      "id": "continue-context",
+      "branch_id": "main",
+      "at_event_id": "e2",
+      "purpose": "continuation",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "input-e1",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Publish this inventory report once."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "source-csv",
+              "description": "Input inventory."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            }
+          ]
+        },
+        {
+          "id": "input-e2",
+          "kind": "tool_call",
+          "role": "assistant",
+          "parts": [],
+          "source_events": [
+            {
+              "event_id": "e2"
+            }
+          ],
+          "call_id": "call-1",
+          "tool_id": "summarize",
+          "arguments": {
+            "resource_id": "source-csv"
+          },
+          "arguments_status": "complete"
+        }
+      ],
+      "tool_ids": [
+        "summarize"
+      ],
+      "configuration_id": "effective",
+      "request_parameters": {}
+    }
+  ],
+  "configurations": [
+    {
+      "id": "effective",
+      "knowledge": "effective",
+      "instructions": [],
+      "capabilities": [],
+      "policies": [],
+      "secret_requirements": [
+        {
+          "handle": "publisher-login",
+          "purpose": "Authenticate to the target publishing account."
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "summarize",
+      "name": "example.inventory.publish",
+      "description": "Publish an inventory report to a service.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "resource_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resource_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "resources": [
+    {
+      "id": "source-csv",
+      "media_type": "text/csv",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 28,
+      "sha256": "c5b9431890ee61d14141333bc013ff331f2b3ac3297fab9f0969945ff53b6fa9",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "text": "item,count\napples,2\npears,3\n"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e2",
+      "knowledge": "observed",
+      "status": "waiting",
+      "context_id": "continue-context",
+      "configuration_id": "effective",
+      "open_calls": [
+        {
+          "call_id": "call-1",
+          "state": "outcome_unknown"
+        }
+      ],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": []
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "configuration",
+      "status": "complete",
+      "detail": "All modeled data is included in this authored synthetic scenario."
+    },
+    {
+      "scope": "tools",
+      "status": "complete",
+      "detail": "The defined tool, call and terminal result are included."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All modeled input resources included."
+    },
+    {
+      "scope": "environment",
+      "status": "known_empty",
+      "detail": "No native artifact or workspace supplied by this invented non-coding scenario."
+    },
+    {
+      "scope": "native",
+      "status": "known_empty",
+      "detail": "No native artifact or workspace supplied by this invented non-coding scenario."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [],
+  "required_features": [
+    "asif.portable-continuation/0.1"
+  ],
+  "continuation": {
+    "profile_version": "0.1",
+    "source_runtime": {
+      "agent": {
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
+      },
+      "adapter": {
+        "id": "example-adapter",
+        "version": "1"
+      },
+      "os": "macos",
+      "architecture": "arm64"
+    },
+    "workspaces": [],
+    "dependencies": [
+      {
+        "id": "publisher",
+        "kind": "tool",
+        "identity": "example.inventory.publish",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [],
+        "resource_ids": [],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example.inventory.publish"
+        },
+        "tool_id": "summarize",
+        "behavior": {
+          "id": "example.inventory.publish",
+          "revision": "1",
+          "effects": "remote",
+          "replay": "reconcile"
+        }
+      }
+    ],
+    "configuration_bindings": [
+      {
+        "configuration_id": "effective",
+        "effective_order": [],
+        "instruction_rules": [],
+        "policy_ids": []
+      }
+    ],
+    "service_bindings": [
+      {
+        "id": "publisher-service",
+        "service": "example.publisher",
+        "endpoint": {
+          "kind": "https",
+          "locator": "https://publisher.example.invalid"
+        },
+        "account": {
+          "provider": "example",
+          "subject": "account-A"
+        },
+        "auth_method": "oauth",
+        "audience": "example.publisher",
+        "scopes": [
+          "reports:write"
+        ],
+        "secret_handles": [
+          "publisher-login"
+        ],
+        "dependency_ids": [
+          "publisher"
+        ]
+      }
+    ],
+    "operations": [
+      {
+        "id": "publish-operation",
+        "call_id": "call-1",
+        "kind": "tool",
+        "external_identity": {
+          "namespace": "example.publisher/account-A",
+          "value": "operation-42"
+        },
+        "state": "outcome_unknown",
+        "effects": "remote",
+        "replay": "reconcile",
+        "evidence_resource_ids": [],
+        "recovery": {
+          "strategy": "reconcile",
+          "handler_dependency_id": "publisher",
+          "idempotency_ref": null,
+          "evidence_resource_ids": []
+        }
+      }
+    ],
+    "native_imports": [],
+    "plans": [
+      {
+        "id": "continue-main",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [],
+        "dependency_ids": [
+          "publisher"
+        ],
+        "service_binding_ids": [
+          "publisher-service"
+        ],
+        "operation_ids": [
+          "publish-operation"
+        ],
+        "native_import_id": null,
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          }
+        ],
+        "cwd": null,
+        "path_references": [],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "reconcile_operation",
+          "operation_id": "publish-operation"
+        }
+      }
+    ]
+  }
+}

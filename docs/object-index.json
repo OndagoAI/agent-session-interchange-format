@@ -1,0 +1,870 @@
+[
+  {
+    "schema": "session.schema.json",
+    "pointer": "",
+    "example_key": "session:",
+    "page": "objects.md",
+    "anchor": "asif-document-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/properties/capture",
+    "example_key": "session:/properties/capture",
+    "page": "objects.md",
+    "anchor": "capture-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/properties/capture/properties/producer",
+    "example_key": "session:/properties/capture/properties/producer",
+    "page": "objects.md",
+    "anchor": "producer-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/properties/session",
+    "example_key": "session:/properties/session",
+    "page": "objects.md",
+    "anchor": "session-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/properties/session/properties/native_ids/items",
+    "example_key": "session:/properties/session/properties/native_ids/items",
+    "page": "objects.md",
+    "anchor": "native-identifier-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/properties/session/properties/lineage/items",
+    "example_key": "session:/properties/session/properties/lineage/items",
+    "page": "objects.md",
+    "anchor": "lineage-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event_ref",
+    "example_key": "session:/$defs/event_ref",
+    "page": "objects.md",
+    "anchor": "event-reference-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/part/oneOf/0",
+    "example_key": "session:/$defs/part/oneOf/0",
+    "page": "objects.md",
+    "anchor": "text-part-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/part/oneOf/1",
+    "example_key": "session:/$defs/part/oneOf/1",
+    "page": "objects.md",
+    "anchor": "resource-part-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/part/oneOf/2",
+    "example_key": "session:/$defs/part/oneOf/2",
+    "page": "objects.md",
+    "anchor": "structured-part-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/part/oneOf/3",
+    "example_key": "session:/$defs/part/oneOf/3",
+    "page": "objects.md",
+    "anchor": "opaque-part-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/provenance",
+    "example_key": "session:/$defs/provenance",
+    "page": "objects.md",
+    "anchor": "provenance-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/provenance/properties/sources/items",
+    "example_key": "session:/$defs/provenance/properties/sources/items",
+    "page": "objects.md",
+    "anchor": "provenance-source-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/provenance/properties/sources/items/properties/locator",
+    "example_key": "session:/$defs/provenance/properties/sources/items/properties/locator",
+    "page": "objects.md",
+    "anchor": "source-locator-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/participant",
+    "example_key": "session:/$defs/participant",
+    "page": "objects.md",
+    "anchor": "participant-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/participant/properties/child_session",
+    "example_key": "session:/$defs/participant/properties/child_session",
+    "page": "objects.md",
+    "anchor": "participant-child-session-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/execution",
+    "example_key": "session:/$defs/execution",
+    "page": "objects.md",
+    "anchor": "execution-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/execution/properties/model",
+    "example_key": "session:/$defs/execution/properties/model",
+    "page": "objects.md",
+    "anchor": "execution-model-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/tool",
+    "example_key": "session:/$defs/tool",
+    "page": "objects.md",
+    "anchor": "tool-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/instruction",
+    "example_key": "session:/$defs/instruction",
+    "page": "objects.md",
+    "anchor": "instruction-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/instruction/properties/scope",
+    "example_key": "session:/$defs/instruction/properties/scope",
+    "page": "objects.md",
+    "anchor": "instruction-scope-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/instruction/properties/activation",
+    "example_key": "session:/$defs/instruction/properties/activation",
+    "page": "objects.md",
+    "anchor": "instruction-activation-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/capability",
+    "example_key": "session:/$defs/capability",
+    "page": "objects.md",
+    "anchor": "capability-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/policy",
+    "example_key": "session:/$defs/policy",
+    "page": "objects.md",
+    "anchor": "policy-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/configuration",
+    "example_key": "session:/$defs/configuration",
+    "page": "objects.md",
+    "anchor": "configuration-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/configuration/properties/secret_requirements/items",
+    "example_key": "session:/$defs/configuration/properties/secret_requirements/items",
+    "page": "objects.md",
+    "anchor": "configuration-secret-requirements-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/configuration/properties/model",
+    "example_key": "session:/$defs/configuration/properties/model",
+    "page": "objects.md",
+    "anchor": "configuration-model-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/requirement",
+    "example_key": "session:/$defs/requirement",
+    "page": "objects.md",
+    "anchor": "requirement-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/environment",
+    "example_key": "session:/$defs/environment",
+    "page": "objects.md",
+    "anchor": "environment-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/environment/properties/definition",
+    "example_key": "session:/$defs/environment/properties/definition",
+    "page": "objects.md",
+    "anchor": "environment-definition-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/resource",
+    "example_key": "session:/$defs/resource",
+    "page": "objects.md",
+    "anchor": "resource-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/context_input",
+    "example_key": "session:/$defs/context_input",
+    "page": "objects.md",
+    "anchor": "context-input-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/context",
+    "example_key": "session:/$defs/context",
+    "page": "objects.md",
+    "anchor": "context-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/context/properties/model",
+    "example_key": "session:/$defs/context/properties/model",
+    "page": "objects.md",
+    "anchor": "context-model-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/context/properties/request_parameters",
+    "example_key": "session:/$defs/context/properties/request_parameters",
+    "page": "objects.md",
+    "anchor": "context-request-parameters-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/branch",
+    "example_key": "session:/$defs/branch",
+    "page": "objects.md",
+    "anchor": "branch-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/branch/properties/fork",
+    "example_key": "session:/$defs/branch/properties/fork",
+    "page": "objects.md",
+    "anchor": "branch-fork-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/checkpoint",
+    "example_key": "session:/$defs/checkpoint",
+    "page": "objects.md",
+    "anchor": "checkpoint-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/checkpoint/properties/open_calls/items",
+    "example_key": "session:/$defs/checkpoint/properties/open_calls/items",
+    "page": "objects.md",
+    "anchor": "open-call-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/checkpoint/properties/open_decisions/items",
+    "example_key": "session:/$defs/checkpoint/properties/open_decisions/items",
+    "page": "objects.md",
+    "anchor": "open-decision-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/checkpoint/properties/tasks/items",
+    "example_key": "session:/$defs/checkpoint/properties/tasks/items",
+    "page": "objects.md",
+    "anchor": "task-state-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/usage",
+    "example_key": "session:/$defs/usage",
+    "page": "objects.md",
+    "anchor": "usage-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event",
+    "example_key": "session:/$defs/event",
+    "page": "objects.md",
+    "anchor": "event-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/properties/data",
+    "example_key": "session:/$defs/event/properties/data",
+    "page": "objects.md",
+    "anchor": "event-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/properties/extensions",
+    "example_key": "session:/$defs/event/properties/extensions",
+    "page": "objects.md",
+    "anchor": "extension-map-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/0/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/0/then/properties/data",
+    "page": "objects.md",
+    "anchor": "message-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/1/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/1/then/properties/data",
+    "page": "objects.md",
+    "anchor": "tool-call-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/2/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/2/then/properties/data",
+    "page": "objects.md",
+    "anchor": "tool-result-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/3/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/3/then/properties/data",
+    "page": "objects.md",
+    "anchor": "decision-request-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/3/then/properties/data/properties/options/items",
+    "example_key": "session:/$defs/event/allOf/3/then/properties/data/properties/options/items",
+    "page": "objects.md",
+    "anchor": "decision-request-option-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/4/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/4/then/properties/data",
+    "page": "objects.md",
+    "anchor": "decision-resolution-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/5/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/5/then/properties/data",
+    "page": "objects.md",
+    "anchor": "task-update-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/6/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/6/then/properties/data",
+    "page": "objects.md",
+    "anchor": "context-checkpoint-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/7/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/7/then/properties/data",
+    "page": "objects.md",
+    "anchor": "configuration-change-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/8/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/8/then/properties/data",
+    "page": "objects.md",
+    "anchor": "execution-transition-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/9/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/9/then/properties/data",
+    "page": "objects.md",
+    "anchor": "resource-change-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/10/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/10/then/properties/data",
+    "page": "objects.md",
+    "anchor": "note-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/event/allOf/11/then/properties/data",
+    "example_key": "session:/$defs/event/allOf/11/then/properties/data",
+    "page": "objects.md",
+    "anchor": "extension-data-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/coverage",
+    "example_key": "session:/$defs/coverage",
+    "page": "objects.md",
+    "anchor": "coverage-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/loss",
+    "example_key": "session:/$defs/loss",
+    "page": "objects.md",
+    "anchor": "loss-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/loss/properties/references/items",
+    "example_key": "session:/$defs/loss/properties/references/items",
+    "page": "objects.md",
+    "anchor": "loss-references-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/stream_segment",
+    "example_key": "session:/$defs/stream_segment",
+    "page": "objects.md",
+    "anchor": "stream-segment-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/stream",
+    "example_key": "session:/$defs/stream",
+    "page": "objects.md",
+    "anchor": "stream-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding",
+    "example_key": "session:/$defs/external_binding",
+    "page": "objects.md",
+    "anchor": "external-binding-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding/properties/source",
+    "example_key": "session:/$defs/external_binding/properties/source",
+    "page": "objects.md",
+    "anchor": "external-binding-source-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding/properties/descriptor",
+    "example_key": "session:/$defs/external_binding/properties/descriptor",
+    "page": "objects.md",
+    "anchor": "external-binding-descriptor-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding/allOf/0/then/properties/descriptor",
+    "example_key": "session:/$defs/external_binding/allOf/0/then/properties/descriptor",
+    "page": "objects.md",
+    "anchor": "external-call-descriptor-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding/allOf/1/then/properties/descriptor",
+    "example_key": "session:/$defs/external_binding/allOf/1/then/properties/descriptor",
+    "page": "objects.md",
+    "anchor": "external-request-descriptor-object"
+  },
+  {
+    "schema": "session.schema.json",
+    "pointer": "/$defs/external_binding/allOf/1/then/properties/descriptor/properties/options/items",
+    "example_key": "session:/$defs/external_binding/allOf/1/then/properties/descriptor/properties/options/items",
+    "page": "objects.md",
+    "anchor": "external-request-option-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "",
+    "example_key": "continuation:",
+    "page": "continuation-objects.md",
+    "anchor": "continuation-profile-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/agent",
+    "example_key": "continuation:/$defs/agent",
+    "page": "continuation-objects.md",
+    "anchor": "agent-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/runtime",
+    "example_key": "continuation:/$defs/runtime",
+    "page": "continuation-objects.md",
+    "anchor": "runtime-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/runtime/properties/adapter",
+    "example_key": "continuation:/$defs/runtime/properties/adapter",
+    "page": "continuation-objects.md",
+    "anchor": "runtime-adapter-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/model",
+    "example_key": "continuation:/$defs/model",
+    "page": "continuation-objects.md",
+    "anchor": "model-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/entry",
+    "example_key": "continuation:/$defs/entry",
+    "page": "continuation-objects.md",
+    "anchor": "workspace-entry-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/git",
+    "example_key": "continuation:/$defs/git",
+    "page": "continuation-objects.md",
+    "anchor": "git-state-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/git/properties/prerequisites/items",
+    "example_key": "continuation:/$defs/git/properties/prerequisites/items",
+    "page": "continuation-objects.md",
+    "anchor": "git-prerequisites-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/git/properties/index_entries/items",
+    "example_key": "continuation:/$defs/git/properties/index_entries/items",
+    "page": "continuation-objects.md",
+    "anchor": "git-index-entries-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/git/properties/submodules/items",
+    "example_key": "continuation:/$defs/git/properties/submodules/items",
+    "page": "continuation-objects.md",
+    "anchor": "git-submodules-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/workspace",
+    "example_key": "continuation:/$defs/workspace",
+    "page": "continuation-objects.md",
+    "anchor": "workspace-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/workspace/properties/selection",
+    "example_key": "continuation:/$defs/workspace/properties/selection",
+    "page": "continuation-objects.md",
+    "anchor": "workspace-selection-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/behavior",
+    "example_key": "continuation:/$defs/behavior",
+    "page": "continuation-objects.md",
+    "anchor": "tool-behavior-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/dependency",
+    "example_key": "continuation:/$defs/dependency",
+    "page": "continuation-objects.md",
+    "anchor": "dependency-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/dependency/properties/platform",
+    "example_key": "continuation:/$defs/dependency/properties/platform",
+    "page": "continuation-objects.md",
+    "anchor": "dependency-platform-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/dependency/properties/binding",
+    "example_key": "continuation:/$defs/dependency/properties/binding",
+    "page": "continuation-objects.md",
+    "anchor": "dependency-binding-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/scope",
+    "example_key": "continuation:/$defs/scope",
+    "page": "continuation-objects.md",
+    "anchor": "scope-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/activation",
+    "example_key": "continuation:/$defs/activation",
+    "page": "continuation-objects.md",
+    "anchor": "activation-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/configuration_binding",
+    "example_key": "continuation:/$defs/configuration_binding",
+    "page": "continuation-objects.md",
+    "anchor": "configuration-binding-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/configuration_binding/properties/instruction_rules/items",
+    "example_key": "continuation:/$defs/configuration_binding/properties/instruction_rules/items",
+    "page": "continuation-objects.md",
+    "anchor": "configuration-binding-instruction-rules-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/service",
+    "example_key": "continuation:/$defs/service",
+    "page": "continuation-objects.md",
+    "anchor": "service-binding-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/service/properties/endpoint",
+    "example_key": "continuation:/$defs/service/properties/endpoint",
+    "page": "continuation-objects.md",
+    "anchor": "service-endpoint-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/service/properties/account",
+    "example_key": "continuation:/$defs/service/properties/account",
+    "page": "continuation-objects.md",
+    "anchor": "service-account-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/operation",
+    "example_key": "continuation:/$defs/operation",
+    "page": "continuation-objects.md",
+    "anchor": "operation-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/operation/properties/external_identity/anyOf/0",
+    "example_key": "continuation:/$defs/operation/properties/external_identity/anyOf/0",
+    "page": "continuation-objects.md",
+    "anchor": "operation-external-identity-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/operation/properties/recovery",
+    "example_key": "continuation:/$defs/operation/properties/recovery",
+    "page": "continuation-objects.md",
+    "anchor": "operation-recovery-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/native",
+    "example_key": "continuation:/$defs/native",
+    "page": "continuation-objects.md",
+    "anchor": "native-import-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/native/properties/adapter",
+    "example_key": "continuation:/$defs/native/properties/adapter",
+    "page": "continuation-objects.md",
+    "anchor": "native-adapter-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/accounting",
+    "example_key": "continuation:/$defs/accounting",
+    "page": "continuation-objects.md",
+    "anchor": "context-accounting-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/next_action",
+    "example_key": "continuation:/$defs/next_action",
+    "page": "continuation-objects.md",
+    "anchor": "next-action-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/plan",
+    "example_key": "continuation:/$defs/plan",
+    "page": "continuation-objects.md",
+    "anchor": "continuation-plan-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/plan/properties/boundary",
+    "example_key": "continuation:/$defs/plan/properties/boundary",
+    "page": "continuation-objects.md",
+    "anchor": "plan-boundary-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/plan/properties/cwd/anyOf/0",
+    "example_key": "continuation:/$defs/plan/properties/cwd/anyOf/0",
+    "page": "continuation-objects.md",
+    "anchor": "plan-cwd-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/plan/properties/path_references/items",
+    "example_key": "continuation:/$defs/plan/properties/path_references/items",
+    "page": "continuation-objects.md",
+    "anchor": "plan-path-references-object"
+  },
+  {
+    "schema": "continuation.schema.json",
+    "pointer": "/$defs/plan/properties/model_requirements",
+    "example_key": "continuation:/$defs/plan/properties/model_requirements",
+    "page": "continuation-objects.md",
+    "anchor": "plan-model-requirements-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "",
+    "example_key": "continuation-report:",
+    "page": "report-objects.md",
+    "anchor": "destination-report-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/source",
+    "example_key": "continuation-report:/properties/source",
+    "page": "report-objects.md",
+    "anchor": "source-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/destination",
+    "example_key": "continuation-report:/properties/destination",
+    "page": "report-objects.md",
+    "anchor": "destination-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/path_bindings/items",
+    "example_key": "continuation-report:/properties/path_bindings/items",
+    "page": "report-objects.md",
+    "anchor": "path-bindings-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/identity_mappings/items",
+    "example_key": "continuation-report:/properties/identity_mappings/items",
+    "page": "report-objects.md",
+    "anchor": "identity-mappings-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/model_assessment",
+    "example_key": "continuation-report:/properties/model_assessment",
+    "page": "report-objects.md",
+    "anchor": "model-assessment-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/blocking_reasons/items",
+    "example_key": "continuation-report:/properties/blocking_reasons/items",
+    "page": "report-objects.md",
+    "anchor": "blocking-reasons-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/import_result",
+    "example_key": "continuation-report:/properties/import_result",
+    "page": "report-objects.md",
+    "anchor": "import-result-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/properties/continuation_result",
+    "example_key": "continuation-report:/properties/continuation_result",
+    "page": "report-objects.md",
+    "anchor": "continuation-result-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/runtime",
+    "example_key": "continuation-report:/$defs/runtime",
+    "page": "report-objects.md",
+    "anchor": "runtime-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/runtime/properties/adapter",
+    "example_key": "continuation-report:/$defs/runtime/properties/adapter",
+    "page": "report-objects.md",
+    "anchor": "runtime-adapter-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/agent",
+    "example_key": "continuation-report:/$defs/agent",
+    "page": "report-objects.md",
+    "anchor": "agent-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/model",
+    "example_key": "continuation-report:/$defs/model",
+    "page": "report-objects.md",
+    "anchor": "model-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/subject",
+    "example_key": "continuation-report:/$defs/subject",
+    "page": "report-objects.md",
+    "anchor": "subject-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/assessment",
+    "example_key": "continuation-report:/$defs/assessment",
+    "page": "report-objects.md",
+    "anchor": "assessment-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/assessment/properties/resolved",
+    "example_key": "continuation-report:/$defs/assessment/properties/resolved",
+    "page": "report-objects.md",
+    "anchor": "assessment-resolved-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/assessment/properties/resolved/properties/account",
+    "example_key": "continuation-report:/$defs/assessment/properties/resolved/properties/account",
+    "page": "report-objects.md",
+    "anchor": "assessment-resolved-account-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/evidence",
+    "example_key": "continuation-report:/$defs/evidence",
+    "page": "report-objects.md",
+    "anchor": "evidence-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/transformation",
+    "example_key": "continuation-report:/$defs/transformation",
+    "page": "report-objects.md",
+    "anchor": "transformation-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/result",
+    "example_key": "continuation-report:/$defs/result",
+    "page": "report-objects.md",
+    "anchor": "result-object"
+  }
+]

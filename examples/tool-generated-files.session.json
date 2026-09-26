@@ -1,0 +1,335 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-tool-generated-files",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e4; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-tool-generated-files",
+    "title": "Tool-generated CSV and report",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    },
+    {
+      "id": "tool-runner",
+      "kind": "tool"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Total this inventory and return the files."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "source-csv",
+            "description": "Inline input CSV."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "tool_call",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "tool_id": "summarize",
+        "arguments": {
+          "resource_id": "source-csv"
+        },
+        "arguments_status": "complete"
+      }
+    },
+    {
+      "id": "e3",
+      "sequence": 2,
+      "actor_id": "tool-runner",
+      "kind": "tool_result",
+      "causes": [
+        {
+          "event_id": "e2"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "result_index": 0,
+        "terminal": true,
+        "outcome": "success",
+        "parts": [
+          {
+            "kind": "resource",
+            "resource_id": "output-csv",
+            "description": "CSV with total row."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "report",
+            "description": "Markdown report."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4",
+      "sequence": 3,
+      "actor_id": "agent",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "e3"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "The total is 5."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "output-csv",
+            "description": "Download the output CSV."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "report",
+            "description": "Read the summary."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "head_event_id": "e4"
+    }
+  ],
+  "executions": [],
+  "contexts": [],
+  "configurations": [],
+  "tools": [
+    {
+      "id": "summarize",
+      "name": "example.inventory.summarize",
+      "description": "Create a total and report from a CSV resource.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "resource_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resource_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "resources": [
+    {
+      "id": "source-csv",
+      "media_type": "text/csv",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 28,
+      "sha256": "c5b9431890ee61d14141333bc013ff331f2b3ac3297fab9f0969945ff53b6fa9",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "text": "item,count\napples,2\npears,3\n"
+    },
+    {
+      "id": "output-csv",
+      "media_type": "text/csv",
+      "availability": "embedded",
+      "purpose": "output",
+      "bytes": 36,
+      "sha256": "7f66072a16b21cbb54be4425ade0f2619f5856bb595003821f63ca4a198b40a8",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "path": "assets/totals.csv",
+      "name": "totals.csv"
+    },
+    {
+      "id": "report",
+      "media_type": "text/markdown",
+      "availability": "embedded",
+      "purpose": "output",
+      "bytes": 41,
+      "sha256": "ceee478a26f68fb2c2635eff949f0fb34b72f4ca9077f9b7c63d241e47fd4124",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "path": "assets/summary.md",
+      "name": "summary.md"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e4",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "configuration",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "tools",
+      "status": "complete",
+      "detail": "The defined tool, call and terminal result are included."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

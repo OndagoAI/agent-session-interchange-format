@@ -1,0 +1,603 @@
+{
+  "purposes": {
+    "ASIF Document": "Root of an immutable session capture. Collections describe identity, history, effective context, resources and known state; coverage explains their limits.",
+    "Capture": "Identifies this immutable observation of a logical session and explains its capture boundary.",
+    "Producer": "Identifies the software that created the capture, including its version.",
+    "Session": "Identifies the logical interaction across captures, with its objective and lineage.",
+    "Native Identifier": "Preserves an opaque identifier in a provider's namespace without making it an ASIF identity.",
+    "Lineage": "Relates this session to the source of a continuation, fork, translation or copy.",
+    "Event Reference": "Names a local event or explicitly names an event in another session capture. It never causes an automatic fetch.",
+    "Text Part": "Carries exact Unicode text at one position in ordered content.",
+    "Resource Part": "Places an attachment or other resource at one position in ordered content; availability belongs to the Resource Object.",
+    "Structured Part": "Carries JSON whose interpretation is defined by a named schema. Unknown schemas remain opaque.",
+    "Opaque Part": "Preserves a resource whose semantic interpretation is unavailable to this reader.",
+    "Provenance": "Distinguishes observed, reported, derived and synthetic evidence and identifies its sources.",
+    "Provenance Source": "Identifies a source resource and, optionally, a specific span or structured location within it.",
+    "Source Locator": "Selects bytes or a structured location within a provenance source; unknown syntaxes remain uninterpreted.",
+    "Participant": "Identifies a person, agent, tool or service independently of the role used in a particular message.",
+    "Participant Child Session": "Names a delegated participant's separate session capture; its history is not implicitly included.",
+    "Execution": "Records an agent activity interval and its observed state, model contexts and optional usage.",
+    "Execution Model": "Retains the model settings recorded for an execution. Provider-specific values require a declared interpretation before reuse.",
+    "Tool": "Defines a callable interface, including its JSON Schema input contract. A definition does not implement the tool.",
+    "Instruction": "Records instruction content, source, scope and activation without inventing unknown precedence.",
+    "Instruction Scope": "Preserves a source dialect's scope declaration. Portable scope bindings are defined by the continuation profile.",
+    "Instruction Activation": "Preserves a source dialect's activation declaration. Portable activation bindings are defined by the continuation profile.",
+    "Capability": "Describes a skill, plugin, hook, connection or other runtime facility and its supporting resources.",
+    "Policy": "Records a named policy dialect and whether its restrictions were enforced.",
+    "Configuration": "An immutable snapshot of instructions, capabilities, policies and credential prerequisites.",
+    "Configuration Secret Requirements": "Names a credential prerequisite using a logical handle and purpose. Credential values do not belong here.",
+    "Configuration Model": "Retains configuration-level model settings; a context can identify the settings used for a particular request.",
+    "Requirement": "States a prerequisite and the capabilities for which it matters, including whether its resolution is known.",
+    "Environment": "Describes a workspace, service or runtime environment and its dependencies without granting access to it.",
+    "Environment Definition": "Preserves environment-specific data under an explicit dialect identifier.",
+    "Resource": "Describes attachment or dependency identity, availability and integrity. Embedded text, base64 and file-backed resources share the same decoded-byte semantics.",
+    "Context Input": "One resolved, ordered input to a model: a message, tool call or tool result, with source attribution.",
+    "Context": "Records or proposes the actual ordered model input independently of conversation and branch order.",
+    "Context Model": "Retains the model identity and settings associated with this context.",
+    "Context Request Parameters": "Retains request settings associated with this exact context; unknown provider parameters are not silently translated.",
+    "Branch": "Selects an ordered conversation history and its head within this capture.",
+    "Branch Fork": "Records the source branch boundary at which histories diverged. It does not imply a filesystem rewind.",
+    "Checkpoint": "Records known state at a selected branch boundary, including unresolved calls, decisions and task revisions.",
+    "Open Call": "Records a call whose outcome remains unresolved at the checkpoint; it does not authorize replay.",
+    "Open Decision": "Records an unresolved decision at the checkpoint; absence of a resolution is not consent.",
+    "Task State": "Selects the current revision of a recorded task at a checkpoint.",
+    "Usage": "Attributes a measured or reported counter to an explicit scope, unit and provenance.",
+    "Event": "Immutable envelope for a recorded occurrence, including identity, attribution, causality and kind-specific data.",
+    "Event Data": "Discriminated payload selected by the enclosing Event Object's `kind`. Use the corresponding event data object below.",
+    "Extension Map": "Carries namespaced extension values without changing the meaning of core fields.",
+    "Message Data": "A conversation message whose role is separate from the event actor's identity.",
+    "Tool Call Data": "One logical invocation and its known arguments. Partial arguments cannot be executed as a completed call.",
+    "Tool Result Data": "One indexed result for a correlated call, including its terminal marker and outcome.",
+    "Decision Request Data": "A question, approval or review request, optionally bound to a call or an exact task revision.",
+    "Decision Request Option": "A selectable answer with a stable ID within its decision request.",
+    "Decision Resolution Data": "Records the outcome of the exact referenced request. Historical approval does not authorize a receiving runtime.",
+    "Task Update Data": "A versioned task state, with optional predecessor and dependency declarations.",
+    "Context Checkpoint Data": "Records the selection or replacement of a context, including a compaction boundary.",
+    "Configuration Change Data": "Records a new configuration snapshot; effective use is determined by referencing contexts and executions.",
+    "Execution Transition Data": "Records an observed execution lifecycle transition without claiming a process is still alive.",
+    "Resource Change Data": "Records creation, modification, deletion or observation of a resource identity.",
+    "Note Data": "Explanatory content with no implicit execution or authorization meaning.",
+    "Extension Data": "An event with namespaced semantics; required interpretation is also advertised in `required_features`.",
+    "Coverage": "Declares the completeness or known absence of one session domain. An empty collection alone makes no completeness claim.",
+    "Loss": "Discloses information omitted or changed during capture, normalization, redaction or translation.",
+    "Loss References": "Identifies an entity affected by a loss using its entity type and ID.",
+    "Stream Segment": "Selects an exact byte slice of a captured resource and its position in a logical stream.",
+    "Stream": "Binds incremental argument or text-result bytes to a core event. A complete stream must agree with that event's assembled value.",
+    "External Binding": "Binds an invocation or decision request from an earlier capture to its immutable source boundary and descriptor.",
+    "External Binding Source": "Names the exact source event of an external call or request; no external data is fetched implicitly.",
+    "External Binding Descriptor": "Discriminated descriptor selected by the enclosing external binding's `kind`.",
+    "External Call Descriptor": "Preserves the tool and argument contract of an invocation outside the included event history.",
+    "External Request Descriptor": "Preserves the kind, prompt and options of a decision request outside the included event history.",
+    "Continuation Profile": "Optional declarations needed to assess continuation from a session checkpoint. It contains no runtime authorization.",
+    "Agent": "Names an agent implementation, version and native state format.",
+    "Runtime": "Identifies the agent, adapter and operating platform involved in a continuation assessment.",
+    "Runtime Adapter": "Names the adapter implementation and version used to interpret native state.",
+    "Model": "Identifies a model provider, model ID and optional known revision without assuming equivalence to another model.",
+    "Workspace Entry": "One selected filesystem entry. File bytes are resources; link targets are declarations requiring a destination link policy.",
+    "Git State": "Describes Git identity, index stages, object prerequisites, submodules and LFS dependencies separately from working-tree bytes.",
+    "Git Prerequisites": "Declares a Git object required to interpret or restore the captured state.",
+    "Git Index Entries": "Records one index path and stage, preserving conflicts rather than collapsing them into working-tree content.",
+    "Git Submodules": "Pins a submodule path and commit and names the dependency needed to resolve it.",
+    "Workspace": "A selected filesystem snapshot, delta or reference declaration bound to a session boundary and logical root.",
+    "Workspace Selection": "Defines the selected portion of a workspace and whether it is complete within that selection.",
+    "Tool Behavior": "Describes a versioned tool behavior contract, including effects and replay semantics.",
+    "Dependency": "A runtime, tool, capability or other dependency with explicit version, platform and transitive requirements.",
+    "Dependency Platform": "Declares the operating systems and architectures on which the dependency is accepted.",
+    "Dependency Binding": "Describes how a dependency is expected to be resolved without installing or fetching it automatically.",
+    "Scope": "A portable instruction scope: global, a logical root or a path prefix within that root.",
+    "Activation": "An unconditional activation or a predicate in an explicitly named dialect.",
+    "Configuration Binding": "Connects a configuration to explicit instruction order, interpretation rules and policy identities.",
+    "Configuration Binding Instruction Rules": "Declares one instruction's authority, merge behavior, priority, scope and activation.",
+    "Service Binding": "Describes the service identity and access prerequisites that a destination must resolve separately.",
+    "Service Endpoint": "A recorded service locator or destination-resolved endpoint declaration.",
+    "Service Account": "Identifies the expected account without including credentials.",
+    "Operation": "Records an external or local operation whose outcome or recovery affects continuation.",
+    "Operation External Identity": "Names an operation in an external system without treating its identifier as proof of status.",
+    "Operation Recovery": "Declares a recovery strategy and its required handler, idempotency binding and evidence.",
+    "Native Import": "Describes a native-state import contract, including ordering, indexes, identity and conflicts.",
+    "Native Adapter": "Names the adapter responsible for interpreting this native import contract.",
+    "Context Accounting": "Explains how one branch event is represented, summarized, excluded or unavailable in the selected context.",
+    "Next Action": "Declares the intended next interaction after prerequisites and destination authorization are resolved.",
+    "Continuation Plan": "Selects one checkpoint, context, configuration and dependency closure for a particular continuation attempt.",
+    "Plan Boundary": "Describes how the source boundary was captured consistently and identifies supporting evidence.",
+    "Plan Cwd": "Names the working directory relative to a selected logical workspace root.",
+    "Plan Path References": "Maps one explicitly selected string field to a logical root and relative path; it never triggers global string replacement.",
+    "Plan Model Requirements": "Declares the source model, required capabilities and media types, and overflow handling.",
+    "Destination Report": "An expiring assessment bound to exact source bytes and a particular destination. Synthetic reports cannot claim execution.",
+    "Source": "Binds this report to a source session, capture, continuation plan and exact document digest.",
+    "Destination": "Identifies the assessed destination runtime and the digest of its capability snapshot.",
+    "Path Bindings": "Maps one logical root to a destination path and declares the destination's path comparison rules.",
+    "Identity Mappings": "Records an explicit mapping of a source entity identity into the destination namespace.",
+    "Model Assessment": "Reports the target model and measured or unknown context fit, including reserved output capacity.",
+    "Blocking Reasons": "Explains a subject-specific condition preventing the selected continuation plan from being ready.",
+    "Import Result": "Records whether native import was attempted and the evidence for its outcome.",
+    "Continuation Result": "Records whether continuation was tested and the evidence for its outcome.",
+    "Subject": "Identifies the exact entity or capability being assessed, including its owner where IDs are scoped.",
+    "Assessment": "Records support, adaptation or a blocker for one subject, with evidence and any resolved binding.",
+    "Assessment Resolved": "Carries the destination's resolved dependency or service binding for comparison with source requirements.",
+    "Assessment Resolved Account": "Identifies the resolved destination account for comparison with the expected service account.",
+    "Evidence": "Identifies the producer, time and kind of evidence supporting an assessment or execution result.",
+    "Transformation": "Declares a proposed or accepted adaptation, its target, rule, losses and acceptance evidence.",
+    "Result": "Common result shape for an attempted import or continuation operation, including explanatory evidence.",
+    "External Request Option": "One selectable option of an externally bound decision request."
+  },
+  "fields": {
+    "id": "Opaque, case-sensitive identity within the object's declared scope.",
+    "kind": "Discriminator selecting this object's interpretation.",
+    "type": "Namespaced semantic type or entity type, as defined by the enclosing object.",
+    "version": "Implementation or format version.",
+    "name": "Recorded name; identity is carried separately by the ID.",
+    "value": "Value interpreted according to the enclosing schema, dialect or counter.",
+    "description": "Human-readable description of this declaration.",
+    "detail": "Explanation of the stated status or evidence.",
+    "explanation": "Reason for the declaration or limitation.",
+    "reason": "Reason for the recorded operation or unavailable interpretation.",
+    "status": "Recorded state at the relevant boundary; see the allowed values.",
+    "state": "Recorded pending or observed state; it is not a live process assertion.",
+    "mode": "Representation or interpretation mode selected by the enclosing object.",
+    "purpose": "Intended use of the record or resource.",
+    "required": "Whether this subject is required for the selected capability.",
+    "required_for": "Capabilities that depend on this prerequisite.",
+    "required_features": "Feature identifiers whose semantics a consumer must understand for its capability claim.",
+    "asif_version": "Exact ASIF draft version used by this document.",
+    "profile_version": "Version of the portable-continuation profile.",
+    "report_version": "Version of the destination-report format.",
+    "capture": "Immutable capture identity and observation boundary.",
+    "session": "Logical session identity, objective and lineage.",
+    "participants": "Declared actors referenced by the captured interaction.",
+    "events": "Immutable captured occurrences in serialization order.",
+    "branches": "Explicit selections of conversation history.",
+    "executions": "Observed agent activity intervals.",
+    "contexts": "Resolved or proposed model inputs.",
+    "configurations": "Immutable configuration snapshots.",
+    "tools": "Callable tool definitions referenced by activity or context.",
+    "resources": "Attachments, artifacts, memory and supporting resources.",
+    "environments": "Workspace, service or runtime descriptions.",
+    "checkpoints": "State observations at branch boundaries, including each captured head.",
+    "coverage": "One completeness declaration for every required session domain.",
+    "losses": "Explicit information changes or omissions; empty means none declared.",
+    "usage": "Recorded counters with scope, units and provenance.",
+    "continuation": "Optional portable-continuation profile, gated by its required feature identifier.",
+    "streams": "Optional byte-fragment assemblies, gated by `asif.streams/0.1`.",
+    "external_bindings": "Optional prior-capture call/request descriptors, gated by `asif.external-bindings/0.1`.",
+    "producer": "Software or instrumentation responsible for the capture or evidence.",
+    "consistency": "Whether the captured boundary is known to be consistent.",
+    "boundary": "Explanation or structured declaration of the observation boundary.",
+    "started_at": "Recorded start time; omitted when unknown.",
+    "ended_at": "Recorded end time; omitted when unknown.",
+    "time": "Recorded observation time; it does not define causality.",
+    "title": "Human-readable session title.",
+    "objective": "Recorded session objective as ordered content parts.",
+    "native_ids": "Original IDs, each qualified by provider and namespace.",
+    "lineage": "Explicit relationships to source sessions and captures.",
+    "provider": "Provider identity for the named object or account.",
+    "namespace": "Namespace in which the opaque value is meaningful.",
+    "relation": "Relationship to the referenced source session.",
+    "session_id": "Logical session ID of the referenced boundary.",
+    "capture_id": "Immutable capture ID of the referenced boundary.",
+    "event_id": "Event identity, resolved locally unless an external capture is explicit.",
+    "inclusive": "Whether the referenced boundary event is included.",
+    "text": "Exact Unicode text; embedded-resource bytes use UTF-8.",
+    "media_type": "Declared media type of the content or resource.",
+    "resource_id": "ID of the referenced Resource Object.",
+    "schema": "Identifier of the schema that gives the structured value meaning.",
+    "semantic_type": "Namespaced meaning of content whose interpretation is unavailable.",
+    "sources": "Original resource locations supporting this provenance.",
+    "locator": "Location interpreted according to its declared syntax or availability.",
+    "syntax": "Locator syntax, such as `bytes` or `json_pointer`.",
+    "offset": "Zero-based byte offset into the referenced resource.",
+    "length": "Number of bytes in the selected span.",
+    "method": "Method used to derive, synthesize or capture this record.",
+    "inputs": "Ordered inputs; provenance inputs identify supporting events.",
+    "parent_participant_id": "ID of the parent or delegating participant.",
+    "native_id": "Opaque participant identity in its source system.",
+    "child_session": "Explicit reference to a delegated session capture.",
+    "participant_id": "ID of the participant responsible for the execution.",
+    "context_ids": "IDs of contexts associated with this execution.",
+    "model": "Recorded model identity or settings for this scope.",
+    "error": "Captured error evidence; its contents do not establish a recovery action.",
+    "input_schema": "JSON Schema 2020-12 contract for tool arguments; `true` declares no known restriction.",
+    "output_schema": "Optional JSON Schema contract for tool output.",
+    "server_identity": "Recorded identity of the tool server.",
+    "revision": "Versioned definition or task revision within its identity.",
+    "resource_ids": "IDs of supporting resources; their availability is declared separately.",
+    "parts": "Ordered content parts. Order is semantically significant.",
+    "scope": "Domain or activation scope to which this declaration applies.",
+    "activation": "Conditions under which an instruction or rule applies.",
+    "provenance": "Evidence classification and source attribution.",
+    "dialect": "Identifier of the language used to interpret the associated value.",
+    "definition": "Dialect-specific definition retained without guessing unknown semantics.",
+    "enforcing": "Whether this policy enforces restrictions rather than providing advice.",
+    "instructions": "Recorded instruction sequence; effective order must be known before equivalent continuation.",
+    "capabilities": "Required or declared abilities for this configuration or model.",
+    "policies": "Recorded policy declarations.",
+    "secret_requirements": "Logical credential handles and purposes; no credential values.",
+    "knowledge": "How much of the effective state or configuration is known.",
+    "environment_ids": "IDs of environments required by this configuration.",
+    "handle": "Logical credential name to resolve at the destination.",
+    "capability_id": "Referenced capability identity within the applicable configuration.",
+    "environment_id": "Referenced Environment Object ID.",
+    "secret_handle": "Logical credential handle referenced by this requirement.",
+    "requirements": "Prerequisites for the stated capability.",
+    "availability": "Whether and how the referenced content is available.",
+    "original_location": "Source location retained as metadata; not permission to access it.",
+    "bytes": "Exact decoded byte count.",
+    "sha256": "Lowercase SHA-256 digest of exact decoded resource bytes.",
+    "data": "Kind-specific payload; for an embedded resource this is base64-encoded bytes.",
+    "path": "Portable relative path within the declared resource or workspace root.",
+    "role": "Message role used for this input, independently of participant identity.",
+    "source_events": "Events from which this resolved input was obtained.",
+    "transformation": "Explanation of a known change from source content.",
+    "call_id": "Session-scoped identity of one logical invocation.",
+    "tool_id": "ID of the referenced tool definition.",
+    "arguments": "Exact known JSON argument value; completeness is declared separately.",
+    "arguments_status": "Whether the known arguments are complete, partial or unknown.",
+    "result_index": "Monotonically increasing result position within the call's selected history.",
+    "terminal": "Whether this is the final result or fragment in its declared scope.",
+    "outcome": "Recorded result or assessment outcome; unknown remains explicit.",
+    "branch_id": "ID of the selected branch.",
+    "at_event_id": "Event at the recorded boundary, or null for an empty boundary.",
+    "fidelity": "How closely this context represents the known model input.",
+    "tool_ids": "IDs of tools made available to this context.",
+    "configuration_id": "ID of the configuration snapshot used at this boundary.",
+    "request_parameters": "Recorded request settings; unknown provider-specific semantics are not inferred.",
+    "event_ids": "Ordered, duplicate-free selection of included event IDs.",
+    "head_event_id": "Final selected event ID, or null for an empty branch.",
+    "fork": "Explicit source boundary for a branch fork.",
+    "context_id": "ID of the selected Context Object.",
+    "open_calls": "Unresolved invocation identities at this checkpoint.",
+    "open_decisions": "Unresolved decision-request identities at this checkpoint.",
+    "tasks": "Task revision selections at this checkpoint.",
+    "request_id": "Session-scoped identity of the exact decision request.",
+    "task_id": "Identity of the versioned task.",
+    "scope_id": "Identity of the entity to which the counter applies.",
+    "unit": "Unit of the reported counter; counters with different units cannot be summed directly.",
+    "counter": "Whether this value is a delta or a cumulative counter; cumulative observations MUST NOT be added as independent deltas.",
+    "sequence": "Unique nonnegative serialization position in this capture; not a causal or wall-clock timestamp.",
+    "actor_id": "ID of the participant responsible for the event.",
+    "causes": "Explicit causal predecessor event references.",
+    "execution_id": "ID of the associated execution.",
+    "supersedes": "Reference to an earlier record corrected by this event; evidence remains preserved.",
+    "extensions": "Namespaced extension values.",
+    "retry_of": "ID of an earlier invocation being retried; the retry has a new call ID.",
+    "decision_kind": "Whether this request is an approval, question or plan review.",
+    "prompt": "Ordered content presented for the decision.",
+    "options": "Selectable options, with stable IDs within this request.",
+    "task_revision": "Exact task revision to which the request applies.",
+    "label": "Human-readable option label.",
+    "answer": "Recorded answer content, which may be empty for non-text outcomes.",
+    "selected_option_id": "ID of the exact selected option in the referenced request.",
+    "previous_revision": "Earlier selected revision of this task.",
+    "dependencies": "Declared dependencies; interpretation is determined by the enclosing object.",
+    "replaced_context_id": "ID of the context replaced by this checkpoint or compaction.",
+    "operation": "Kind of resource change recorded by the event.",
+    "previous_resource_id": "ID of the prior immutable resource version.",
+    "category": "Names the explanatory note category.",
+    "interpretation_required": "Whether understanding this event is required; its feature must also be declared.",
+    "stage": "Transformation stage; in a Git index entry, the conflict stage number.",
+    "references": "Typed identities affected by this loss.",
+    "index": "Zero-based fragment position within its stream.",
+    "segments": "Ordered byte-fragment declarations; gaps preserve partial status.",
+    "source": "Source identity and boundary or report binding.",
+    "descriptor": "Call or request declaration selected by the binding kind.",
+    "source_runtime": "Agent, adapter and platform recorded at the source.",
+    "workspaces": "Workspace state declarations, including referenced delta bases.",
+    "configuration_bindings": "Portable interpretation bindings for configuration snapshots.",
+    "service_bindings": "Service identity and access requirements.",
+    "operations": "Operations whose state or recovery matters to continuation.",
+    "native_imports": "Native-state import contracts, when required.",
+    "plans": "Selections of a checkpoint and its continuation prerequisites.",
+    "agent": "Agent implementation, version and state format.",
+    "adapter": "Adapter implementation and version interpreting the source or destination.",
+    "os": "Operating-system identifier or accepted identifiers.",
+    "architecture": "Runtime CPU architecture identifier.",
+    "architectures": "Accepted CPU architecture identifiers.",
+    "state_format": "Native state-format identifier.",
+    "target": "Declared target value, model or symbolic-link target according to context.",
+    "object_format": "Git object hash algorithm.",
+    "head": "Captured Git HEAD object ID, or null if unavailable or unborn.",
+    "branch": "Captured Git branch name, or null for no named branch.",
+    "bundle_resource_ids": "Resources carrying Git bundles required by the declaration.",
+    "prerequisites": "Git objects that must be resolved before restoration.",
+    "index_entries": "Per-path Git index stages, separate from the working tree.",
+    "submodules": "Submodule paths, pinned objects and dependency bindings.",
+    "lfs_dependency_ids": "Dependencies needed to resolve Git LFS content.",
+    "object_id": "Git object ID in the declared object format, when known.",
+    "dependency_id": "ID of the referenced dependency declaration.",
+    "root_id": "Logical workspace root identity, independent of source and destination absolute paths.",
+    "source_root": "Recorded source path, retained as metadata.",
+    "selection": "Included and excluded workspace paths and completeness within that selection.",
+    "entries": "Explicit filesystem entries captured by this workspace declaration.",
+    "deletions": "Paths explicitly removed by a delta; absence alone is not deletion.",
+    "base_snapshot_id": "ID of the included base state, or null when no base is required.",
+    "git": "Optional Git administrative and object prerequisites, separate from selected files.",
+    "include": "Declared include patterns for the selected workspace tree.",
+    "exclude": "Declared excluded paths or patterns, protected from implicit deletion.",
+    "complete_for_selection": "Whether every entry within the declared selection is accounted for.",
+    "effects": "Known side-effect classes of the tool or operation.",
+    "replay": "Declared replay characteristics; unknown never implies safe repetition.",
+    "identity": "Namespaced dependency identity to resolve.",
+    "accepted_versions": "Explicit accepted dependency versions; not a guessed compatibility range.",
+    "platform": "Operating-system and architecture constraints.",
+    "depends_on": "Dependency IDs required transitively by this declaration.",
+    "binding": "Resolution mechanism and reference for the dependency.",
+    "behavior": "Versioned behavior and side-effect contract for a tool.",
+    "reference": "Opaque evidence or resolution locator; no implicit fetch is permitted.",
+    "relative_path": "Portable path relative to the named logical root.",
+    "expression": "Predicate value interpreted only by the explicitly named activation dialect.",
+    "effective_order": "Exact order of instruction IDs after precedence resolution.",
+    "instruction_rules": "One interpretation rule for each instruction in the bound configuration.",
+    "policy_ids": "Policy IDs scoped to the bound configuration.",
+    "instruction_id": "Instruction ID within the bound configuration.",
+    "authority": "Declared authority of the instruction; an unknown value blocks equivalence claims.",
+    "merge_behavior": "How this instruction combines with others in the same declared scope and group.",
+    "group_id": "Identity of the instruction merge group.",
+    "priority": "Precedence value; effective order must agree with ascending priority.",
+    "service": "Namespaced service identity.",
+    "endpoint": "Recorded or resolved endpoint declaration.",
+    "account": "Expected or resolved service-account identity.",
+    "auth_method": "Required authentication mechanism, without credentials.",
+    "audience": "Intended service audience for access credentials.",
+    "scopes": "Required or resolved service access scopes.",
+    "secret_handles": "Logical credential handles to resolve separately at the destination.",
+    "dependency_ids": "IDs of selected dependencies; selected closure must be complete.",
+    "subject": "Account identity or assessed subject, as defined by the containing object.",
+    "external_identity": "Identifier used to reconcile this operation in its external system.",
+    "evidence_resource_ids": "Resources supporting the claim or recovery declaration.",
+    "recovery": "Declared strategy for resolving or recovering the operation.",
+    "strategy": "Recovery action supported by the declared evidence and handler.",
+    "handler_dependency_id": "Dependency implementing recovery, or null when no handler is selected.",
+    "idempotency_ref": "Recorded idempotency binding, when available; not an authorization to replay.",
+    "source_state_format": "Native source format expected by the import adapter.",
+    "accepted_target_agent_versions": "Explicit target versions supported by this import contract.",
+    "identity_policy": "How native identities are preserved or mapped during import.",
+    "ordering_contract": "Contract for preserving native history ordering.",
+    "index_contract": "Contract for rebuilding or maintaining native indexes.",
+    "conflict_policy": "Declared behavior if destination state already exists.",
+    "baseline_sha256": "Digest of the destination baseline required for conditional replacement.",
+    "disposition": "How the source event is accounted for in the selected context.",
+    "input_ids": "Context input IDs representing or summarizing this event.",
+    "native_import_id": "ID of the selected native import contract, or null where allowed.",
+    "operation_id": "ID of the operation selected for reconciliation.",
+    "checkpoint_id": "ID of the continuation boundary checkpoint.",
+    "workspace_ids": "Selected workspace states, at most one state per root.",
+    "service_binding_ids": "Service bindings selected for this continuation plan.",
+    "operation_ids": "Operations selected for this continuation plan.",
+    "context_accounting": "One disposition for each selected branch event.",
+    "cwd": "Selected logical working directory, or null if none is required.",
+    "path_references": "Explicit fields requiring path rebinding; arbitrary strings are not rewritten.",
+    "model_requirements": "Source-model identity and capability, media and overflow requirements.",
+    "next_action": "Proposed next interaction after prerequisite checks.",
+    "entity_type": "Type of the entity containing or identified by this reference.",
+    "entity_id": "ID of that entity within its collection.",
+    "json_pointer": "RFC 6901 pointer to the exact string field being mapped.",
+    "source_model": "Source model identity used for adaptation comparison.",
+    "media_types": "Media types the target must accept or explicitly adapt.",
+    "overflow_policy": "Permitted handling when the context exceeds destination capacity.",
+    "evaluation_mode": "Whether evidence is observed or synthetic; synthetic results cannot claim execution.",
+    "destination": "Identity and capability snapshot of the assessed destination.",
+    "assessed_at": "Time at which the assessment was made, including timezone.",
+    "expires_at": "Exclusive expiry time after which the assessment must be refreshed.",
+    "assessments": "Subject-specific support, adaptation and blocker declarations.",
+    "path_bindings": "Destination paths and comparison rules for selected logical roots.",
+    "identity_mappings": "Explicit mappings of source IDs into destination namespaces.",
+    "transformations": "Declared adaptations and their acceptance state.",
+    "model_assessment": "Target-model selection and context-fit measurement.",
+    "blocking_reasons": "Reasons tied to subjects that prevent readiness.",
+    "evidence": "Recorded evidence referenced by assessments, transformations and results.",
+    "import_result": "Observed or explicitly unattempted native import outcome.",
+    "continuation_result": "Observed or explicitly untested continuation outcome.",
+    "plan_id": "ID of the exact continuation plan being assessed.",
+    "document_sha256": "SHA-256 of the exact source session JSON bytes, not a reserialized equivalent.",
+    "capabilities_sha256": "Digest of the destination capability snapshot used for this assessment.",
+    "destination_path": "Absolute path selected by the destination for the logical root.",
+    "case_sensitive": "Whether the destination distinguishes path spelling by case.",
+    "unicode_normalization": "Normalization applied when checking destination path collisions.",
+    "source_id": "Original entity identity.",
+    "target_id": "Mapped destination identity.",
+    "target_namespace": "Namespace containing the mapped destination identity.",
+    "tokenizer": "Tokenizer identity used for input measurement, or null when unmeasured.",
+    "input_tokens": "Measured input token count, or null when unknown.",
+    "input_limit": "Destination input capacity, or null when unknown.",
+    "output_reserve": "Capacity reserved for the next output.",
+    "fit": "Whether the measured context fits the destination budget.",
+    "owner_id": "Owner identity for a subject whose ID is scoped, such as an instruction.",
+    "evidence_ids": "IDs of evidence records supporting this declaration.",
+    "resolved": "Destination-resolved dependency or service values.",
+    "rule": "Explicit transformation rule rather than an implicit substitution.",
+    "accepted": "Whether the declared transformation has been accepted with the required evidence.",
+    "runtime": "Agent, adapter and platform of the assessed runtime.",
+    "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress."
+  },
+  "session:/properties/capture": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/properties/capture/properties/producer": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/properties/session": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/properties/session/properties/native_ids/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/properties/session/properties/lineage/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/$defs/event_ref": {
+    "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
+  },
+  "session:/$defs/part/oneOf/0": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/part/oneOf/1": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/part/oneOf/2": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/part/oneOf/3": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/provenance": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/provenance/properties/sources/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/provenance/properties/sources/items/properties/locator": {
+    "rules": "See [normative session rules](../SEMANTICS.md#5-event-envelope-ordering-and-content)."
+  },
+  "session:/$defs/participant": {
+    "rules": "See [normative session rules](../SEMANTICS.md#4-participants-and-executions)."
+  },
+  "session:/$defs/participant/properties/child_session": {
+    "rules": "See [normative session rules](../SEMANTICS.md#4-participants-and-executions)."
+  },
+  "session:/$defs/execution": {
+    "rules": "See [normative session rules](../SEMANTICS.md#4-participants-and-executions)."
+  },
+  "session:/$defs/execution/properties/model": {
+    "rules": "This is an open map. Preserve unknown values. Reuse requires support for their declared semantics; an empty map does not prove that the source had no hidden settings."
+  },
+  "session:/$defs/tool": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/instruction": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/instruction/properties/scope": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/instruction/properties/activation": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/capability": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/policy": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/configuration": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/configuration/properties/secret_requirements/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/configuration/properties/model": {
+    "rules": "This is an open map. Preserve unknown values. Reuse requires support for their declared semantics; an empty map does not prove that the source had no hidden settings."
+  },
+  "session:/$defs/environment": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/environment/properties/definition": {
+    "rules": "See [normative session rules](../SEMANTICS.md#9-configuration-and-environment)."
+  },
+  "session:/$defs/resource": {
+    "fields": {
+      "data": "Base64 encoding of the embedded resource bytes.",
+      "path": "Portable relative path resolved against the session document or package root.",
+      "locator": "External resource locator. Reading the document MUST NOT fetch it automatically."
+    },
+    "rules": "See [resource rules](../SEMANTICS.md#10-resources-and-availability). Embedded resources MUST select exactly one of `text`, `data` and `path`, with verified decoded `bytes` and `sha256`. Other availability states MUST explain the limitation; external resources also require a locator."
+  },
+  "session:/$defs/context_input": {
+    "rules": "See [normative session rules](../SEMANTICS.md#8-context-and-compaction)."
+  },
+  "session:/$defs/context": {
+    "rules": "See [normative session rules](../SEMANTICS.md#8-context-and-compaction)."
+  },
+  "session:/$defs/context/properties/model": {
+    "rules": "This is an open map. Preserve unknown values. Reuse requires support for their declared semantics; an empty map does not prove that the source had no hidden settings."
+  },
+  "session:/$defs/context/properties/request_parameters": {
+    "rules": "This is an open map. Preserve unknown values. Reuse requires support for their declared semantics; an empty map does not prove that the source had no hidden settings."
+  },
+  "session:/$defs/branch": {
+    "rules": "See [normative session rules](../SEMANTICS.md#7-branches-and-selected-history)."
+  },
+  "session:/$defs/branch/properties/fork": {
+    "rules": "See [normative session rules](../SEMANTICS.md#7-branches-and-selected-history)."
+  },
+  "session:/$defs/checkpoint": {
+    "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
+  },
+  "session:/$defs/checkpoint/properties/open_calls/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
+  },
+  "session:/$defs/checkpoint/properties/open_decisions/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
+  },
+  "session:/$defs/checkpoint/properties/tasks/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
+  },
+  "session:/$defs/event": {
+    "rules": "See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events."
+  },
+  "session:/$defs/event/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/properties/extensions": {
+    "rules": "This is an open map. Preserve unknown values. Reuse requires support for their declared semantics; an empty map does not prove that the source had no hidden settings."
+  },
+  "session:/$defs/event/allOf/0/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/1/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/2/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/3/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/3/then/properties/data/properties/options/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/4/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/5/then/properties/data": {
+    "rules": "See [selected-history state transitions](../SEMANTICS.md#15-selected-history-state-transitions). Revisions increase and name their selected predecessor. Reopening a terminal task as pending or in progress requires `reopen_reason`."
+  },
+  "session:/$defs/event/allOf/6/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/7/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/8/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/9/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/10/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/event/allOf/11/then/properties/data": {
+    "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
+  },
+  "session:/$defs/coverage": {
+    "rules": "See [normative session rules](../SEMANTICS.md#12-coverage-losses-and-unknown-extensions)."
+  },
+  "session:/$defs/loss": {
+    "rules": "See [normative session rules](../SEMANTICS.md#12-coverage-losses-and-unknown-extensions)."
+  },
+  "session:/$defs/loss/properties/references/items": {
+    "rules": "See [normative session rules](../SEMANTICS.md#12-coverage-losses-and-unknown-extensions)."
+  },
+  "session:/$defs/stream": {
+    "rules": "See [stream assembly rules](../STREAMING.md). `tool_result_text` requires `result_index`. Complete argument streams MUST decode as JSON equal to the bound call arguments; complete result streams MUST equal the bound text result."
+  },
+  "session:/$defs/external_binding": {
+    "rules": "See [external binding rules](../STREAMING.md#external-bindings). `call` selects the External Call Descriptor; `request` selects the External Request Descriptor. Bindings do not synthesize events or authorize replay."
+  },
+  "continuation:/$defs/entry": {
+    "fields": {
+      "mode": "POSIX permission bits expressed as a decimal integer, from 0 through 511 (octal 0777)."
+    },
+    "rules": "See [workspace rules](../CONTINUATION.md#5-workspace-snapshots-roots-and-paths). A file requires mode and resource_id; a directory requires mode; a symlink requires target. The local reference restorer explicitly refuses symlinks."
+  }
+}

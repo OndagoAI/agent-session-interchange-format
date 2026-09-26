@@ -1,0 +1,232 @@
+{
+  "asif_version": "0.3",
+  "profile": "asif.portable-continuation/0.1",
+  "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
+  "checks": 44,
+  "passed": 44,
+  "real_runtime_tests": 0,
+  "independent_implementations": 0,
+  "operational_authorization": false,
+  "results": [
+    {
+      "case": "another-agent",
+      "passed": true,
+      "outcome": "adaptation_required"
+    },
+    {
+      "case": "another-computer",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "pending-remote-operation",
+      "passed": true,
+      "outcome": "blocked"
+    },
+    {
+      "case": "profile-not-gated",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "profile-declaration-without-data",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "untyped-context",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "orphan-tool-result",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-tool-result",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "stale-context",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "wrong-checkpoint-config",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "mixed-workspace-boundary",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "workspace-traversal",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-path-selector",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "dependency-cycle",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "incomplete-dependency-closure",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-skill-resource",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-instruction-rule",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-policy-binding",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "incomplete-context-accounting",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "corrupt-resource",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "replacement-without-baseline",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unsafe-operation-restart",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unbound-open-call",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "undeclared-secret",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-source-digest",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "expired-assessment",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-assessment",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "optional-downgrade",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "context-overflow",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unknown-tokenizer",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "silent-model-substitution",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unverified-dependency-version",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unsupported-platform",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-root-binding",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "partial-capture-marked-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "partial-configuration-marked-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unknown-authority-marked-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unavailable-resource-marked-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "adaptation-without-mapping",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "pending-operation-marked-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "synthetic-import-claim",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "wrong-service-account",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-case-collision",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "accepted-adaptations-simulated",
+      "passed": true,
+      "outcome": "ready"
+    }
+  ]
+}

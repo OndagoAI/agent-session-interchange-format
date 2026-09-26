@@ -1,0 +1,234 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-audio-and-transcript",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e2; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-audio-and-transcript",
+    "title": "Inline audio and text annotation",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Does this sample contain speech?"
+          },
+          {
+            "kind": "resource",
+            "resource_id": "audio",
+            "description": "Synthetic silent WAV fixture."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "This fixture contains silence."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "transcript",
+            "description": "Explicit annotation; not a transcript of invented speech."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2"
+      ],
+      "head_event_id": "e2"
+    }
+  ],
+  "executions": [],
+  "contexts": [],
+  "configurations": [],
+  "tools": [],
+  "resources": [
+    {
+      "id": "audio",
+      "media_type": "audio/wav",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 1644,
+      "sha256": "c726d333dd159a31423f3480dbb1c5c4a9dfcd30efe1f7e12ade390dc92e8908",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": "UklGRmQGAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YUAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    {
+      "id": "transcript",
+      "media_type": "text/plain",
+      "availability": "embedded",
+      "purpose": "derived_input",
+      "bytes": 56,
+      "sha256": "d82ec1e00a4c60e87760348e99e45768edf67b78af953796d849567dec811a55",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": [],
+        "sources": [
+          {
+            "resource_id": "audio"
+          }
+        ]
+      },
+      "text": "[Synthetic fixture: 0.1 seconds of silence; no speech.]\n"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e2",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "configuration",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

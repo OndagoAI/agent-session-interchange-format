@@ -1,0 +1,50 @@
+{
+  "asif_version": "0.3",
+  "scope": "Python/TypeScript CLI and package exchange, shared authorship",
+  "checks": 10,
+  "passed": 10,
+  "independent_implementations": 0,
+  "real_runtime_tests": 0,
+  "results": [
+    {
+      "case": "validate",
+      "passed": true
+    },
+    {
+      "case": "request",
+      "passed": true
+    },
+    {
+      "case": "report",
+      "passed": true
+    },
+    {
+      "case": "python-to-typescript-package-and-signature",
+      "passed": true
+    },
+    {
+      "case": "typescript-to-python-package-and-signature",
+      "passed": true
+    },
+    {
+      "case": "identical-package-and-signature-bytes",
+      "passed": true
+    },
+    {
+      "case": "restored-file-bytes",
+      "passed": true
+    },
+    {
+      "case": "redaction-result",
+      "passed": true
+    },
+    {
+      "case": "invalid-json-exit-2",
+      "passed": true
+    },
+    {
+      "case": "unsupported-feature-exit-3",
+      "passed": true
+    }
+  ]
+}

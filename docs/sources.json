@@ -1,0 +1,32 @@
+[
+  {
+    "id": "asf",
+    "url": "https://github.com/ChristopherDavenport/agentsession/blob/dfc9ec67ec22de5e7946d0b75673fc34bcf2a824/docs/rfcs/0001-agent-session-format.md",
+    "sha256": "118a4c8fc1454fd27eb86a9a69cbd10ebb7fb4a9f0299474d19d1793d4c2aad4",
+    "reviewed_on": "2026-09-26"
+  },
+  {
+    "id": "atif",
+    "url": "https://github.com/harbor-framework/harbor/blob/74cc6312018c349c6bd2400c89a0ac4983ac1085/rfcs/0001-trajectory-format.md",
+    "sha256": "ab2dd5602187ac8271adba13bb9c89dd70961878faa1ab26324d98116bf37b34",
+    "reviewed_on": "2026-09-26"
+  },
+  {
+    "id": "asp",
+    "url": "https://github.com/kevin-dp/agent-session-protocol/blob/0c554624eb8c4d0a5dc68172fc0aed8d8c5eb2dd/src/types.ts",
+    "sha256": "2d747384d7bb7b63d08dde3b52b75cb1b6588b98e3584c0cdfd2eb960203cd53",
+    "reviewed_on": "2026-09-26"
+  },
+  {
+    "id": "vac",
+    "url": "https://www.ietf.org/archive/id/draft-birkholz-verifiable-agent-conversations-01.txt",
+    "sha256": "033dff9866ed4403a060bd0cdc92aa59067b6fb4720f0d662a82d35cb3e2617e",
+    "reviewed_on": "2026-09-26"
+  },
+  {
+    "id": "vcon",
+    "url": "https://www.ietf.org/archive/id/draft-howe-vcon-agent-session-00.txt",
+    "sha256": "b88e60f74fc6737ceb4ffd230c2bfa49b5c5250b64b058bcd009b4b75a61c507",
+    "reviewed_on": "2026-09-26"
+  }
+]

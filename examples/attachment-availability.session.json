@@ -1,0 +1,248 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-attachment-availability",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through e1; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-attachment-availability",
+    "title": "Missing, external, excluded and uninspected attachments",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Review the referenced attachments."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "missing",
+            "description": "The transcript referenced a PDF whose bytes could not be recovered."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "external",
+            "description": "Location recorded only; no network access occurred."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "excluded",
+            "description": "Intentionally omitted by the example export selection."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "unknown",
+            "description": "The exporter did not inspect attachment availability."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1"
+      ],
+      "head_event_id": "e1"
+    }
+  ],
+  "executions": [],
+  "contexts": [],
+  "configurations": [],
+  "tools": [],
+  "resources": [
+    {
+      "id": "missing",
+      "media_type": "application/pdf",
+      "purpose": "input",
+      "availability": "unavailable",
+      "explanation": "The transcript referenced a PDF whose bytes could not be recovered."
+    },
+    {
+      "id": "external",
+      "media_type": "video/mp4",
+      "purpose": "input",
+      "availability": "external",
+      "locator": "https://media.example.invalid/recording.mp4",
+      "explanation": "Location recorded only; no network access occurred."
+    },
+    {
+      "id": "excluded",
+      "media_type": "application/zip",
+      "purpose": "input",
+      "availability": "excluded",
+      "explanation": "Intentionally omitted by the example export selection."
+    },
+    {
+      "id": "unknown",
+      "media_type": "image/png",
+      "purpose": "input",
+      "availability": "unknown",
+      "explanation": "The exporter did not inspect attachment availability."
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e1",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "required-pdf",
+          "kind": "asif.resource",
+          "resource_id": "missing",
+          "description": "The requested review needs the missing PDF.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unavailable"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "configuration",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "partial",
+      "detail": "References are represented; some original content is not embedded. See each resource and the losses."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [
+    {
+      "id": "missing-pdf",
+      "stage": "capture",
+      "kind": "unavailable",
+      "scope": "resources",
+      "references": [
+        {
+          "type": "resource",
+          "id": "missing"
+        }
+      ],
+      "explanation": "The transcript referenced a PDF whose bytes could not be recovered."
+    },
+    {
+      "id": "excluded-zip",
+      "stage": "capture",
+      "kind": "excluded",
+      "scope": "resources",
+      "references": [
+        {
+          "type": "resource",
+          "id": "excluded"
+        }
+      ],
+      "explanation": "Intentionally omitted by the example export selection."
+    }
+  ],
+  "required_features": []
+}

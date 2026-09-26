@@ -1,0 +1,62 @@
+{
+  "scope": "Synthetic fixture structure, embedded bytes and selected references only",
+  "examples_passed": 7,
+  "negative_checks_passed": 5,
+  "embedded_resources_verified": 11,
+  "file_attachments_verified": 5,
+  "full_semantic_conformance_tested": false,
+  "interoperability_tested": false,
+  "continuation_tested": false,
+  "results": [
+    {
+      "example": "attachment-availability.session.json",
+      "passed": true,
+      "embedded_resources_verified": 0,
+      "file_paths": []
+    },
+    {
+      "example": "audio-and-transcript.session.json",
+      "passed": true,
+      "embedded_resources_verified": 2,
+      "file_paths": []
+    },
+    {
+      "example": "awaiting-approval.session.json",
+      "passed": true,
+      "embedded_resources_verified": 0,
+      "file_paths": []
+    },
+    {
+      "example": "compaction-with-attachment.session.json",
+      "passed": true,
+      "embedded_resources_verified": 2,
+      "file_paths": [
+        "assets/project-notes.md"
+      ]
+    },
+    {
+      "example": "image-and-document.session.json",
+      "passed": true,
+      "embedded_resources_verified": 3,
+      "file_paths": [
+        "assets/color-grid.png",
+        "assets/meeting-notes.pdf"
+      ]
+    },
+    {
+      "example": "redacted-attachment.session.json",
+      "passed": true,
+      "embedded_resources_verified": 1,
+      "file_paths": []
+    },
+    {
+      "example": "tool-generated-files.session.json",
+      "passed": true,
+      "embedded_resources_verified": 3,
+      "file_paths": [
+        "assets/totals.csv",
+        "assets/summary.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,835 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-another-agent",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Synthetic complete checkpoint through e4. No real runtime executed."
+  },
+  "session": {
+    "id": "session-another-agent",
+    "title": "another agent",
+    "native_ids": [
+      {
+        "provider": "example-agent-a",
+        "namespace": "source-runtime",
+        "value": "source-native"
+      }
+    ],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    },
+    {
+      "id": "tool-runner",
+      "kind": "tool"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Total this inventory and return the files."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "source-csv",
+            "description": "Inline input CSV."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "tool_call",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "tool_id": "summarize",
+        "arguments": {
+          "resource_id": "source-csv"
+        },
+        "arguments_status": "complete"
+      }
+    },
+    {
+      "id": "e3",
+      "sequence": 2,
+      "actor_id": "tool-runner",
+      "kind": "tool_result",
+      "causes": [
+        {
+          "event_id": "e2"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "result_index": 0,
+        "terminal": true,
+        "outcome": "success",
+        "parts": [
+          {
+            "kind": "resource",
+            "resource_id": "output-csv",
+            "description": "CSV with total row."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "report",
+            "description": "Markdown report."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4",
+      "sequence": 3,
+      "actor_id": "agent",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "e3"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "The total is 5."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "output-csv",
+            "description": "Download the output CSV."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "report",
+            "description": "Read the summary."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "head_event_id": "e4"
+    }
+  ],
+  "executions": [],
+  "contexts": [
+    {
+      "id": "continue-context",
+      "branch_id": "main",
+      "at_event_id": "e4",
+      "purpose": "continuation",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "input-instruction",
+          "kind": "message",
+          "role": "system",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Use the declared workspace for file operations."
+            }
+          ],
+          "source_events": []
+        },
+        {
+          "id": "input-e1",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Total this inventory and return the files."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "source-csv",
+              "description": "Inline input CSV."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            }
+          ]
+        },
+        {
+          "id": "input-e2",
+          "kind": "tool_call",
+          "role": "assistant",
+          "parts": [],
+          "source_events": [
+            {
+              "event_id": "e2"
+            }
+          ],
+          "call_id": "call-1",
+          "tool_id": "summarize",
+          "arguments": {
+            "resource_id": "source-csv"
+          },
+          "arguments_status": "complete"
+        },
+        {
+          "id": "input-e3",
+          "kind": "tool_result",
+          "role": "tool",
+          "parts": [
+            {
+              "kind": "resource",
+              "resource_id": "output-csv",
+              "description": "CSV with total row."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "report",
+              "description": "Markdown report."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e3"
+            }
+          ],
+          "call_id": "call-1",
+          "result_index": 0,
+          "terminal": true,
+          "outcome": "success"
+        },
+        {
+          "id": "input-e4",
+          "kind": "message",
+          "role": "assistant",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "The total is 5."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "output-csv",
+              "description": "Download the output CSV."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "report",
+              "description": "Read the summary."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e4"
+            }
+          ]
+        }
+      ],
+      "tool_ids": [
+        "summarize"
+      ],
+      "configuration_id": "effective",
+      "request_parameters": {}
+    }
+  ],
+  "configurations": [
+    {
+      "id": "effective",
+      "knowledge": "effective",
+      "instructions": [
+        {
+          "id": "workspace-rule",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Use the declared workspace for file operations."
+            }
+          ],
+          "scope": {
+            "dialect": "example.scope/1",
+            "value": "workspace"
+          },
+          "activation": {
+            "dialect": "example.activation/1",
+            "value": "always"
+          },
+          "provenance": {
+            "mode": "synthetic",
+            "producer": "asif-examples",
+            "method": "Authored configuration fixture.",
+            "inputs": []
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "id": "summary-skill",
+          "type": "example.skill",
+          "definition": {
+            "id": "inventory-summary",
+            "version": "1"
+          },
+          "resource_ids": [
+            "skill-template"
+          ],
+          "required": true
+        }
+      ],
+      "policies": [
+        {
+          "id": "workspace-only",
+          "type": "example.policy/1",
+          "definition": {
+            "file_access": "declared-workspace"
+          },
+          "enforcing": true
+        }
+      ],
+      "secret_requirements": []
+    }
+  ],
+  "tools": [
+    {
+      "id": "summarize",
+      "name": "example.inventory.summarize",
+      "description": "Create a total and report from a CSV resource.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "resource_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resource_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "resources": [
+    {
+      "id": "source-csv",
+      "media_type": "text/csv",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 28,
+      "sha256": "c5b9431890ee61d14141333bc013ff331f2b3ac3297fab9f0969945ff53b6fa9",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "text": "item,count\napples,2\npears,3\n"
+    },
+    {
+      "id": "output-csv",
+      "media_type": "text/csv",
+      "availability": "embedded",
+      "purpose": "output",
+      "bytes": 36,
+      "sha256": "7f66072a16b21cbb54be4425ade0f2619f5856bb595003821f63ca4a198b40a8",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "name": "totals.csv",
+      "text": "item,count\napples,2\npears,3\nTOTAL,5\n"
+    },
+    {
+      "id": "report",
+      "media_type": "text/markdown",
+      "availability": "embedded",
+      "purpose": "output",
+      "bytes": 41,
+      "sha256": "ceee478a26f68fb2c2635eff949f0fb34b72f4ca9077f9b7c63d241e47fd4124",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "name": "summary.md",
+      "text": "# Inventory summary\n\nTotal items: **5**.\n"
+    },
+    {
+      "id": "skill-template",
+      "media_type": "text/plain",
+      "availability": "embedded",
+      "purpose": "capability",
+      "text": "Total the rows; retain source CSV and output files.\n",
+      "bytes": 52,
+      "sha256": "b258d6525bf890df635d7b964a82101e8c52235ae4e92f0b13f8e383cfd1f898"
+    },
+    {
+      "id": "native-state",
+      "media_type": "application/json",
+      "availability": "embedded",
+      "purpose": "native",
+      "text": "{\"session\":\"source-native\",\"ordinals\":[1,2,3,4]}\n",
+      "bytes": 49,
+      "sha256": "ec02a98eb69571f07f24cc778d926da03ea0073ae658446a7586628817c5ed3c"
+    }
+  ],
+  "environments": [
+    {
+      "id": "project-env",
+      "kind": "workspace",
+      "description": "Synthetic project directory at the captured boundary.",
+      "resource_ids": [
+        "source-csv",
+        "output-csv",
+        "report"
+      ],
+      "requirements": [],
+      "definition": {
+        "dialect": "example.workspace/1",
+        "value": {
+          "cwd": "/Users/example/project"
+        }
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "e4",
+      "knowledge": "observed",
+      "status": "idle",
+      "context_id": "continue-context",
+      "configuration_id": "effective",
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": []
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "contexts",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    },
+    {
+      "scope": "configuration",
+      "status": "complete",
+      "detail": "All modeled data is included in this authored synthetic scenario."
+    },
+    {
+      "scope": "tools",
+      "status": "complete",
+      "detail": "The defined tool, call and terminal result are included."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "environment",
+      "status": "complete",
+      "detail": "All modeled data is included in this authored synthetic scenario."
+    },
+    {
+      "scope": "native",
+      "status": "complete",
+      "detail": "All modeled data is included in this authored synthetic scenario."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic attachment example."
+    }
+  ],
+  "losses": [],
+  "required_features": [
+    "asif.portable-continuation/0.1"
+  ],
+  "continuation": {
+    "profile_version": "0.1",
+    "source_runtime": {
+      "agent": {
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
+      },
+      "adapter": {
+        "id": "example-adapter",
+        "version": "1"
+      },
+      "os": "macos",
+      "architecture": "arm64"
+    },
+    "workspaces": [
+      {
+        "id": "workspace-head",
+        "environment_id": "project-env",
+        "root_id": "project",
+        "at_event_id": "e4",
+        "source_root": "/Users/example/project",
+        "mode": "snapshot",
+        "selection": {
+          "include": [
+            "inventory.csv",
+            "totals.csv",
+            "summary.md"
+          ],
+          "exclude": [
+            ".cache/"
+          ],
+          "complete_for_selection": true
+        },
+        "entries": [
+          {
+            "path": "inventory.csv",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "source-csv"
+          },
+          {
+            "path": "totals.csv",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "output-csv"
+          },
+          {
+            "path": "summary.md",
+            "kind": "file",
+            "mode": 420,
+            "resource_id": "report"
+          }
+        ],
+        "deletions": [],
+        "base_snapshot_id": null
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "agent-runtime",
+        "kind": "agent_runtime",
+        "identity": "example-agent-a",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [],
+        "resource_ids": [],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example-agent-a"
+        }
+      },
+      {
+        "id": "summary-tool",
+        "kind": "tool",
+        "identity": "example.inventory.summarize",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [],
+        "resource_ids": [],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example.inventory.summarize"
+        },
+        "tool_id": "summarize",
+        "behavior": {
+          "id": "example.inventory.summarize",
+          "revision": "1",
+          "effects": "local",
+          "replay": "never"
+        }
+      },
+      {
+        "id": "summary-skill",
+        "kind": "skill",
+        "identity": "example.inventory-summary",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "continue"
+        ],
+        "depends_on": [
+          "summary-tool"
+        ],
+        "resource_ids": [
+          "skill-template"
+        ],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example.inventory-summary"
+        }
+      }
+    ],
+    "configuration_bindings": [
+      {
+        "configuration_id": "effective",
+        "effective_order": [
+          "workspace-rule"
+        ],
+        "instruction_rules": [
+          {
+            "instruction_id": "workspace-rule",
+            "authority": "system",
+            "merge_behavior": "append",
+            "group_id": "workspace-rules",
+            "priority": 0,
+            "scope": {
+              "kind": "root",
+              "root_id": "project"
+            },
+            "activation": {
+              "kind": "always"
+            }
+          }
+        ],
+        "policy_ids": [
+          "workspace-only"
+        ]
+      }
+    ],
+    "service_bindings": [],
+    "operations": [],
+    "native_imports": [
+      {
+        "id": "native",
+        "adapter": {
+          "id": "example-adapter",
+          "version": "1"
+        },
+        "source_state_format": "example-native/1",
+        "accepted_target_agent_versions": [
+          "2"
+        ],
+        "resource_ids": [
+          "native-state"
+        ],
+        "mode": "translate",
+        "identity_policy": "map",
+        "ordering_contract": "example.ordinal-order/1",
+        "index_contract": "example.native-index/1",
+        "conflict_policy": "reject"
+      }
+    ],
+    "plans": [
+      {
+        "id": "continue-main",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill"
+        ],
+        "service_binding_ids": [],
+        "operation_ids": [],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "await_user"
+        }
+      }
+    ]
+  }
+}
