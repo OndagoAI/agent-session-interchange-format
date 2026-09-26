@@ -191,4 +191,61 @@ after = context('compacted', 'e2', [input_record('i2', 'user', [text('Retained s
 loss = {'id': 'context-compaction', 'stage': 'normalization', 'kind': 'summarization', 'scope': 'contexts', 'explanation': 'The compacted input loses original detail; history and original attachment remain preserved.'}
 save('compaction-with-attachment', session('compaction-with-attachment', 'Preserved attachment and compacted working context', events, [notes, memory], contexts=[before, after], losses=[loss]))
 
-print('Built six session examples and five deterministic file attachments.')
+# 7. Three participants share a brief and contribute in distinct, declared roles.
+# Provider names and responses are invented; no execution or live coordination occurred.
+brief = resource('workshop-brief', 'text/markdown',
+                 '# Workshop brief\n\nPlan a 90-minute beginner gardening workshop for 12 adults.\n'
+                 'Keep supplies within a total budget of $300. Include time for questions.\n')
+brief_parts = [text('Prepare a workshop plan from this brief.'), part('workshop-brief', 'Shared workshop constraints.')]
+draft_parts = [text('Draft: 20 minutes of introduction, 50 minutes of planting practice, and 30 minutes of questions. Supplies: $240 total.')]
+review_parts = [text('The draft totals 100 minutes, exceeding the 90-minute limit. Reduce the introduction to 15 minutes and practice to 45 minutes. The stated $240 supplies total is within budget.')]
+edited_parts = [text('Revised plan: 15 minutes of introduction, 45 minutes of planting practice, and 30 minutes of questions: 90 minutes total. Supplies budget: $240 for 12 adults.')]
+events = [message('brief', 'user', brief_parts)]
+for identifier, actor, parts in [('draft', 'writer', draft_parts), ('review', 'reviewer', review_parts), ('revision', 'editor', edited_parts)]:
+    entry = event(identifier, actor, 'message', {'role': 'assistant', 'parts': parts})
+    entry['execution_id'] = actor + '-execution'
+    events.append(entry)
+
+shared_brief = input_record('shared-brief', 'user', brief_parts, ['brief'])
+draft_input = input_record('draft-input', 'assistant', draft_parts, ['draft'])
+review_input = input_record('review-input', 'assistant', review_parts, ['review'])
+roles = [
+    ('writer', 'example.provider-a', 'Draft a workshop plan from the brief. State timing and supplies.', 'brief', []),
+    ('reviewer', 'example.provider-b', 'Review the draft against the brief. Check the total duration and budget and explain any corrections.', 'draft', [draft_input]),
+    ('editor', 'example.provider-c', 'Revise the draft using the brief and review. Preserve the workshop constraints.', 'review', [draft_input, review_input]),
+]
+contexts, configurations, executions = [], [], []
+participants = [{'id': 'person', 'kind': 'human', 'name': 'Workshop organizer'}]
+for role, provider, instruction, boundary, contributions in roles:
+    participants.append({'id': role, 'kind': 'agent', 'name': role.title(), 'provider': provider})
+    configuration_id = role + '-configuration'
+    configurations.append({
+        'id': configuration_id, 'knowledge': 'declared',
+        'instructions': [{'id': 'role', 'parts': [text(instruction)],
+                          'scope': {'dialect': 'example.scope/1', 'value': 'global'},
+                          'activation': {'dialect': 'example.activation/1', 'value': 'always'},
+                          'provenance': provenance()}],
+        'capabilities': [], 'policies': [], 'secret_requirements': [],
+    })
+    inputs = [input_record('role-instruction', 'system', [text(instruction)], []),
+              copy.deepcopy(shared_brief), *copy.deepcopy(contributions)]
+    ctx = context(role + '-context', boundary, inputs)
+    ctx.update(configuration_id=configuration_id,
+               model={'provider': provider, 'name': 'synthetic-' + role}, request_parameters={})
+    contexts.append(ctx)
+    executions.append({'id': role + '-execution', 'participant_id': role,
+                       'status': 'unknown', 'context_ids': [ctx['id']], 'model': copy.deepcopy(ctx['model'])})
+
+collaboration = session('multi-agent-review', 'One brief, three agents: writer, reviewer and editor',
+                        events, [brief], contexts=contexts)
+collaboration.update(participants=participants, configurations=configurations, executions=executions)
+collaboration['session']['objective'] = [text('Produce a workshop plan that satisfies the shared brief through drafting, review and editing.')]
+collaboration['checkpoints'][0]['configuration_id'] = 'editor-configuration'
+for coverage in collaboration['coverage']:
+    if coverage['scope'] in ('contexts', 'configuration', 'executions'):
+        coverage.update(status='partial', detail='Authored role instructions, proposed inputs and participant bindings only; no real provider request, runtime policy or execution lifecycle was observed.')
+    elif coverage['status'] == 'not_inspected':
+        coverage['detail'] = 'Not modeled by this synthetic collaboration example.'
+save('multi-agent-review', collaboration)
+
+print('Built seven session examples and five deterministic file attachments.')

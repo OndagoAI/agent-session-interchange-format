@@ -32,9 +32,11 @@ The build job has read access to repository contents. Only the deployment job re
 
 ## Add or update a page
 
-Add authored Markdown at the repository root or directly under `docs/`, then add it to `nav` in `mkdocs.yml`. Keep relative Markdown links so the same source works on GitHub and on the site. MkDocs publishes `README.md` as the corresponding directory's index.
+Add authored Markdown at the repository root or directly under `docs/`, then add it to `nav` in `mkdocs.yml`. Keep relative Markdown links so the same source works on GitHub and on the site. The landing page is authored in [home.md](home.md) and published at the site root; the repository [README](../README.md) appears under `overview/`. Other `README.md` files become their directory's index.
 
-The hook at `docs/site/hooks.py` selects publication inputs explicitly and retains their repository-relative paths. It also publishes schemas, sample data and linked source files. Files under `examples/assets/` remain byte-for-byte downloads, even when their extension is `.md`. Extend the hook's input patterns if a new documentation directory or asset type is needed.
+The hook at `docs/site/hooks.py` selects publication inputs explicitly and maps the landing and overview pages while retaining their source-link identities. It also publishes schemas, sample data and linked source files. Files under `examples/assets/` remain byte-for-byte downloads, even when their extension is `.md`. Extend the hook's input patterns if a new documentation directory or asset type is needed.
+
+The visual theme lives in `docs/site/assets/styles.css`, with templates under `docs/site/overrides/`. The homepage's session illustration uses `docs/site/assets/site.js` for keyboard-accessible tabs; it makes no provider calls. Object-reference indexes become collapsible on the website, while the generated Markdown remains unchanged. Both the homepage and reference pages stay in the normal search index.
 
 Generated object pages come from the schemas and authored metadata. After changing those inputs, regenerate the pages and rerun validation:
 

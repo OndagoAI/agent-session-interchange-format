@@ -1,0 +1,617 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-multi-agent-review",
+    "producer": {
+      "name": "asif-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Invented example through revision; no real model or tool ran."
+  },
+  "session": {
+    "id": "session-multi-agent-review",
+    "title": "One brief, three agents: writer, reviewer and editor",
+    "native_ids": [],
+    "lineage": [],
+    "objective": [
+      {
+        "kind": "text",
+        "text": "Produce a workshop plan that satisfies the shared brief through drafting, review and editing."
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human",
+      "name": "Workshop organizer"
+    },
+    {
+      "id": "writer",
+      "kind": "agent",
+      "name": "Writer",
+      "provider": "example.provider-a"
+    },
+    {
+      "id": "reviewer",
+      "kind": "agent",
+      "name": "Reviewer",
+      "provider": "example.provider-b"
+    },
+    {
+      "id": "editor",
+      "kind": "agent",
+      "name": "Editor",
+      "provider": "example.provider-c"
+    }
+  ],
+  "events": [
+    {
+      "id": "brief",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Prepare a workshop plan from this brief."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "workshop-brief",
+            "description": "Shared workshop constraints."
+          }
+        ]
+      }
+    },
+    {
+      "id": "draft",
+      "sequence": 1,
+      "actor_id": "writer",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "brief"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Draft: 20 minutes of introduction, 50 minutes of planting practice, and 30 minutes of questions. Supplies: $240 total."
+          }
+        ]
+      },
+      "execution_id": "writer-execution"
+    },
+    {
+      "id": "review",
+      "sequence": 2,
+      "actor_id": "reviewer",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "draft"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "The draft totals 100 minutes, exceeding the 90-minute limit. Reduce the introduction to 15 minutes and practice to 45 minutes. The stated $240 supplies total is within budget."
+          }
+        ]
+      },
+      "execution_id": "reviewer-execution"
+    },
+    {
+      "id": "revision",
+      "sequence": 3,
+      "actor_id": "editor",
+      "kind": "message",
+      "causes": [
+        {
+          "event_id": "review"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "data": {
+        "role": "assistant",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Revised plan: 15 minutes of introduction, 45 minutes of planting practice, and 30 minutes of questions: 90 minutes total. Supplies budget: $240 for 12 adults."
+          }
+        ]
+      },
+      "execution_id": "editor-execution"
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "brief",
+        "draft",
+        "review",
+        "revision"
+      ],
+      "head_event_id": "revision"
+    }
+  ],
+  "executions": [
+    {
+      "id": "writer-execution",
+      "participant_id": "writer",
+      "status": "unknown",
+      "context_ids": [
+        "writer-context"
+      ],
+      "model": {
+        "provider": "example.provider-a",
+        "name": "synthetic-writer"
+      }
+    },
+    {
+      "id": "reviewer-execution",
+      "participant_id": "reviewer",
+      "status": "unknown",
+      "context_ids": [
+        "reviewer-context"
+      ],
+      "model": {
+        "provider": "example.provider-b",
+        "name": "synthetic-reviewer"
+      }
+    },
+    {
+      "id": "editor-execution",
+      "participant_id": "editor",
+      "status": "unknown",
+      "context_ids": [
+        "editor-context"
+      ],
+      "model": {
+        "provider": "example.provider-c",
+        "name": "synthetic-editor"
+      }
+    }
+  ],
+  "contexts": [
+    {
+      "id": "writer-context",
+      "branch_id": "main",
+      "at_event_id": "brief",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "role-instruction",
+          "kind": "message",
+          "role": "system",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Draft a workshop plan from the brief. State timing and supplies."
+            }
+          ],
+          "source_events": []
+        },
+        {
+          "id": "shared-brief",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Prepare a workshop plan from this brief."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "workshop-brief",
+              "description": "Shared workshop constraints."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "brief"
+            }
+          ]
+        }
+      ],
+      "tool_ids": [],
+      "configuration_id": "writer-configuration",
+      "model": {
+        "provider": "example.provider-a",
+        "name": "synthetic-writer"
+      },
+      "request_parameters": {}
+    },
+    {
+      "id": "reviewer-context",
+      "branch_id": "main",
+      "at_event_id": "draft",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "role-instruction",
+          "kind": "message",
+          "role": "system",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Review the draft against the brief. Check the total duration and budget and explain any corrections."
+            }
+          ],
+          "source_events": []
+        },
+        {
+          "id": "shared-brief",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Prepare a workshop plan from this brief."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "workshop-brief",
+              "description": "Shared workshop constraints."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "brief"
+            }
+          ]
+        },
+        {
+          "id": "draft-input",
+          "kind": "message",
+          "role": "assistant",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Draft: 20 minutes of introduction, 50 minutes of planting practice, and 30 minutes of questions. Supplies: $240 total."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "draft"
+            }
+          ]
+        }
+      ],
+      "tool_ids": [],
+      "configuration_id": "reviewer-configuration",
+      "model": {
+        "provider": "example.provider-b",
+        "name": "synthetic-reviewer"
+      },
+      "request_parameters": {}
+    },
+    {
+      "id": "editor-context",
+      "branch_id": "main",
+      "at_event_id": "review",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "role-instruction",
+          "kind": "message",
+          "role": "system",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Revise the draft using the brief and review. Preserve the workshop constraints."
+            }
+          ],
+          "source_events": []
+        },
+        {
+          "id": "shared-brief",
+          "kind": "message",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Prepare a workshop plan from this brief."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "workshop-brief",
+              "description": "Shared workshop constraints."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "brief"
+            }
+          ]
+        },
+        {
+          "id": "draft-input",
+          "kind": "message",
+          "role": "assistant",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Draft: 20 minutes of introduction, 50 minutes of planting practice, and 30 minutes of questions. Supplies: $240 total."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "draft"
+            }
+          ]
+        },
+        {
+          "id": "review-input",
+          "kind": "message",
+          "role": "assistant",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "The draft totals 100 minutes, exceeding the 90-minute limit. Reduce the introduction to 15 minutes and practice to 45 minutes. The stated $240 supplies total is within budget."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "review"
+            }
+          ]
+        }
+      ],
+      "tool_ids": [],
+      "configuration_id": "editor-configuration",
+      "model": {
+        "provider": "example.provider-c",
+        "name": "synthetic-editor"
+      },
+      "request_parameters": {}
+    }
+  ],
+  "configurations": [
+    {
+      "id": "writer-configuration",
+      "knowledge": "declared",
+      "instructions": [
+        {
+          "id": "role",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Draft a workshop plan from the brief. State timing and supplies."
+            }
+          ],
+          "scope": {
+            "dialect": "example.scope/1",
+            "value": "global"
+          },
+          "activation": {
+            "dialect": "example.activation/1",
+            "value": "always"
+          },
+          "provenance": {
+            "mode": "synthetic",
+            "producer": "asif-examples",
+            "method": "Authored synthetic fixture; no real user data or model execution.",
+            "inputs": []
+          }
+        }
+      ],
+      "capabilities": [],
+      "policies": [],
+      "secret_requirements": []
+    },
+    {
+      "id": "reviewer-configuration",
+      "knowledge": "declared",
+      "instructions": [
+        {
+          "id": "role",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Review the draft against the brief. Check the total duration and budget and explain any corrections."
+            }
+          ],
+          "scope": {
+            "dialect": "example.scope/1",
+            "value": "global"
+          },
+          "activation": {
+            "dialect": "example.activation/1",
+            "value": "always"
+          },
+          "provenance": {
+            "mode": "synthetic",
+            "producer": "asif-examples",
+            "method": "Authored synthetic fixture; no real user data or model execution.",
+            "inputs": []
+          }
+        }
+      ],
+      "capabilities": [],
+      "policies": [],
+      "secret_requirements": []
+    },
+    {
+      "id": "editor-configuration",
+      "knowledge": "declared",
+      "instructions": [
+        {
+          "id": "role",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Revise the draft using the brief and review. Preserve the workshop constraints."
+            }
+          ],
+          "scope": {
+            "dialect": "example.scope/1",
+            "value": "global"
+          },
+          "activation": {
+            "dialect": "example.activation/1",
+            "value": "always"
+          },
+          "provenance": {
+            "mode": "synthetic",
+            "producer": "asif-examples",
+            "method": "Authored synthetic fixture; no real user data or model execution.",
+            "inputs": []
+          }
+        }
+      ],
+      "capabilities": [],
+      "policies": [],
+      "secret_requirements": []
+    }
+  ],
+  "tools": [],
+  "resources": [
+    {
+      "id": "workshop-brief",
+      "media_type": "text/markdown",
+      "availability": "embedded",
+      "purpose": "input",
+      "bytes": 151,
+      "sha256": "52fd1f5b3ba9bb9dd454467a4d5d4e5b2b73ec71d179fa9f9bc5c8f894c175fe",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "Authored synthetic fixture; no real user data or model execution.",
+        "inputs": []
+      },
+      "text": "# Workshop brief\n\nPlan a 90-minute beginner gardening workshop for 12 adults.\nKeep supplies within a total budget of $300. Include time for questions.\n"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "head",
+      "branch_id": "main",
+      "at_event_id": "revision",
+      "knowledge": "unknown",
+      "status": "unknown",
+      "context_id": "editor-context",
+      "configuration_id": "editor-configuration",
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": [
+        {
+          "id": "configuration",
+          "kind": "asif.configuration",
+          "description": "Resolve effective configuration and destination capabilities.",
+          "required_for": [
+            "continue"
+          ],
+          "status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "executions",
+      "status": "partial",
+      "detail": "Authored role instructions, proposed inputs and participant bindings only; no real provider request, runtime policy or execution lifecycle was observed."
+    },
+    {
+      "scope": "contexts",
+      "status": "partial",
+      "detail": "Authored role instructions, proposed inputs and participant bindings only; no real provider request, runtime policy or execution lifecycle was observed."
+    },
+    {
+      "scope": "configuration",
+      "status": "partial",
+      "detail": "Authored role instructions, proposed inputs and participant bindings only; no real provider request, runtime policy or execution lifecycle was observed."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No such activity is part of this invented scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "All declared records in this invented scenario are included."
+    },
+    {
+      "scope": "environment",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic collaboration example."
+    },
+    {
+      "scope": "native",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic collaboration example."
+    },
+    {
+      "scope": "usage",
+      "status": "not_inspected",
+      "detail": "Not modeled by this synthetic collaboration example."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

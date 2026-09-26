@@ -4,8 +4,11 @@ These are complete, synthetic ASIF documents. All conversation, tool activity an
 
 For destination reconstruction, see the additional [three portable-continuation scenarios](continuation/README.md): another computer/cloud runtime, another agent, and an unresolved remote operation. Each includes a separate, explicitly synthetic assessment report.
 
+For the benefits behind these records, see [use cases](../docs/use-cases.md): moving work between computers and clouds, collaborating across providers, comparing approaches and handing a project to a teammate.
+
 | Example | What to inspect |
 |---|---|
+| [Agents with different roles](multi-agent-review.session.json) | Three fictional providers contribute to one session; writer, reviewer and editor contexts share the same brief while selecting different instructions and prior contributions. |
 | [Image and PDF](image-and-document.session.json) | Ordered text/image/document parts; one image referenced twice; original PDF preserved while extracted text appears in the reconstructed model input. |
 | [Audio and transcript](audio-and-transcript.session.json) | A WAV stored as inline base64; a separate inline text annotation. The sample is 0.1 seconds of silence; the annotation explicitly says there is no speech. |
 | [Tool-generated files](tool-generated-files.session.json) | Inline CSV input, correlated tool call/result, CSV and Markdown outputs referenced again by the assistant. |
@@ -13,6 +16,31 @@ For destination reconstruction, see the additional [three portable-continuation 
 | [Redacted attachment](redacted-attachment.session.json) | Original content marked redacted; a distinct sanitized resource with its own bytes/hash; loss report and explicit substitution in model input. |
 | [Compaction with an attachment](compaction-with-attachment.session.json) | Original notes retained in history; a summary memory selected into a separate continuation context. |
 | [Awaiting approval](awaiting-approval.session.json) | Tool call and approval request without a recorded answer or tool result. |
+
+## Agents with different roles
+
+The [multi-agent review session](multi-agent-review.session.json) follows a workshop organizer working with three agents. The writer proposes a plan that exceeds the time limit, the reviewer identifies the error, and the editor revises the plan. All provider names and outputs are invented.
+
+| Context ID | Participant | Selected inputs, in order |
+|---|---|---|
+| `writer-context` | Writer, `example.provider-a` | Writer instructions; shared brief |
+| `reviewer-context` | Reviewer, `example.provider-b` | Reviewer instructions; shared brief; draft |
+| `editor-context` | Editor, `example.provider-c` | Editor instructions; shared brief; draft; review |
+
+Each context contains an identical `shared-brief` input referencing the same `workshop-brief` resource. Role instructions are separate, declared configuration records and are explicitly included once in each context. The later inputs reference the earlier contribution events, so you can see what the reviewer and editor were given.
+
+Participants retain distinct IDs and provider labels. Executions bind each participant to its input context; event `actor_id` and `execution_id` attribute each response. Writer, reviewer and editor are job assignments expressed by instructions, while their messages all use `role: assistant`. Execution status remains `unknown` because no actual runtime lifecycle was observed.
+
+Inspect the proposed inputs with either CLI:
+
+```sh
+node asif.ts validate examples/multi-agent-review.session.json
+node asif.ts request examples/multi-agent-review.session.json writer-context
+node asif.ts request examples/multi-agent-review.session.json reviewer-context
+node asif.ts request examples/multi-agent-review.session.json editor-context
+```
+
+Replace `node asif.ts` with `.venv/bin/python asif.py` for Python. These commands run from the repository root and produce neutral JSON projections. They do not contact providers. The example records a sequential collaboration; scheduling agents, enforcing permissions and coordinating concurrent writes belong to an integrating application.
 
 ## Attachment representation
 
@@ -78,6 +106,6 @@ From the project root:
 .venv/bin/python tests/check_examples.py
 ```
 
-The second check validates all seven documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. It is not a complete ASIF semantic validator or an interoperability test.
+The second check validates all eight documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. It is not a complete ASIF semantic validator or an interoperability test.
 
-`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples and their five file assets. It does not replace the existing approval example. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.
+`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples, their five file assets, and the collaboration example. It does not replace the existing approval example. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.

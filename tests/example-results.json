@@ -1,8 +1,8 @@
 {
   "scope": "Synthetic fixture structure, embedded bytes and selected references only",
-  "examples_passed": 7,
+  "examples_passed": 8,
   "negative_checks_passed": 5,
-  "embedded_resources_verified": 11,
+  "embedded_resources_verified": 12,
   "file_attachments_verified": 5,
   "full_semantic_conformance_tested": false,
   "interoperability_tested": false,
@@ -42,6 +42,12 @@
         "assets/color-grid.png",
         "assets/meeting-notes.pdf"
       ]
+    },
+    {
+      "example": "multi-agent-review.session.json",
+      "passed": true,
+      "embedded_resources_verified": 1,
+      "file_paths": []
     },
     {
       "example": "redacted-attachment.session.json",

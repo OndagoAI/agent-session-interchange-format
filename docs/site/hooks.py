@@ -38,6 +38,11 @@ def on_files(files, config):
             relative, str(ROOT), config.site_dir, config.use_directory_urls,
             inclusion=InclusionLevel.INCLUDED,
         )
+        # Source links keep working while the site has a dedicated landing page.
+        if relative == "docs/home.md":
+            file.dest_uri = "index.html"
+        elif relative == "README.md":
+            file.dest_uri = "overview/index.html" if config.use_directory_urls else "overview.html"
         published.append(file)
     return published
 
@@ -51,6 +56,15 @@ def on_serve(server, config, builder):
 
 
 def on_page_markdown(markdown, page, config, files):
+    if page.file.src_uri in ("docs/objects.md", "docs/continuation-objects.md", "docs/report-objects.md"):
+        page.meta["asif_reference"] = True
+        # The sidebar already lists every object; keep the authored index in a disclosure.
+        markdown = re.sub(
+            r'^## Contents\n\n(.*?)(?=^<a id=)',
+            '<details class="asif-object-index" markdown="1">\n'
+            '<summary id="contents">Browse all objects on this page</summary>\n\n'
+            r'\1</details>\n\n', markdown, flags=re.MULTILINE | re.DOTALL,
+        )
     # Generated references have explicit anchors for GitHub. Attach those IDs to
     # the rendered headings so MkDocs does not emit the same ID twice.
     return re.sub(

@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block announce %}
-  ASIF 0.3 · Proposed standard. Local reference checks cover a subset;
-  independent interoperability remains unproven.
+  <span class="asif-status-dot" aria-hidden="true"></span>
+  <strong>ASIF 0.3</strong><span class="asif-banner-divider">/</span> An open format, in progress.
+  <a href="{{ 'REFERENCE/' | url }}">Current scope <span aria-hidden="true">↗</span></a>
+{% endblock %}
+
+{% block container %}
+  <div class="md-content{% if page and page.meta.asif_reference %} asif-reference{% endif %}" data-md-component="content">
+    <article class="md-content__inner md-typeset">
+      {% block content %}{% include "partials/content.html" %}{% endblock %}
+    </article>
+  </div>
 {% endblock %}

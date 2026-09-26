@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 87,
-  "passed": 87,
+  "checks": 88,
+  "passed": 88,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
@@ -25,6 +25,10 @@
     },
     {
       "case": "core fixture image-and-document.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture multi-agent-review.session.json",
       "passed": true
     },
     {

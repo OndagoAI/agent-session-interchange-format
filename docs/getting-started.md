@@ -6,6 +6,7 @@ ASIF describes an agent session as a portable JSON document. Start by validating
 
 | Goal | Start with |
 |---|---|
+| See what ASIF is for | [Benefits and use cases](use-cases.md) |
 | Understand the format | [Specification](../SPEC.md) and [session semantics](../SEMANTICS.md) |
 | Find a field or object | [Core object reference](objects.md) and [JSON schemas](schemas.md) |
 | Run local checks | [Reference CLI installation and commands](../REFERENCE.md) |

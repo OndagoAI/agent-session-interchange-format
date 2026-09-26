@@ -18,7 +18,7 @@ python3 -m venv .venv
 
 The checks verify the schema itself, the synthetic example, and selected structural rejection cases. Results name this limited scope explicitly.
 
-The [example corpus](examples/README.md) adds six attachment-focused sessions to the existing approval example. Its separate checker validates document shape, embedded lengths/digests, selected local references and branch/context boundaries, plus targeted rejection cases. External locators are never fetched. These fixture checks do not implement every semantic rule or establish interoperability.
+The [example corpus](examples/README.md) includes six attachment-focused sessions, the approval example, and a synthetic session with a writer, reviewer and editor from three fictional providers. Its separate checker validates document shape, embedded lengths/digests, selected local references and branch/context boundaries, plus targeted rejection cases. External locators are never fetched. These fixture checks do not implement every semantic rule or establish interoperability.
 
 The [continuation scenarios](examples/continuation/README.md) add three complete session/profile documents and three destination reports. Tests cover typed tool context, exact checkpoint/configuration bindings, dependency closure and resources, path selectors/collisions, authority, service identity, native version gating, unsafe restart refusal, report source hashes/expiry, model fit, missing assessments and adaptation acceptance. All destination evidence is synthetic. No tests install tools, obtain credentials, mutate a native store or start an agent.
 

@@ -1,29 +1,34 @@
-site_name: ASIF Documentation
+site_name: ASIF
 site_description: Agent Session Interchange Format — a vendor-neutral model for agent sessions.
 site_url: https://ondagoai.github.io/agent-session-interchange-format/
 repo_url: https://github.com/OndagoAI/agent-session-interchange-format
-repo_name: OndagoAI/agent-session-interchange-format
+repo_name: View on GitHub
 edit_uri: edit/main/
 docs_dir: docs
 site_dir: site
 strict: true
+copyright: ASIF · Open specification · MIT licensed
+extra:
+  generator: false
 
 theme:
   name: material
   custom_dir: docs/site/overrides
   font: false
+  logo: docs/site/assets/mark.svg
+  favicon: docs/site/assets/mark.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: teal
-      accent: teal
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: teal
-      accent: teal
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to light mode
@@ -44,10 +49,13 @@ hooks:
   - docs/site/hooks.py
 extra_css:
   - docs/site/assets/styles.css
+extra_javascript:
+  - docs/site/assets/site.js
 markdown_extensions:
   - admonition
   - attr_list
   - tables
+  - md_in_html
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.superfences
@@ -63,7 +71,8 @@ validation:
 
 nav:
   - Start here:
-      - Overview: README.md
+      - Home: docs/home.md
+      - Benefits and use cases: docs/use-cases.md
       - Getting started: docs/getting-started.md
       - Reference CLIs: REFERENCE.md
   - Specification:
@@ -83,6 +92,7 @@ nav:
       - Sessions and attachments: examples/README.md
       - Continuation scenarios: examples/continuation/README.md
   - Project:
+      - Project overview: README.md
       - Gaps and priorities: GAPS.md
       - Conformance: CONFORMANCE.md
       - Implementation evidence: IMPLEMENTERS.md

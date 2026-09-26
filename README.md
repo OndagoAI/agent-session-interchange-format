@@ -1,12 +1,54 @@
 # Agent Session Interchange Format (ASIF)
 
-ASIF defines what an agent session contains and what another implementation must preserve and understand. The current design is **0.3**, a session data-model proposal.
+**Carry an agent's work across computers, clouds, and providers. Let other agents join with the context they need.**
 
-New to ASIF? Follow the [getting started guide](docs/getting-started.md). The documentation includes a searchable GitHub Pages site; see [preview and publishing instructions](docs/site.md).
+ASIF is a proposed open format for agent sessions. It records the conversation together with selected model inputs, instructions, files, tool results, decisions and unfinished work. The goal is to make that work portable and understandable to another implementation, so people can change environments or bring in another agent without rebuilding the session by hand.
 
-Start with the [specification](SPEC.md). It defines identity, participants, conversation, branches, executions, effective context, configuration, tool activity, decisions/tasks, memory, resources, environment, checkpoints, and coverage/losses.
+[Documentation website](https://ondagoai.github.io/agent-session-interchange-format/) · [Getting started](docs/getting-started.md) · [Use cases](docs/use-cases.md) · [Specification](SPEC.md)
 
-The central distinction is between recorded history, selected branch history, and actual model input. Interchange preserves those distinctions; continuation additionally needs known state, supported capabilities, available resources and destination authorization.
+## Why ASIF?
+
+### Move sessions between computers and clouds
+
+Start a task on your laptop, move it to a cloud worker for a longer run, and bring the results back to your desktop. A useful handoff includes the working files, relevant conversation, instructions, completed tool calls and remaining tasks.
+
+ASIF gives implementations a common way to describe that handoff: a checkpoint, the context to continue from, resource contents and the destination's prerequisites. Logical workspace roots can be mapped to new paths, and missing tools, files or access can be identified before work resumes.
+
+The [another-computer example](examples/continuation/README.md) illustrates a macOS/ARM session assessed for a Linux/x86 destination. It includes a workspace mapping and a synthetic destination report.
+
+### Let different agents contribute to the same session
+
+A researcher from one provider could collect evidence, a writer from another could draft a proposal, and a reviewer could check it. Each contribution retains its author, and each execution can identify the context it received.
+
+Agents can share the same task brief, source documents and recorded decisions while receiving instructions for different roles. Later agents can receive earlier contributions explicitly, so the review or handoff is part of the session's record.
+
+Try the [writer, reviewer and editor example](examples/README.md#agents-with-different-roles). It models three fictional providers working on one workshop proposal, with a separate input context for each agent.
+
+**Sharing context means sharing declared inputs.** Agents with different roles have different instructions, and later participants may see additional results. ASIF makes those differences visible. Provider adapters still need to account for model limits, tool behavior and instruction handling; shared inputs do not guarantee identical answers.
+
+### More ways to use a portable session
+
+| Situation | What ASIF helps preserve | Example |
+|---|---|---|
+| Switch agents midway through a task | Prior decisions, selected context, tool results and unresolved work, with any adaptations declared | [Another-agent handoff](examples/continuation/README.md) |
+| Ask another model for a second opinion | An explicit common input and separately attributed responses; each model's actual inputs remain inspectable | [Compare approaches](docs/use-cases.md#compare-approaches-from-a-common-starting-point) |
+| Hand a project to a teammate | The brief, supporting files, decisions and next steps, including gaps in the capture | [Team handoff](docs/use-cases.md#hand-work-to-a-teammate) |
+| Move research or document work | Images, PDFs, audio, extracted text and their relationship to the model's inputs | [Attachment examples](examples/README.md) |
+| Continue a long project after summarization | Original evidence, retained summaries and a record of what remains in active context | [Compaction example](examples/compaction-with-attachment.session.json) |
+| Inspect an interrupted workflow | Known results, pending decisions and operations whose outcome still needs checking | [Unresolved remote operation](examples/continuation/README.md) |
+| Keep a record that another tool can inspect | Stable identities, provenance, content digests and explicit missing or transformed data | [Archive and inspect](docs/use-cases.md#keep-an-inspectable-record-of-the-work) |
+
+See the [use-case walkthroughs](docs/use-cases.md) for the handoff steps and what an integrating application needs to provide.
+
+## What works today?
+
+ASIF **0.3** is a session data-model proposal. This repository includes schemas, checked synthetic examples, and locally authored **Python and TypeScript CLIs** for validation, neutral request projection, selected file-tree restoration, packaging/signatures and redaction auditing.
+
+The workflows above are integration goals. Real source/destination adapters, provider request encoding, live multi-agent coordination and independent interoperability evidence remain outstanding. ASIF describes shared session data; an application must implement agent scheduling, access control, synchronization and import. A valid session or a synthetic `ready` report does not establish that a destination can execute it. See [implementation scope](REFERENCE.md) and [remaining gaps](GAPS.md).
+
+## Explore the format
+
+The format distinguishes recorded events, selected branch history and actual model input. This lets a receiver understand both what happened and what information an agent used. The [specification](SPEC.md) defines these relationships and the rules for preserving them.
 
 - [Core object reference](docs/objects.md), [continuation objects](docs/continuation-objects.md), and [destination report objects](docs/report-objects.md): fixed fields, types, requirements, semantics and checked examples.
 - [Session semantics](SEMANTICS.md)
@@ -15,7 +57,7 @@ The central distinction is between recorded history, selected branch history, an
 - [Structural JSON Schema](schemas/session.schema.json)
 - [Portable-continuation profile](CONTINUATION.md): checkpoints, workspace/path mappings, runtime/tool/model dependencies, configuration, authentication, operation recovery, native import and destination assessment.
 - [Continuation profile schema](schemas/continuation.schema.json) and [destination report schema](schemas/continuation-report.schema.json).
-- [Seven worked examples](examples/README.md): images, PDF, audio, tool outputs, unavailable/redacted attachments, compaction, and pending approval.
+- [Worked examples](examples/README.md): agents with different roles, images, PDF, audio, tool outputs, unavailable/redacted attachments, compaction, and pending approval.
 - [Three continuation scenarios](examples/continuation/README.md): another computer, another agent, and an unresolved remote operation, each with a separate synthetic destination report.
 - [Core versus optional profiles](PROFILES.md)
 - [Remaining specification gaps](GAPS.md)
@@ -24,8 +66,6 @@ The central distinction is between recorded history, selected branch history, an
 - [Structural check results](tests/results.json)
 - [Example and attachment check results](tests/example-results.json)
 - [Continuation check results](tests/continuation-results.json)
-
-Version 0.3 includes a linked object reference with examples for every object, optional stream/external-call bindings, state-transition rules, and local vendor-neutral tools. The schemas and local checks cover structure and selected semantic invariants. Full semantic validation, real adapters and independent interoperability evidence remain outstanding. Synthetic destination reports cannot authorize execution.
 
 ## Python quick start
 

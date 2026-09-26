@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local vendor-neutral reference implementation checks",
-  "checks": 60,
-  "passed": 60,
+  "checks": 61,
+  "passed": 61,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -36,6 +36,10 @@
     },
     {
       "case": "validate-image-and-document.session",
+      "passed": true
+    },
+    {
+      "case": "validate-multi-agent-review.session",
       "passed": true
     },
     {
