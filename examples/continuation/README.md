@@ -1,6 +1,6 @@
 # Portable-continuation scenarios
 
-These examples use ASIF **0.3** and `asif.portable-continuation/0.1`. All agent names, native formats, dependency behavior and destination checks are invented. Each report has `evaluation_mode: synthetic`, `import_result: not_attempted`, and `continuation_result: not_tested`. Even the example with outcome `ready` cannot authorize a real import or execution.
+These examples use ASIF **0.4** and `asif.portable-continuation/0.2`. All agent names, native formats, dependency behavior and destination checks are invented. Each report has `evaluation_mode: synthetic`, `import_result: not_attempted`, and `continuation_result: not_tested`. Even the example with outcome `ready` cannot authorize a real import or execution.
 
 | Scenario | Source document | Destination report | Main behavior |
 |---|---|---|---|

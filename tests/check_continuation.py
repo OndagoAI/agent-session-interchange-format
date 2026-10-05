@@ -40,6 +40,12 @@ def negative_report(name,mutate,expected,fixture='another-computer',mutate_sourc
     else:raise AssertionError('invalid report accepted: '+name)
     results.append({'case':name,'passed':True,'outcome':'rejected'})
 
+negative_source('previous-core-version-refused',lambda d:d.update(asif_version='0.3'),None)
+negative_source('future-core-version-refused',lambda d:d.update(asif_version='0.5'),None)
+negative_source('missing-core-version-refused',lambda d:d.pop('asif_version'),None)
+negative_source('previous-profile-version-refused',lambda d:d['continuation'].update(profile_version='0.1'),None)
+negative_source('previous-profile-feature-refused',lambda d:d.update(required_features=['asif.portable-continuation/0.1']),None)
+negative_report('previous-report-version-refused',lambda r:r.update(report_version='0.1'),None)
 negative_source('profile-not-gated',lambda d:d.update(required_features=[]),None)
 negative_source('profile-declaration-without-data',lambda d:d.pop('continuation'),None)
 negative_source('untyped-context',lambda d:d['contexts'][0]['inputs'][0].pop('kind'),None)
@@ -149,6 +155,6 @@ doc=copy.deepcopy(action_doc)
 doc['resources'].append({'id':'unused-history','media_type':'text/plain','purpose':'input','availability':'unavailable','explanation':'Unselected historical attachment.'})
 assert all(not any(x['subject']=={'kind':'resource','id':'unused-history'} for x in subjects) for subjects in inspect_session(doc,FOLDER).values())
 results.append({'case':'unavailable-unselected-history-outside-inventory','passed':True,'outcome':'accepted'})
-summary={'asif_version':'0.3','profile':'asif.portable-continuation/0.1','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
+summary={'asif_version':'0.4','profile':'asif.portable-continuation/0.2','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
 (ROOT/'tests/continuation-results.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='results'},indent=2))

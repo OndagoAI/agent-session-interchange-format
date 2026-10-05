@@ -1,12 +1,12 @@
 {
-  "report_version": "0.1",
+  "report_version": "0.2",
   "evaluation_mode": "synthetic",
   "id": "assessment-another-computer",
   "source": {
     "session_id": "session-another-computer",
     "capture_id": "capture-another-computer",
     "plan_id": "continue-main",
-    "document_sha256": "03cda6d1614aad49fca048643bcddc94b6eb15dc046ab54b4ffcaec0528364dd"
+    "document_sha256": "f5d785300d303bf985c880e38bdf42067e33c7b94032e35796e3e332f206243c"
   },
   "destination": {
     "id": "example-cloud-runtime",
@@ -80,7 +80,7 @@
     {
       "subject": {
         "kind": "feature",
-        "id": "asif.portable-continuation/0.1"
+        "id": "asif.portable-continuation/0.2"
       },
       "status": "supported",
       "required": true,

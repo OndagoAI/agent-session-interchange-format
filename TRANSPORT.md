@@ -1,6 +1,6 @@
 # ASIF package transport 0.1
 
-Status: optional draft convention accompanying **ASIF 0.3**. [Specification](SPEC.md) · [Reference implementation](REFERENCE.md)
+Status: optional draft convention accompanying **ASIF 0.4**. [Specification](SPEC.md) · [Reference implementation](REFERENCE.md)
 
 This envelope transports exact session JSON bytes and its file-backed embedded resources. It makes no continuation claim. ASIF documents can also be exchanged without an archive.
 
@@ -40,7 +40,7 @@ This example inventories the complete [attachment package](examples/package-exam
     {
       "bytes": 7652,
       "path": "session.json",
-      "sha256": "12d1f359e304b209a3881970b135aad58a970091540e0dd6209ab0957dc1f9c4"
+      "sha256": "9414004ea4a1dd4aa32ffd7972c41ced2525d4076ff7ed3daff24bbbb3024196"
     }
   ],
   "package_version": "0.1",
@@ -92,8 +92,8 @@ A complete generated example is in [package-signature.json](examples/package-sig
 {
   "algorithm": "Ed25519",
   "key_id": "sha256:56475aa75463474c0285df5dbf2bcab73da651358839e9b77481b2eab107708c",
-  "manifest_sha256": "40e881e2dd0b72f46c5ad2ff5d11e51a1bfd08b1407eef243a8bf4cd71c51245",
-  "signature": "kja1W9Ysy+4If1wb7owzu6C0im2noWnEAyfyO1lnqljBXOjnhFZN3tqNNRpWeeBZT+uWcXNIY3cq5zK8OlujAw==",
+  "manifest_sha256": "9e710efd97190b5b5c080bd3812e0b7fc93a78669810a52ab66de9cb0e4118b8",
+  "signature": "hEho1le84p6HtLwOd7a96SGVAjfyWepY0CznpJYT4zhSGLUI1Fbx5sXUQLiXBVZ4DFdR44EmxezzvtjZoS2kDQ==",
   "signature_version": "0.1"
 }
 ```

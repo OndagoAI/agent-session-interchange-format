@@ -1,6 +1,6 @@
 # Destination report object reference
 
-Version: **0.3**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
+Version: **0.4**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
 
 Every example below is JSON Schema checked. Object fragments use IDs resolved by an enclosing session or report; they are not standalone session documents. Full scenarios are in [examples](../examples/README.md). Required means unconditionally required; conditional rules follow each table. Normative [session semantics](../SEMANTICS.md) and [continuation rules](../CONTINUATION.md) also apply.
 
@@ -38,7 +38,7 @@ An expiring assessment bound to exact source bytes and a particular destination.
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| <a id="destination-report-object-report_version"></a>`report_version` | `"0.1"` | Yes | Version of the destination-report format. |
+| <a id="destination-report-object-report_version"></a>`report_version` | `"0.2"` | Yes | Version of the destination-report format. |
 | <a id="destination-report-object-evaluation_mode"></a>`evaluation_mode` | enum | Yes | Whether evidence is observed or synthetic; synthetic results cannot claim execution. One of `"synthetic"`, `"observed"`. |
 | <a id="destination-report-object-id"></a>`id` | string | Yes | Opaque, case-sensitive identity within the object's declared scope. Minimum length: `1`. |
 | <a id="destination-report-object-source"></a>`source` | [Source Object](report-objects.md#source-object) | Yes | Source identity and boundary or report binding. |
@@ -66,14 +66,14 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 
 ```json
 {
-  "report_version": "0.1",
+  "report_version": "0.2",
   "evaluation_mode": "synthetic",
   "id": "assessment-pending-remote-operation",
   "source": {
     "session_id": "session-pending-remote-operation",
     "capture_id": "capture-pending-remote-operation",
     "plan_id": "continue-main",
-    "document_sha256": "966361de8e573d9c451c09f108e695de169d9a8736956b34ec9c93a0b3ed3837"
+    "document_sha256": "dc12ec7e916d78633e33355378f998f90097d6cc569eb04d93878c53df778187"
   },
   "destination": {
     "id": "example-cloud-runtime",
@@ -147,7 +147,7 @@ Additional properties are permitted and MUST be preserved when relaying supporte
     {
       "subject": {
         "kind": "feature",
-        "id": "asif.portable-continuation/0.1"
+        "id": "asif.portable-continuation/0.2"
       },
       "status": "supported",
       "required": true,
@@ -292,10 +292,10 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 
 ```json
 {
-  "session_id": "session-another-agent",
-  "capture_id": "capture-another-agent",
+  "session_id": "session-pending-remote-operation",
+  "capture_id": "capture-pending-remote-operation",
   "plan_id": "continue-main",
-  "document_sha256": "0a0684e757513cd81b7bbf5f92901ba745a50c0e6442aca7cf9b9a7a9fbc9f91"
+  "document_sha256": "dc12ec7e916d78633e33355378f998f90097d6cc569eb04d93878c53df778187"
 }
 ```
 

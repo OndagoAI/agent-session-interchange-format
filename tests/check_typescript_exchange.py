@@ -38,5 +38,5 @@ with tempfile.TemporaryDirectory() as tmp:
  # A valid core document with an unsupported required feature remains inspectable.
  value=json.loads((ROOT/'examples/awaiting-approval.session.json').read_text());value['required_features']=['example.unknown/1'];unknown=tmp/'unknown.json';unknown.write_text(json.dumps(value))
  compare('unsupported-feature-exit-3','validate',unknown,expected=3)
-result={'asif_version':'0.3','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
+result={'asif_version':'0.4','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
 (ROOT/'tests/typescript-exchange-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='results'},indent=2))
