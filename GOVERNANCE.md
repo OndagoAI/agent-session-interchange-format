@@ -31,7 +31,7 @@ Calling a community specification “stable” does not imply approval by IETF o
 
 ## Change and extension policy
 
-Breaking meanings or interpretation requirements require a new major version. Optional additions must preserve old meanings and unknown data. Required extensions use versioned names and a documented refusal path. A profile registration needs a stable owner, exact schema/semantics, privacy considerations, fixtures, and two implementation reports before stable status.
+Before 1.0, breaking meanings or interpretation requirements increment the minor version (for example, 0.3 to 0.4). Starting at 1.0, they require a new major version. Core versions are exact interpretation contracts, not ranges or promises of backward compatibility. Required profiles and independently versioned report formats also increment their version when their interpretation requirements change; a core bump does not silently change their identifiers. Optional additions must preserve old meanings and unknown data. Required extensions use versioned names and a documented refusal path. A profile registration needs a stable owner, exact schema/semantics, privacy considerations, fixtures, and two implementation reports before stable status.
 
 Do not register extensions solely because a vendor uses a field. Require a use case and specify how a reader behaves without support. Profiles can advance separately from the core. Deprecations carry a migration plan and retained fixtures; no retroactive relabeling of old records.
 

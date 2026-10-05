@@ -1,6 +1,6 @@
 # ASIF portable-continuation profile
 
-Profile: `asif.portable-continuation/0.1`. ASIF version: **0.3**. Status: normative proposal with structural schemas and synthetic validation fixtures; no real agent interoperability or runtime restoration is claimed.
+Profile: `asif.portable-continuation/0.2`. ASIF version: **0.4**. Status: normative proposal with structural schemas and synthetic validation fixtures; no real agent interoperability or runtime restoration is claimed.
 
 Object reference: [profile objects](docs/continuation-objects.md) · [report objects](docs/report-objects.md). Each object has a field table, rules and a checked JSON example.
 
@@ -34,7 +34,7 @@ For every event in selected branch history through the head, `context_accounting
 
 ## 4. Typed request context
 
-ASIF 0.3 adds mandatory `kind` to each context input:
+ASIF 0.3 introduced mandatory `kind` to each context input:
 
 | Kind | Additional fields and semantics |
 |---|---|

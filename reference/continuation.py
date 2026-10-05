@@ -14,7 +14,7 @@ from .workspace import workspace_states, check_git
 ROOT=Path(__file__).resolve().parents[1]
 SESSION=Draft202012Validator(json.loads((ROOT/'schemas/session.schema.json').read_text()))
 REPORT=Validator(json.loads((ROOT/'schemas/continuation-report.schema.json').read_text()))
-FEATURE='asif.portable-continuation/0.1'
+FEATURE='asif.portable-continuation/0.2'
 def subject(kind,id,owner=None):
     s={'kind':kind,'id':id}
     if owner is not None:s['owner_id']=owner

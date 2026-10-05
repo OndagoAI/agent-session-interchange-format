@@ -1,12 +1,12 @@
 {
-  "report_version": "0.1",
+  "report_version": "0.2",
   "evaluation_mode": "synthetic",
   "id": "assessment-another-agent",
   "source": {
     "session_id": "session-another-agent",
     "capture_id": "capture-another-agent",
     "plan_id": "continue-main",
-    "document_sha256": "d32b30525d3670ff919d46a7bd56129f10bc6b3b95176cbba98a9b08a3a95708"
+    "document_sha256": "fe150480075ea66081a68478faa58b2a8190a1c42d3d128efc75f2356ac57994"
   },
   "destination": {
     "id": "example-agent-b-runtime",
@@ -80,7 +80,7 @@
     {
       "subject": {
         "kind": "feature",
-        "id": "asif.portable-continuation/0.1"
+        "id": "asif.portable-continuation/0.2"
       },
       "status": "supported",
       "required": true,

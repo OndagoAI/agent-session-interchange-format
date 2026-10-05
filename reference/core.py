@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 TYPES=Draft202012Validator.TYPE_CHECKER.redefine('integer',lambda checker,value:not isinstance(value,bool) and (isinstance(value,int) or isinstance(value,(float,Decimal)) and value==int(value)))
 Validator=validators.extend(Draft202012Validator,type_checker=TYPES)
 SCHEMA=Validator(json.loads((ROOT/'schemas/session.schema.json').read_text()))
-SUPPORTED={'asif.portable-continuation/0.1','asif.streams/0.1','asif.external-bindings/0.1'}
+SUPPORTED={'asif.portable-continuation/0.2','asif.streams/0.1','asif.external-bindings/0.1'}
 
 
 def effective(events):

@@ -22,5 +22,5 @@ def wrap(kind,original):
 continuation_checks.inspect_session=wrap('session',continuation_checks.inspect_session)
 continuation_checks.inspect_report=wrap('report',continuation_checks.inspect_report)
 runpy.run_path(str(ROOT/'tests/check_continuation.py'))
-(ROOT/'tests/typescript-parity-cases.json').write_bytes(encode({'asif_version':'0.3','source':'tests/check_continuation.py','independent_implementations':0,'cases':cases}))
+(ROOT/'tests/typescript-parity-cases.json').write_bytes(encode({'asif_version':'0.4','source':'tests/check_continuation.py','independent_implementations':0,'cases':cases}))
 print('Exported',len(cases),'Python continuation outcomes for TypeScript parity checks.')

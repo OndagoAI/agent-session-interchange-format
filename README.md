@@ -44,7 +44,7 @@ See the [use-case walkthroughs](docs/use-cases.md) for the handoff steps and wha
 
 ## What works today?
 
-ASIF **0.3** is a session data-model proposal. This repository includes schemas, checked synthetic examples, and locally authored **Python and TypeScript CLIs** for validation, neutral request projection, selected file-tree restoration, packaging/signatures and redaction auditing.
+ASIF **0.4** is a review draft of the session data model. [Changes and migration from 0.3](MIGRATION.md) explain the compatibility boundary. This repository includes schemas, checked synthetic examples, and locally authored **Python and TypeScript CLIs** for validation, neutral request projection, selected file-tree restoration, packaging/signatures and redaction auditing.
 
 The workflows above are integration goals. Real source/destination adapters, provider request encoding, live multi-agent coordination and independent interoperability evidence remain outstanding. ASIF describes shared session data; an application must implement agent scheduling, access control, synchronization and import. A valid session or a synthetic `ready` report does not establish that a destination can execute it. See the [compatibility and evidence matrix](docs/compatibility.md), [implementation scope](REFERENCE.md) and [remaining gaps](GAPS.md).
 

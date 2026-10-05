@@ -1,4 +1,4 @@
-# ASIF 0.3 gaps and implementation status
+# ASIF 0.4 gaps and implementation status
 
 Reviewed against the current specification and recorded test results on **2026-09-26**.
 
