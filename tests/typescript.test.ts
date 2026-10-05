@@ -103,52 +103,95 @@ const progression = JSON.parse(
     "utf8",
   ),
 );
-for (const item of progression.cases)
-  check("call progression: " + item.name, () => {
-    const d = load(path.join(ROOT, "examples", item.fixture))[0];
-    for (const edit of item.edits) {
-      let target = d;
-      for (const key of edit.path.slice(0, -1)) target = target[key];
-      const key = edit.path.at(-1);
-      if (edit.remove) {
-        if (Array.isArray(target)) target.splice(Number(key), 1);
-        else delete target[key];
-      } else target[key] = structuredClone(edit.value);
-    }
-    if (item.error) {
-      assert.throws(
-        () => validateDocument(d, path.join(ROOT, "examples")),
-        (error) =>
-          error instanceof Invalid && error.message.includes(item.error),
-      );
-    } else {
-      const validated = validateDocument(d, path.join(ROOT, "examples"));
-      const externalCalls = Object.fromEntries(
-        (d.external_bindings ?? [])
-          .filter((b: Obj) => b.kind === "call")
-          .map((b: Obj) => [b.id, b.descriptor]),
-      );
-      const state = historyState(
-        d.branches[0].event_ids.map(
-          (id: string) => validated.collections.events[id],
-        ),
-        externalCalls,
-      );
-      const actual = {
-        calls: Object.fromEntries(
-          Object.entries<Obj>(state.calls).map(([id, call]) => [
-            id,
-            {
-              arguments: call.arguments,
-              arguments_status: call.arguments_status,
-            },
-          ]),
-        ),
-        closed_calls: state.closed_calls,
-      };
-      assert.deepEqual(JSON.parse(JSON.stringify(actual)), item.expected);
-    }
-  });
+const taskCases = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "tests/task-semantics-cases.json"), "utf8"),
+);
+for (const group of [
+  { name: "call progression", cases: progression.cases },
+  { name: "task semantics", cases: taskCases.cases },
+])
+  for (const item of group.cases)
+    check(group.name + ": " + item.name, () => {
+      const d = load(path.join(ROOT, "examples", item.fixture))[0];
+      for (const edit of item.edits) {
+        let target = d;
+        for (const key of edit.path.slice(0, -1)) target = target[key];
+        const key = edit.path.at(-1);
+        if (edit.remove) {
+          if (Array.isArray(target)) target.splice(Number(key), 1);
+          else delete target[key];
+        } else target[key] = structuredClone(edit.value);
+      }
+      if (item.schema_error) {
+        assert.throws(
+          () => validateDocument(d, path.join(ROOT, "examples")),
+          SchemaInvalid,
+        );
+      } else if (item.error) {
+        assert.throws(
+          () => validateDocument(d, path.join(ROOT, "examples")),
+          (error) =>
+            error instanceof Invalid && error.message.includes(item.error),
+        );
+      } else {
+        const validated = validateDocument(d, path.join(ROOT, "examples"));
+        if (item.task_states) {
+          const partial =
+            d.coverage.find((c: Obj) => c.scope === "tasks").status ===
+            "partial";
+          for (const branch of d.branches) {
+            if (!Object.hasOwn(item.task_states, branch.id)) continue;
+            const state = historyState(
+              branch.event_ids.map(
+                (id: string) => validated.collections.events[id],
+              ),
+              {},
+              {},
+              partial,
+            );
+            const actual = {
+              tasks: Object.fromEntries(
+                Object.entries<Obj>(state.tasks).map(([id, task]) => [
+                  id,
+                  { revision: task.revision, status: task.status },
+                ]),
+              ),
+              task_dependencies: state.task_dependencies,
+              task_history_gaps: state.task_history_gaps,
+            };
+            assert.deepEqual(
+              JSON.parse(JSON.stringify(actual)),
+              item.task_states[branch.id],
+            );
+          }
+          return;
+        }
+        const externalCalls = Object.fromEntries(
+          (d.external_bindings ?? [])
+            .filter((b: Obj) => b.kind === "call")
+            .map((b: Obj) => [b.id, b.descriptor]),
+        );
+        const state = historyState(
+          d.branches[0].event_ids.map(
+            (id: string) => validated.collections.events[id],
+          ),
+          externalCalls,
+        );
+        const actual = {
+          calls: Object.fromEntries(
+            Object.entries<Obj>(state.calls).map(([id, call]) => [
+              id,
+              {
+                arguments: call.arguments,
+                arguments_status: call.arguments_status,
+              },
+            ]),
+          ),
+          closed_calls: state.closed_calls,
+        };
+        assert.deepEqual(JSON.parse(JSON.stringify(actual)), item.expected);
+      }
+    });
 check("call progression retains immutable evidence across captures", () => {
   const partial = load(
     path.join(ROOT, "examples/tool-call-partial.session.json"),

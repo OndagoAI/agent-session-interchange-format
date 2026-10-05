@@ -114,12 +114,13 @@
     "Continuation Result": "Records whether continuation was tested and the evidence for its outcome.",
     "Subject": "Identifies the exact entity or capability being assessed, including its owner where IDs are scoped.",
     "Assessment": "Records support, adaptation or a blocker for one subject, with evidence and any resolved binding.",
-    "Assessment Resolved": "Carries the destination's resolved dependency or service binding for comparison with source requirements.",
+    "Assessment Resolved": "Destination dependency, service, operation recovery or core requirement binding, checked against its source declaration.",
     "Assessment Resolved Account": "Identifies the resolved destination account for comparison with the expected service account.",
     "Evidence": "Identifies the producer, time and kind of evidence supporting an assessment or execution result.",
     "Transformation": "Declares a proposed or accepted adaptation, its target, rule, losses and acceptance evidence.",
     "Result": "Common result shape for an attempted import or continuation operation, including explanatory evidence.",
-    "External Request Option": "One selectable option of an externally bound decision request."
+    "External Request Option": "One selectable option of an externally bound decision request.",
+    "Assessment Resolved External Identity": "Identifies the exact remote operation being reconciled; must match its source namespace and identity."
   },
   "fields": {
     "id": "Opaque, case-sensitive identity within the object's declared scope.",
@@ -136,7 +137,7 @@
     "state": "Recorded pending or observed state; it is not a live process assertion.",
     "mode": "Representation or interpretation mode selected by the enclosing object.",
     "purpose": "Intended use of the record or resource.",
-    "required": "Whether this subject is required for the selected capability.",
+    "required": "Whether the action-specific prerequisite closure requires this subject; reports must match the computed flag exactly.",
     "required_for": "Capabilities that depend on this prerequisite.",
     "required_features": "Feature identifiers whose semantics a consumer must understand for its capability claim.",
     "asif_version": "Exact ASIF draft version used by this document.",
@@ -401,13 +402,14 @@
     "input_limit": "Destination input capacity, or null when unknown.",
     "output_reserve": "Capacity reserved for the next output.",
     "fit": "Whether the measured context fits the destination budget.",
-    "owner_id": "Owner identity for a subject whose ID is scoped, such as an instruction.",
+    "owner_id": "Configuration owner for instruction/capability/policy subjects, checkpoint owner for checkpoint_requirement, or environment owner for environment_requirement.",
     "evidence_ids": "IDs of evidence records supporting this declaration.",
     "resolved": "Destination-resolved dependency or service values.",
     "rule": "Explicit transformation rule rather than an implicit substitution.",
     "accepted": "Whether the declared transformation has been accepted with the required evidence.",
     "runtime": "Agent, adapter and platform of the assessed runtime.",
-    "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress."
+    "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress.",
+    "recovery_strategy": "Resolved reconcile or reconnect strategy; must match the selected source operation."
   },
   "session:/properties/capture": {
     "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
@@ -532,7 +534,7 @@
     "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
   },
   "session:/$defs/event": {
-    "rules": "See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events."
+    "rules": "See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events. Task updates MUST omit envelope `supersedes`; corrections use new task revisions and `previous_revision`."
   },
   "session:/$defs/event/properties/data": {
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
@@ -559,7 +561,14 @@
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
   },
   "session:/$defs/event/allOf/5/then/properties/data": {
-    "rules": "See [selected-history state transitions](../SEMANTICS.md#15-selected-history-state-transitions). Revisions increase and name their selected predecessor. Reopening a terminal task as pending or in progress requires `reopen_reason`."
+    "rules": "See [task revision and dependency semantics](../SEMANTICS.md#16-task-revisions-and-dependencies). Dependencies are session-scoped task IDs interpreted at the selected boundary, with no implicit scheduling or status cascade. Every target must be declared locally, selected dependency graphs must remain acyclic, and absent predecessor history requires partial task coverage. Task updates use `previous_revision`, never envelope `supersedes`. Reopening completed, failed, cancelled or superseded tasks as proposed, pending or in_progress requires `reopen_reason`.",
+    "fields": {
+      "task_id": "Session-scoped identity of the logical task.",
+      "revision": "Revision number unique within this task identity; numbers need not be contiguous.",
+      "previous_revision": "Exact preceding selected revision, strictly smaller than revision. An omitted predecessor event requires partial task coverage.",
+      "dependencies": "Complete declared prerequisite task IDs for this revision. Resolve to latest selected revisions at the assessed boundary. Omission is unknown; [] declares none. No implicit inheritance, execution ordering or status cascade.",
+      "reopen_reason": "Required nonempty explanation when a completed, failed, cancelled or superseded task becomes proposed, pending or in_progress."
+    }
   },
   "session:/$defs/event/allOf/6/then/properties/data": {
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."

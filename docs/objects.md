@@ -985,7 +985,7 @@ Describes a skill, plugin, hook, connection or other runtime facility and its su
 | <a id="capability-object-type"></a>`type` | string | Yes | Namespaced semantic type or entity type, as defined by the enclosing object. Minimum length: `1`. |
 | <a id="capability-object-definition"></a>`definition` | JSON value | Yes | Dialect-specific definition retained without guessing unknown semantics. |
 | <a id="capability-object-resource_ids"></a>`resource_ids` | array of string | Yes | IDs of supporting resources; their availability is declared separately. Items MUST be unique. |
-| <a id="capability-object-required"></a>`required` | boolean | Yes | Whether this subject is required for the selected capability. |
+| <a id="capability-object-required"></a>`required` | boolean | Yes | Whether the action-specific prerequisite closure requires this subject; reports must match the computed flag exactly. |
 
 ### Rules
 
@@ -1921,14 +1921,14 @@ Immutable envelope for a recorded occurrence, including identity, attribution, c
 
 ### Rules
 
-See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events.
+See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events. Task updates MUST omit envelope `supersedes`; corrections use new task revisions and `previous_revision`.
 
 - When `kind` is `"message"`, `data` requires `role`, `parts`.
 - When `kind` is `"tool_call"`, `data` requires `call_id`, `tool_id`, `arguments`, `arguments_status`.
 - When `kind` is `"tool_result"`, `data` requires `call_id`, `result_index`, `terminal`, `outcome`, `parts`.
 - When `kind` is `"decision_request"`, `data` requires `request_id`, `decision_kind`, `prompt`, `options`.
 - When `kind` is `"decision_resolution"`, `data` requires `request_id`, `outcome`, `answer`.
-- When `kind` is `"task_update"`, `data` requires `task_id`, `revision`, `status`, `parts`.
+- When `kind` is `"task_update"`, `data` requires `task_id`, `revision`, `status`, `parts`; omit `supersedes`.
 - When `kind` is `"context_checkpoint"`, `data` requires `context_id`, `reason`.
 - When `kind` is `"configuration_change"`, `data` requires `configuration_id`.
 - When `kind` is `"execution_transition"`, `data` requires `execution_id`, `status`.
@@ -2263,17 +2263,17 @@ A versioned task state, with optional predecessor and dependency declarations.
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| <a id="task-update-data-object-task_id"></a>`task_id` | string | Yes | Identity of the versioned task. Minimum length: `1`. |
-| <a id="task-update-data-object-revision"></a>`revision` | integer | Yes | Versioned definition or task revision within its identity. Minimum: `0`. Maximum: `9007199254740991`. |
+| <a id="task-update-data-object-task_id"></a>`task_id` | string | Yes | Session-scoped identity of the logical task. Minimum length: `1`. |
+| <a id="task-update-data-object-revision"></a>`revision` | integer | Yes | Revision number unique within this task identity; numbers need not be contiguous. Minimum: `0`. Maximum: `9007199254740991`. |
 | <a id="task-update-data-object-status"></a>`status` | enum | Yes | Recorded state at the relevant boundary; see the allowed values. One of `"proposed"`, `"pending"`, `"in_progress"`, `"completed"`, `"failed"`, `"cancelled"`, `"superseded"`, `"unknown"`. |
 | <a id="task-update-data-object-parts"></a>`parts` | array of [Text Part Object](objects.md#text-part-object) / [Resource Part Object](objects.md#resource-part-object) / [Structured Part Object](objects.md#structured-part-object) / [Opaque Part Object](objects.md#opaque-part-object) | Yes | Ordered content parts. Order is semantically significant. |
-| <a id="task-update-data-object-previous_revision"></a>`previous_revision` | integer | No | Earlier selected revision of this task. Minimum: `0`. Maximum: `9007199254740991`. |
-| <a id="task-update-data-object-dependencies"></a>`dependencies` | array of string | No | Declared dependencies; interpretation is determined by the enclosing object. Items MUST be unique. |
-| <a id="task-update-data-object-reopen_reason"></a>`reopen_reason` | string | No | Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress. Minimum length: `1`. |
+| <a id="task-update-data-object-previous_revision"></a>`previous_revision` | integer | No | Exact preceding selected revision, strictly smaller than revision. An omitted predecessor event requires partial task coverage. Minimum: `0`. Maximum: `9007199254740991`. |
+| <a id="task-update-data-object-dependencies"></a>`dependencies` | array of string | No | Complete declared prerequisite task IDs for this revision. Resolve to latest selected revisions at the assessed boundary. Omission is unknown; [] declares none. No implicit inheritance, execution ordering or status cascade. Items MUST be unique. |
+| <a id="task-update-data-object-reopen_reason"></a>`reopen_reason` | string | No | Required nonempty explanation when a completed, failed, cancelled or superseded task becomes proposed, pending or in_progress. Minimum length: `1`. |
 
 ### Rules
 
-See [selected-history state transitions](../SEMANTICS.md#15-selected-history-state-transitions). Revisions increase and name their selected predecessor. Reopening a terminal task as pending or in progress requires `reopen_reason`.
+See [task revision and dependency semantics](../SEMANTICS.md#16-task-revisions-and-dependencies). Dependencies are session-scoped task IDs interpreted at the selected boundary, with no implicit scheduling or status cascade. Every target must be declared locally, selected dependency graphs must remain acyclic, and absent predecessor history requires partial task coverage. Task updates use `previous_revision`, never envelope `supersedes`. Reopening completed, failed, cancelled or superseded tasks as proposed, pending or in_progress requires `reopen_reason`.
 
 Additional properties are permitted and MUST be preserved when relaying supported JSON values. They do not acquire execution semantics without a declared feature or dialect.
 

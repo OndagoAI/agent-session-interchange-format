@@ -827,7 +827,8 @@
           "overflow_policy": "block"
         },
         "next_action": {
-          "kind": "await_user"
+          "kind": "resume_native",
+          "native_import_id": "native"
         }
       }
     ]

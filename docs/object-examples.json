@@ -1430,7 +1430,7 @@
           "id": "continue-context"
         },
         "status": "supported",
-        "required": true,
+        "required": false,
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
@@ -1442,7 +1442,7 @@
           "id": "continue-main"
         },
         "status": "supported",
-        "required": true,
+        "required": false,
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
@@ -1467,6 +1467,18 @@
         },
         "status": "supported",
         "required": true,
+        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+        "evidence_ids": [
+          "scenario"
+        ]
+      },
+      {
+        "subject": {
+          "kind": "resource",
+          "id": "source-csv"
+        },
+        "status": "supported",
+        "required": false,
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
@@ -1508,18 +1520,6 @@
         "status": "unresolved",
         "required": true,
         "detail": "Remote outcome or destination login must be verified before any continuation.",
-        "evidence_ids": [
-          "scenario"
-        ]
-      },
-      {
-        "subject": {
-          "kind": "resource",
-          "id": "source-csv"
-        },
-        "status": "supported",
-        "required": true,
-        "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
         ]
@@ -1725,5 +1725,9 @@
     "status": "not_tested",
     "evidence_ids": [],
     "detail": "No agent was started."
+  },
+  "continuation-report:/$defs/assessment/properties/resolved/properties/external_identity": {
+    "namespace": "example.jobs/account-A",
+    "value": "job-42"
   }
 }

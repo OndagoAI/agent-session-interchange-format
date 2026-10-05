@@ -16,9 +16,9 @@ def effective(events):
     return [e for e in events if e['id'] not in superseded]
 
 
-def history_state(events,external_calls=None,external_requests=None):
+def history_state(events,external_calls=None,external_requests=None,partial_tasks=False):
     calls=dict(external_calls or {});requests=dict(external_requests or {});closed={};decisions={};tasks={};indices={};executions={}
-    call_events={};selected={e['id'] for e in effective(events)}
+    call_events={};task_gaps={};selected={e['id'] for e in effective(events)}
     for event in events:
         # Fold call amendments in place: removing the original could orphan a
         # result or decision recorded before the amendment was captured.
@@ -44,22 +44,42 @@ def history_state(events,external_calls=None,external_requests=None):
             decisions[id]=data
         elif kind=='task_update':
             id=data['task_id'];prior=tasks.get(id)
+            need('supersedes' not in event,'task revisions use previous_revision, not supersedes')
+            if 'previous_revision' in data:need(data['previous_revision']<data['revision'],'task predecessor revision must be earlier')
             if prior:
                 need(data.get('previous_revision')==prior['revision'] and data['revision']>prior['revision'],'task revision transition')
-                if prior['status'] in ('completed','failed','cancelled') and data['status'] in ('pending','in_progress'):
+                if prior['status'] in ('completed','failed','cancelled','superseded') and data['status'] in ('proposed','pending','in_progress'):
                     need(bool(data.get('reopen_reason')),'task reopen reason missing')
-            else:need('previous_revision' not in data,'task predecessor not in selected history')
+            elif 'previous_revision' in data:
+                need(partial_tasks,'task predecessor not in selected history')
+                task_gaps[id]=data['previous_revision']
             tasks[id]=data
+            # Only changed outgoing edges can introduce a cycle. Undeclared
+            # selected state is a leaf; document-level checks resolve identity.
+            pending=list(data.get('dependencies',[]));seen=set()
+            while pending:
+                dependency=pending.pop()
+                need(dependency!=id,'task dependency cycle')
+                if dependency not in seen:
+                    seen.add(dependency);pending.extend(tasks.get(dependency,{}).get('dependencies',[]))
         elif kind=='execution_transition':
             id=data['execution_id'];old=executions.get(id)
             need(old not in ('completed','failed','cancelled','interrupted'),'terminal execution reopened')
             executions[id]=data['status']
-    return {'calls':calls,'closed_calls':closed,'requests':requests,'decisions':decisions,'tasks':tasks,'executions':executions}
+    dependency_states={}
+    for id,task in tasks.items():
+        dependency_states[id]=None if 'dependencies' not in task else {}
+        for dependency in task.get('dependencies',[]):
+            target=tasks.get(dependency,{})
+            status=target.get('status','unknown')
+            dependency_states[id][dependency]={'revision':target.get('revision'),'state':'satisfied' if status=='completed' else 'unknown' if status=='unknown' else 'unsatisfied'}
+    return {'calls':calls,'closed_calls':closed,'requests':requests,'decisions':decisions,'tasks':tasks,'executions':executions,'task_history_gaps':task_gaps,'task_dependencies':dependency_states}
 
 
 def validate_document(doc,folder):
     SCHEMA.validate(doc)
     collections={name:unique(doc[name]) for name in ['participants','events','branches','executions','contexts','configurations','tools','resources','environments','checkpoints','losses']}
+    partial_tasks=next(c['status'] for c in doc['coverage'] if c['scope']=='tasks')=='partial'
     resources=Resources(doc,folder);events=collections['events'];participants=collections['participants']
     acyclic({id:[p['parent_participant_id']] if 'parent_participant_id' in p else [] for id,p in participants.items()},'participant')
     sequences=[e['sequence'] for e in events.values()];need(len(sequences)==len(set(sequences)),'duplicate event sequence')
@@ -132,6 +152,9 @@ def validate_document(doc,folder):
             unique(d['options']);requests[d['request_id']]=d
         elif kind=='task_update':
             key=(d['task_id'],d['revision']);need(key not in task_revisions,'duplicate task revision');task_revisions.add(key)
+            need('supersedes' not in e,'task revisions use previous_revision, not supersedes')
+            need(d['task_id'] not in d.get('dependencies',[]),'task self dependency')
+            if 'previous_revision' in d:need(d['previous_revision']<d['revision'],'task predecessor revision must be earlier')
         elif kind in ('context_checkpoint','configuration_change','execution_transition','resource_change'):
             field,collection={'context_checkpoint':('context_id','contexts'),'configuration_change':('configuration_id','configurations'),'execution_transition':('execution_id','executions'),'resource_change':('resource_id','resources')}[kind]
             need(d[field] in collections[collection],'missing '+field)
@@ -139,8 +162,12 @@ def validate_document(doc,folder):
                 if field in d:need(d[field] in collections['contexts' if field=='replaced_context_id' else 'resources'],'missing predecessor')
         elif kind=='extension' and d['interpretation_required']:need(d['type'] in doc['required_features'],'ungated required extension')
     acyclic(causes,'causal');acyclic(supersessions,'supersession')
+    task_ids={id for id,revision in task_revisions}
     for e in events.values():
         d=e['data']
+        if e['kind']=='task_update':
+            need(set(d.get('dependencies',[]))<=task_ids,'missing task dependency')
+            if 'previous_revision' in d:need((d['task_id'],d['previous_revision']) in task_revisions or partial_tasks,'task predecessor absent without partial coverage')
         if e['kind']=='tool_result':need(d['call_id'] in calls or d['call_id'] in external_calls,'orphan tool result')
         if e['kind']=='decision_resolution':need(d['request_id'] in requests or d['request_id'] in external_requests,'orphan decision resolution')
     for binding in doc.get('external_bindings',[]):
@@ -192,7 +219,7 @@ def validate_document(doc,folder):
             if ctx['at_event_id'] is not None:need(cp['at_event_id'] is not None and events[ctx['at_event_id']]['sequence']<=events[cp['at_event_id']]['sequence'],'checkpoint context is newer than boundary')
         if cp['configuration_id']:need(cp['configuration_id'] in collections['configurations'],'missing checkpoint configuration')
         ids=branch['event_ids'][:branch['event_ids'].index(cp['at_event_id'])+1] if cp['at_event_id'] else []
-        state=history_state([events[id] for id in ids],external_calls,external_requests)
+        state=history_state([events[id] for id in ids],external_calls,external_requests,partial_tasks)
         unique(cp['open_calls'],'call_id');unique(cp['open_decisions'],'request_id');unique(cp['tasks'],'task_id')
         for call in cp['open_calls']:need(call['call_id'] in state['calls'] and call['call_id'] not in state['closed_calls'],'checkpoint call not open')
         for decision in cp['open_decisions']:need(decision['request_id'] in state['requests'] and decision['request_id'] not in state['decisions'],'checkpoint decision not open')
@@ -202,7 +229,7 @@ def validate_document(doc,folder):
             if coverage['tools']=='complete':need({x['call_id'] for x in cp['open_calls']}==state['calls'].keys()-state['closed_calls'].keys(),'unaccounted open call')
             if coverage['decisions']=='complete':need({x['request_id'] for x in cp['open_decisions']}==state['requests'].keys()-state['decisions'].keys(),'unaccounted open decision')
     for id,cps in heads.items():need(len(cps)==1,'branch requires exactly one head checkpoint')
-    for branch in collections['branches'].values():history_state([events[id] for id in branch['event_ids']],external_calls,external_requests)
+    for branch in collections['branches'].values():history_state([events[id] for id in branch['event_ids']],external_calls,external_requests,partial_tasks)
     nonempty={name:bool(doc[name]) for name in ['participants','branches','executions','contexts','resources']}
     nonempty.update(configuration=bool(doc['configurations']),environment=bool(doc['environments']),conversation=any(e['kind']=='message' for e in events.values()),tools=bool(doc['tools']) or bool(calls),decisions=bool(requests),tasks=bool(task_revisions),native=any(r['purpose']=='native' for r in resources.records.values()),usage=bool(doc.get('usage')))
     for cov in doc['coverage']:

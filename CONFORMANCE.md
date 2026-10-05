@@ -22,7 +22,7 @@ The [example corpus](examples/README.md) includes six attachment-focused session
 
 The [continuation scenarios](examples/continuation/README.md) add three complete session/profile documents and three destination reports. Tests cover typed tool context, exact checkpoint/configuration bindings, dependency closure and resources, path selectors/collisions, authority, service identity, native version gating, unsafe restart refusal, report source hashes/expiry, model fit, missing assessments and adaptation acceptance. All destination evidence is synthetic. No tests install tools, obtain credentials, mutate a native store or start an agent.
 
-The checker conservatively assesses every selected dependency/resource as required. More selective `required_for` evaluation, cryptographic runtime-evidence validation and complete Git restoration are not implemented. The local reference now adds bounded parsing, exact-byte package signatures, neutral context/configuration interpretation, stream assembly and staged selected-tree restoration; its supported scope and limitations are listed in [REFERENCE.md](REFERENCE.md). Profile schema validity alone cannot establish those capabilities.
+The checker computes action-specific subject requiredness using active scopes and transitive prerequisites, including core requirements and optional capabilities. Shared same-capture fixtures cover all five actions and exact report inventory. Cryptographic runtime-evidence validation and complete Git restoration are not implemented. The local reference now adds bounded parsing, exact-byte package signatures, neutral context/configuration interpretation, stream assembly and staged selected-tree restoration; its supported scope and limitations are listed in [REFERENCE.md](REFERENCE.md). Profile schema validity alone cannot establish those capabilities.
 
 ## Required acceptance cases
 
@@ -40,6 +40,8 @@ The checker conservatively assesses every selected dependency/resource as requir
 | Interchange | Missing terminal tool result | Outcome unknown; no automatic repeat of a possible side effect. |
 | Interchange | Approval without answer | Pending only with evidence; otherwise outcome unknown. |
 | Interchange | Task revisions and plan approval | Resolution applies to the exact named revision. |
+| Interchange | Task prerequisites, reopened/retired tasks and divergent branches | Resolve task IDs to current selected revisions, retain dependent statuses, reject dangling/self/cyclic dependencies, and keep unknown or cross-branch prerequisite state explicit. |
+| Interchange | Partial task revision history | Require partial task coverage for an omitted predecessor; preserve the gap and refuse complete transition reconstruction. |
 | Context | Transcript includes records absent from request | Reconstruct ordered context inputs without replaying every event. |
 | Context | Compaction | Preserve summary, retained inputs, source coverage and prior context. |
 | Context | Scoped instructions and unknown policy | Report unresolved equivalence; do not claim exact configuration. |
@@ -65,7 +67,7 @@ Current session implementations: **Python and TypeScript ports of one locally au
 
 ## TypeScript and cross-language checks
 
-On Node.js 24+, run `npm ci`, `npm run typecheck`, and `npm test`. The TypeScript suite includes the 44 continuation outcomes exported from the Python checks plus its own parser, state, workspace, package and CLI cases. It explicitly tests unsupported numeric and ZIP representations.
+On Node.js 24+, run `npm ci`, `npm run typecheck`, and `npm test`. The TypeScript suite includes the shared continuation outcomes exported from the Python checks plus its own parser, state, workspace, package and CLI cases. It explicitly tests unsupported numeric and ZIP representations.
 
 With the Python environment and Node available, run `.venv/bin/python tests/check_typescript_exchange.py` to verify packages/signatures produced by each CLI using the other CLI. The checker also compares request/report/redaction outputs and restored bytes. Use `.venv/bin/python tests/build_typescript_parity.py` to refresh shared expected results when the Python continuation tests change.
 

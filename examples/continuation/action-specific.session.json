@@ -1,17 +1,17 @@
 {
   "asif_version": "0.3",
   "capture": {
-    "id": "capture-another-computer",
+    "id": "capture-action-specific",
     "producer": {
       "name": "asif-examples",
       "version": "1"
     },
     "consistency": "consistent",
-    "boundary": "Synthetic complete checkpoint through e4. No real runtime executed."
+    "boundary": "Synthetic capture through e5; no runtime executed. Missing media, optional assets, a pending decision and a remote job have different relevance to each next action."
   },
   "session": {
-    "id": "session-another-computer",
-    "title": "another computer",
+    "id": "session-action-specific",
+    "title": "One capture assessed for five different next actions",
     "native_ids": [
       {
         "provider": "example-agent-a",
@@ -59,6 +59,10 @@
             "kind": "resource",
             "resource_id": "source-csv",
             "description": "Inline input CSV."
+          },
+          {
+            "kind": "resource",
+            "resource_id": "missing-media"
           }
         ]
       }
@@ -158,6 +162,34 @@
           }
         ]
       }
+    },
+    {
+      "id": "e5",
+      "sequence": 4,
+      "actor_id": "agent",
+      "kind": "decision_request",
+      "causes": [
+        {
+          "event_id": "e4"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-examples",
+        "method": "authored pending decision",
+        "inputs": []
+      },
+      "data": {
+        "request_id": "choose-next",
+        "decision_kind": "question",
+        "prompt": [
+          {
+            "kind": "resource",
+            "resource_id": "decision-guide"
+          }
+        ],
+        "options": []
+      }
     }
   ],
   "branches": [
@@ -167,9 +199,10 @@
         "e1",
         "e2",
         "e3",
-        "e4"
+        "e4",
+        "e5"
       ],
-      "head_event_id": "e4"
+      "head_event_id": "e5"
     }
   ],
   "executions": [],
@@ -177,7 +210,7 @@
     {
       "id": "continue-context",
       "branch_id": "main",
-      "at_event_id": "e4",
+      "at_event_id": "e5",
       "purpose": "continuation",
       "fidelity": "reconstructed",
       "inputs": [
@@ -206,6 +239,10 @@
               "kind": "resource",
               "resource_id": "source-csv",
               "description": "Inline input CSV."
+            },
+            {
+              "kind": "resource",
+              "resource_id": "missing-media"
             }
           ],
           "source_events": [
@@ -332,6 +369,15 @@
             "skill-template"
           ],
           "required": true
+        },
+        {
+          "id": "optional-formatting",
+          "type": "example.template",
+          "definition": {},
+          "resource_ids": [
+            "optional-asset"
+          ],
+          "required": false
         }
       ],
       "policies": [
@@ -431,6 +477,29 @@
       "text": "{\"session\":\"source-native\",\"ordinals\":[1,2,3,4]}\n",
       "bytes": 49,
       "sha256": "ec02a98eb69571f07f24cc778d926da03ea0073ae658446a7586628817c5ed3c"
+    },
+    {
+      "id": "missing-media",
+      "media_type": "image/png",
+      "purpose": "input",
+      "availability": "unavailable",
+      "explanation": "Referenced image was not captured."
+    },
+    {
+      "id": "optional-asset",
+      "media_type": "text/plain",
+      "purpose": "capability",
+      "availability": "unavailable",
+      "explanation": "Optional formatting template not supplied."
+    },
+    {
+      "id": "decision-guide",
+      "media_type": "text/plain",
+      "purpose": "input",
+      "availability": "embedded",
+      "text": "Choose whether to continue the workshop summary.\n",
+      "bytes": 49,
+      "sha256": "9628f6af57efe7c4cc6afec2188e6c1485d13f23c6d5c17877319b13f194fec1"
     }
   ],
   "environments": [
@@ -456,15 +525,40 @@
     {
       "id": "head",
       "branch_id": "main",
-      "at_event_id": "e4",
+      "at_event_id": "e5",
       "knowledge": "observed",
       "status": "idle",
       "context_id": "continue-context",
       "configuration_id": "effective",
       "open_calls": [],
-      "open_decisions": [],
+      "open_decisions": [
+        {
+          "request_id": "choose-next",
+          "state": "pending"
+        }
+      ],
       "tasks": [],
-      "requirements": []
+      "requirements": [
+        {
+          "id": "viewer",
+          "kind": "example.viewer",
+          "description": "Resolve destination inspection capability.",
+          "required_for": [
+            "read"
+          ],
+          "status": "available"
+        },
+        {
+          "id": "media-input",
+          "kind": "example.input",
+          "description": "Supply the image before model use.",
+          "required_for": [
+            "context"
+          ],
+          "status": "unavailable",
+          "resource_id": "missing-media"
+        }
+      ]
     }
   ],
   "coverage": [
@@ -505,8 +599,8 @@
     },
     {
       "scope": "decisions",
-      "status": "known_empty",
-      "detail": "No such activity is part of this invented scenario."
+      "status": "complete",
+      "detail": "One pending synthetic decision through e5."
     },
     {
       "scope": "tasks",
@@ -558,7 +652,7 @@
         "id": "workspace-head",
         "environment_id": "project-env",
         "root_id": "project",
-        "at_event_id": "e4",
+        "at_event_id": "e5",
         "source_root": "/Users/example/project",
         "mode": "snapshot",
         "selection": {
@@ -641,9 +735,7 @@
             "x86_64"
           ]
         },
-        "required_for": [
-          "continue"
-        ],
+        "required_for": [],
         "depends_on": [],
         "resource_ids": [],
         "binding": {
@@ -688,6 +780,35 @@
           "kind": "builtin",
           "reference": "example.inventory-summary"
         }
+      },
+      {
+        "id": "media-decoder",
+        "kind": "model",
+        "identity": "example.media-decoder",
+        "accepted_versions": [
+          "1"
+        ],
+        "platform": {
+          "os": [
+            "macos",
+            "linux"
+          ],
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ]
+        },
+        "required_for": [
+          "context"
+        ],
+        "depends_on": [],
+        "resource_ids": [
+          "missing-media"
+        ],
+        "binding": {
+          "kind": "builtin",
+          "reference": "example-agent-a"
+        }
       }
     ],
     "configuration_bindings": [
@@ -717,8 +838,47 @@
         ]
       }
     ],
-    "service_bindings": [],
-    "operations": [],
+    "service_bindings": [
+      {
+        "id": "job-service",
+        "service": "example.jobs",
+        "endpoint": {
+          "kind": "https",
+          "locator": "https://jobs.example.invalid"
+        },
+        "account": {
+          "provider": "example",
+          "subject": "account-A"
+        },
+        "auth_method": "none",
+        "audience": "example.jobs",
+        "scopes": [],
+        "secret_handles": [],
+        "dependency_ids": [
+          "summary-tool"
+        ]
+      }
+    ],
+    "operations": [
+      {
+        "id": "remote-job",
+        "kind": "service_job",
+        "external_identity": {
+          "namespace": "example.jobs/account-A",
+          "value": "job-42"
+        },
+        "state": "outcome_unknown",
+        "effects": "remote",
+        "replay": "reconcile",
+        "evidence_resource_ids": [],
+        "recovery": {
+          "strategy": "reconcile",
+          "handler_dependency_id": "summary-tool",
+          "idempotency_ref": null,
+          "evidence_resource_ids": []
+        }
+      }
+    ],
     "native_imports": [
       {
         "id": "native",
@@ -742,7 +902,7 @@
     ],
     "plans": [
       {
-        "id": "continue-main",
+        "id": "await_user",
         "checkpoint_id": "head",
         "context_id": "continue-context",
         "configuration_id": "effective",
@@ -752,10 +912,15 @@
         "dependency_ids": [
           "agent-runtime",
           "summary-tool",
-          "summary-skill"
+          "summary-skill",
+          "media-decoder"
         ],
-        "service_binding_ids": [],
-        "operation_ids": [],
+        "service_binding_ids": [
+          "job-service"
+        ],
+        "operation_ids": [
+          "remote-job"
+        ],
         "native_import_id": "native",
         "boundary": {
           "method": "quiesced",
@@ -795,6 +960,414 @@
               "input-e4"
             ],
             "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e5",
+            "disposition": "not_input",
+            "input_ids": [],
+            "explanation": "Pending decision is displayed by the destination, not appended to model input."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "await_user"
+        }
+      },
+      {
+        "id": "await_decision",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill",
+          "media-decoder"
+        ],
+        "service_binding_ids": [
+          "job-service"
+        ],
+        "operation_ids": [
+          "remote-job"
+        ],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e5",
+            "disposition": "not_input",
+            "input_ids": [],
+            "explanation": "Pending decision is displayed by the destination, not appended to model input."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "await_decision",
+          "request_id": "choose-next"
+        }
+      },
+      {
+        "id": "reconcile_operation",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill",
+          "media-decoder"
+        ],
+        "service_binding_ids": [
+          "job-service"
+        ],
+        "operation_ids": [
+          "remote-job"
+        ],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e5",
+            "disposition": "not_input",
+            "input_ids": [],
+            "explanation": "Pending decision is displayed by the destination, not appended to model input."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "reconcile_operation",
+          "operation_id": "remote-job"
+        }
+      },
+      {
+        "id": "model_request",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill",
+          "media-decoder"
+        ],
+        "service_binding_ids": [
+          "job-service"
+        ],
+        "operation_ids": [
+          "remote-job"
+        ],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e5",
+            "disposition": "not_input",
+            "input_ids": [],
+            "explanation": "Pending decision is displayed by the destination, not appended to model input."
+          }
+        ],
+        "cwd": {
+          "root_id": "project",
+          "relative_path": ""
+        },
+        "path_references": [
+          {
+            "entity_type": "environment",
+            "entity_id": "project-env",
+            "json_pointer": "/definition/value/cwd",
+            "root_id": "project",
+            "relative_path": ""
+          }
+        ],
+        "model_requirements": {
+          "source_model": {
+            "provider": "example",
+            "id": "model-a",
+            "revision": "1"
+          },
+          "capabilities": [
+            "text",
+            "tool_calls"
+          ],
+          "media_types": [
+            "text/csv",
+            "text/markdown"
+          ],
+          "overflow_policy": "block"
+        },
+        "next_action": {
+          "kind": "model_request"
+        }
+      },
+      {
+        "id": "resume_native",
+        "checkpoint_id": "head",
+        "context_id": "continue-context",
+        "configuration_id": "effective",
+        "workspace_ids": [
+          "workspace-head"
+        ],
+        "dependency_ids": [
+          "agent-runtime",
+          "summary-tool",
+          "summary-skill",
+          "media-decoder"
+        ],
+        "service_binding_ids": [
+          "job-service"
+        ],
+        "operation_ids": [
+          "remote-job"
+        ],
+        "native_import_id": "native",
+        "boundary": {
+          "method": "quiesced",
+          "consistency": "consistent",
+          "evidence_resource_ids": [],
+          "explanation": "Invented quiescent source checkpoint; illustrative evidence only."
+        },
+        "context_accounting": [
+          {
+            "event_id": "e1",
+            "disposition": "included",
+            "input_ids": [
+              "input-e1"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e2",
+            "disposition": "included",
+            "input_ids": [
+              "input-e2"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e3",
+            "disposition": "included",
+            "input_ids": [
+              "input-e3"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e4",
+            "disposition": "included",
+            "input_ids": [
+              "input-e4"
+            ],
+            "explanation": "Retained as a typed input in the reconstructed continuation context."
+          },
+          {
+            "event_id": "e5",
+            "disposition": "not_input",
+            "input_ids": [],
+            "explanation": "Pending decision is displayed by the destination, not appended to model input."
           }
         ],
         "cwd": {

@@ -17,6 +17,29 @@ For the benefits behind these records, see [use cases](../docs/use-cases.md): mo
 | [Compaction with an attachment](compaction-with-attachment.session.json) | Original notes retained in history; a summary memory selected into a separate continuation context. |
 | [Awaiting approval](awaiting-approval.session.json) | Tool call and approval request without a recorded answer or tool result. |
 | [Partial call](tool-call-partial.session.json) → [completed call](tool-call-completed.session.json) | Two captures of the same invocation, preserving immutable partial arguments and stream bytes, then an amendment and a late result. |
+| [Task dependencies](task-dependencies.session.json) | Several branch selections show completion, reopened prerequisites, explicit dependent revisions, retirement and a dependency whose state exists only on another branch. |
+| [Partial task history](task-partial-history.session.json) | Known current revisions retain unavailable predecessors and unknown prerequisite state without inventing missing history. |
+
+## Task revisions and dependencies
+
+The [task dependency example](task-dependencies.session.json) records `write` depending on task `gather`. The dependency string selects a task identity; its interpreted revision changes with the selected branch boundary.
+
+| Branch | Selected task state | Dependency interpretation |
+|---|---|---|
+| `baseline` | `gather` revision 1 and `write` revision 1 are completed. | `write` → `gather` revision 1 is satisfied according to the record. |
+| `reopened` | `gather` revision 2 is pending; `write` revision 1 remains completed. | The prerequisite is now unsatisfied; the dependent is not silently reopened. |
+| `main` | `write` explicitly reopens at revision 2; `gather` completes at revision 3. | `write` → `gather` now selects revision 3. |
+| `retired` | Alternative `gather` revision 4 is superseded. | The prerequisite is unsatisfied; core semantics do not substitute a replacement task. |
+| `dependent-only` | Only `write` revision 1 is selected. | `gather` exists in the capture, but no revision is selected on this branch. Its dependency state is unknown. |
+
+The [partial-history example](task-partial-history.session.json) starts at `gather` revision 7 with predecessor 6 and `write` revision 3 with predecessor 2. The predecessor events are unavailable. Task coverage is explicitly partial and explains the gaps. The recorded task states are inspectable, but their preceding transitions cannot be reconstructed. `gather` has unknown status and an omitted dependency list, so neither completion nor absence of further prerequisites is assumed.
+
+The [shared task cases](../tests/task-semantics-cases.json) exercise both validators, including missing and external-looking IDs, selected cycles, branch isolation, replacement of dependency lists, partial-history gaps and terminal-task reopening. A source exporting unavailable or external task state must preserve evidence and disclose limitations; inventing observed task events is not a valid repair.
+
+```sh
+.venv/bin/python asif.py validate examples/task-dependencies.session.json
+node asif.ts validate examples/task-partial-history.session.json
+```
 
 ## Tool-call progression across captures
 
@@ -121,6 +144,6 @@ From the project root:
 .venv/bin/python tests/check_examples.py
 ```
 
-The second check validates all ten documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. Run `.venv/bin/python tests/check_reference.py` and `npm test` for the shared tool-call progression cases. These are not complete ASIF conformance or interoperability tests.
+The second check validates all twelve documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. Run `.venv/bin/python tests/check_reference.py` and `npm test` for the shared tool-call progression and task cases. These are not complete ASIF conformance or interoperability tests.
 
-`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples, their five file assets, and the collaboration example. It does not replace the existing approval example or the two hand-authored tool-call captures. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.
+`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples, their five file assets, and the collaboration example. It does not replace the existing approval example, the two hand-authored tool-call captures, or the task examples. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.

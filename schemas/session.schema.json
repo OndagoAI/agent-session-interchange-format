@@ -2373,7 +2373,8 @@
                   "previous_revision": {
                     "type": "integer",
                     "minimum": 0,
-                    "maximum": 9007199254740991
+                    "maximum": 9007199254740991,
+                    "description": "Exact preceding selected revision of this task, strictly less than revision. A missing selected predecessor requires partial task coverage and remains a reconstruction gap."
                   },
                   "dependencies": {
                     "type": "array",
@@ -2381,11 +2382,13 @@
                       "type": "string",
                       "minLength": 1
                     },
-                    "uniqueItems": true
+                    "uniqueItems": true,
+                    "description": "Session-scoped task IDs; each resolves to its latest selected revision at the assessed branch boundary. Omission is unknown, an empty array declares none, and later revisions replace the list. Dependencies describe prerequisites without scheduling or cascading status changes."
                   },
                   "reopen_reason": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "description": "Explanation required when a terminal task (including superseded) becomes proposed, pending or in_progress."
                   }
                 },
                 "required": [
@@ -2396,6 +2399,11 @@
                 ],
                 "additionalProperties": true
               }
+            },
+            "not": {
+              "required": [
+                "supersedes"
+              ]
             }
           }
         },

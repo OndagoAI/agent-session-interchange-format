@@ -14,7 +14,8 @@ import {
   hash,
   casefold,
 } from "./common.ts";
-import { validateDocument, shape, type Validated } from "./core.ts";
+import { validateDocument, shape, SUPPORTED, type Validated } from "./core.ts";
+import { planRequirements } from "./requirements.ts";
 import { workspaceStates, checkGit } from "./workspace.ts";
 const FEATURE = "asif.portable-continuation/0.1";
 export const subject = (kind: string, id: string, owner?: string): Obj =>
@@ -343,80 +344,6 @@ export function inspectSession(
       if (rule.scope.kind === "path_prefix")
         relative(rule.scope.relative_path, true);
     }
-    const requiredResources = new Set<string>(
-        plan.boundary.evidence_resource_ids,
-      ),
-      add = (ids: string[]) => {
-        for (const id of ids) requiredResources.add(id);
-      };
-    for (const id of selectedDeps) add(deps[id].resource_ids);
-    for (const id of plan.workspace_ids) {
-      const w = workspaces[id];
-      add(
-        Object.values<Obj>(states[id])
-          .filter((e) => e.kind === "file")
-          .map((e) => e.resource_id),
-      );
-      if (w.git) {
-        add(w.git.bundle_resource_ids);
-        add(
-          w.git.index_entries
-            .filter((e: Obj) => e.resource_id)
-            .map((e: Obj) => e.resource_id),
-        );
-        add(
-          w.git.prerequisites
-            .filter((x: Obj) => own(x, "resource_id"))
-            .map((x: Obj) => x.resource_id),
-        );
-        need(
-          subset(w.git.lfs_dependency_ids, selectedDeps),
-          "unselected LFS dependency",
-        );
-        need(
-          subset(
-            w.git.submodules.map((x: Obj) => x.dependency_id),
-            selectedDeps,
-          ),
-          "unselected submodule dependency",
-        );
-      }
-    }
-    const collect = (value: any): void => {
-      if (Array.isArray(value)) for (const x of value) collect(x);
-      else if (value && typeof value === "object") {
-        if (typeof value.resource_id === "string")
-          requiredResources.add(value.resource_id);
-        if (own(value, "resource_ids")) add(value.resource_ids);
-        for (const x of Object.values(value)) collect(x);
-      }
-    };
-    collect(ctx.inputs);
-    collect(config);
-    for (const op of selectedOps)
-      add([...op.evidence_resource_ids, ...op.recovery.evidence_resource_ids]);
-    const expected = [
-      subject("plan", plan.id),
-      subject("context", ctx.id),
-      subject("model", plan.id),
-      subject("configuration", config.id),
-      ...doc.required_features.map((f: string) => subject("feature", f)),
-    ];
-    for (const [field, kind] of [
-      ["workspace_ids", "workspace"],
-      ["dependency_ids", "dependency"],
-      ["service_binding_ids", "service"],
-      ["operation_ids", "operation"],
-    ])
-      expected.push(...plan[field].map((id: string) => subject(kind, id)));
-    for (const [name, kind] of [
-      ["instructions", "instruction"],
-      ["capabilities", "capability"],
-      ["policies", "policy"],
-    ])
-      expected.push(
-        ...config[name].map((x: Obj) => subject(kind, x.id, config.id)),
-      );
     for (const id of plan.service_binding_ids) {
       const svc = services[id];
       need(
@@ -431,20 +358,9 @@ export function inspectSession(
         "undeclared secret handle",
       );
     }
-    if (plan.native_import_id) {
+    if (plan.native_import_id)
       need(own(native, plan.native_import_id), "missing native import");
-      const n = native[plan.native_import_id];
-      add(n.resource_ids);
-      expected.push(subject("native_import", n.id));
-    }
-    need(
-      subset(requiredResources, Object.keys(resources)),
-      "missing required resource",
-    );
-    expected.push(
-      ...[...requiredResources].sort().map((id) => subject("resource", id)),
-    );
-    planSubjects[plan.id] = expected;
+    planSubjects[plan.id] = planRequirements(doc, plan, states);
   }
   return planSubjects;
 }
@@ -478,12 +394,21 @@ export function inspectReport(
     report.assessments.map((a: Obj) => [key(a.subject), a]),
   );
   need(assessments.size === report.assessments.length, "duplicate assessment");
-  const needed = new Set<string>(expected[source.plan_id].map(key));
+  const requirements = new Map<string, boolean>(
+    expected[source.plan_id].map((item: Obj) => [
+      key(item.subject),
+      item.required,
+    ]),
+  );
+  const needed = new Set(requirements.keys());
   need(subset(needed, assessments.keys()), "missing subject assessment");
-  for (const k of needed)
+  need(setEqual(needed, assessments.keys()), "unexpected subject assessment");
+  for (const [k, required] of requirements)
     need(
-      assessments.get(k)!.required,
-      "selected subject downgraded to optional",
+      assessments.get(k)!.required === required,
+      required
+        ? "selected subject downgraded to optional"
+        : "optional subject marked required",
     );
   const evidence = unique(report.evidence);
   for (const a of report.assessments)
@@ -491,11 +416,15 @@ export function inspectReport(
       subset(a.evidence_ids, Object.keys(evidence)),
       "missing assessment evidence",
     );
-  for (const t of report.transformations)
+  for (const t of report.transformations) {
+    need(needed.has(key(t.subject)), "unexpected transformation subject");
     need(
       subset(t.evidence_ids, Object.keys(evidence)),
       "missing acceptance evidence",
     );
+    if (assessments.get(key(t.subject))!.status === "omitted")
+      need(t.losses.length, "omission transformation requires loss");
+  }
   for (const r of [report.import_result, report.continuation_result])
     need(
       subset(r.evidence_ids, Object.keys(evidence)),
@@ -533,6 +462,16 @@ export function inspectReport(
         ),
         "known blocker marked supported",
       );
+  const action = plan.next_action.kind,
+    agent = ["model_request", "resume_native"].includes(action);
+  const cp = doc.checkpoints.find((x: Obj) => x.id === plan.checkpoint_id);
+  if (report.import_result.status === "imported")
+    need(agent, "import claim exceeds assessed action");
+  if (report.continuation_result.status === "continued")
+    need(
+      agent || action === "reconcile_operation",
+      "continuation claim exceeds assessed action",
+    );
   const config = doc.configurations.find(
     (c: Obj) => c.id === plan.configuration_id,
   );
@@ -548,6 +487,7 @@ export function inspectReport(
     plan.boundary.method === "best_effort"
   )
     blocker("plan", plan.id);
+  if (agent && cp.open_decisions.length) blocker("plan", plan.id);
   const ctx = doc.contexts.find((c: Obj) => c.id === plan.context_id);
   if (["partial", "unknown"].includes(ctx.fidelity)) blocker("context", ctx.id);
   if (plan.context_accounting.some((a: Obj) => a.disposition === "unavailable"))
@@ -560,12 +500,53 @@ export function inspectReport(
       )
     )
       blocker("resource", r.id);
-  for (const op of p.operations)
-    if (
-      plan.operation_ids.includes(op.id) &&
-      ["pending", "running", "outcome_unknown"].includes(op.state)
-    )
+  for (const op of p.operations) {
+    if (!plan.operation_ids.includes(op.id)) continue;
+    const reconciling =
+      action === "reconcile_operation" &&
+      op.id === plan.next_action.operation_id;
+    if (reconciling) {
+      if (!["reconcile", "reconnect"].includes(op.recovery.strategy))
+        blocker("operation", op.id);
+      const a = assessed("operation", op.id);
+      if (a.status === "supported") {
+        const resolved = a.resolved ?? {};
+        need(
+          a.evidence_ids.length &&
+            resolved.recovery_strategy === op.recovery.strategy &&
+            op.external_identity !== null &&
+            equal(resolved.external_identity, op.external_identity),
+          "unverified operation recovery",
+        );
+      }
+    } else if (["pending", "running", "outcome_unknown"].includes(op.state))
       blocker("operation", op.id);
+  }
+  for (const [ownerKind, owners] of [
+    ["checkpoint_requirement", [cp]],
+    ["environment_requirement", doc.environments],
+  ] as [string, Obj[]][]) {
+    for (const owner of owners)
+      for (const requirement of owner.requirements) {
+        const k = key(subject(ownerKind, requirement.id, owner.id));
+        if (!needed.has(k)) continue;
+        const a = assessments.get(k)!;
+        if (a.status === "supported") {
+          const resolved = a.resolved ?? {};
+          need(
+            a.evidence_ids.length && resolved.status === "available",
+            "unverified core requirement",
+          );
+          if (own(requirement, "secret_handle"))
+            need(
+              (resolved.secret_handles ?? []).includes(
+                requirement.secret_handle,
+              ),
+              "unresolved requirement secret",
+            );
+        }
+      }
+  }
   for (const d of p.dependencies)
     if (plan.dependency_ids.includes(d.id)) {
       const a = assessed("dependency", d.id);
@@ -612,17 +593,33 @@ export function inspectReport(
       );
   }
   for (const f of doc.required_features)
-    if (f !== FEATURE) blocker("feature", f);
+    if (!SUPPORTED.has(f)) blocker("feature", f);
+  const selectedRoots = new Set(
+    p.workspaces
+      .filter((w: Obj) => plan.workspace_ids.includes(w.id))
+      .map((w: Obj) => w.root_id),
+  );
   const roots = new Set(
       p.workspaces
-        .filter((w: Obj) => plan.workspace_ids.includes(w.id))
+        .filter(
+          (w: Obj) =>
+            plan.workspace_ids.includes(w.id) &&
+            (assessed("workspace", w.id).required ||
+              ["supported", "adapted"].includes(
+                assessed("workspace", w.id).status,
+              )),
+        )
         .map((w: Obj) => w.root_id),
     ),
     mappings = unique(report.path_bindings, "root_id");
-  need(setEqual(roots, Object.keys(mappings)), "incomplete path bindings");
+  need(
+    subset(roots, Object.keys(mappings)) &&
+      subset(Object.keys(mappings), selectedRoots),
+    "incomplete path bindings",
+  );
   const flattened = workspaceStates(p);
   for (const w of p.workspaces)
-    if (plan.workspace_ids.includes(w.id)) {
+    if (plan.workspace_ids.includes(w.id) && own(mappings, w.root_id)) {
       const mapping = mappings[w.root_id],
         paths = new Set<string>();
       for (const e of Object.values<Obj>(flattened[w.id])) {
@@ -661,14 +658,17 @@ export function inspectReport(
       ["omitted", "unresolved", "unsupported"].includes(a.status),
     );
   let pending = false;
-  for (const a of required)
+  for (const a of report.assessments)
     if (a.status === "adapted") {
       const ts: Obj[] = report.transformations.filter(
         (t: Obj) => key(t.subject) === key(a.subject),
       );
       need(ts.length, "adaptation without mapping");
-      pending ||= ts.some((t) => !t.accepted);
+      if (a.required) pending ||= ts.some((t) => !t.accepted);
     }
+  pending ||= report.transformations.some(
+    (t: Obj) => requirements.get(key(t.subject)) && !t.accepted,
+  );
   const predicted = blockers.length
     ? "blocked"
     : pending
@@ -679,11 +679,11 @@ export function inspectReport(
     report.blocking_reasons.map((r: Obj) => key(r.subject)),
   );
   need(
-    subset(
+    setEqual(
       blockers.map((a) => key(a.subject)),
       reasons,
     ),
-    "missing blocking reason",
+    "missing or extraneous blocking reason",
   );
   if (!blockers.length)
     need(!reasons.size, "nonblocking report has blocking reasons");

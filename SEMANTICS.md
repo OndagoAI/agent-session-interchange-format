@@ -70,7 +70,7 @@ An event requires `id`, `sequence`, `actor_id`, `kind`, `causes[]`, `provenance`
 
 `sequence` is a unique nonnegative integer defining serialization order in this capture. It does not establish causality or wall-clock ordering. `causes` identifies causal predecessors; local edges MUST be acyclic and point to earlier serialized events. Branch order selects conversation history; context order selects model input. Consumers MUST NOT substitute one of these orders for another.
 
-Events are immutable. A correction names `supersedes`; the original remains available. The branch or context explicitly selects which version applies. Supersession MUST be acyclic and MUST NOT silently remove evidence from history. A timestamp is optional and cannot break an ordering tie by itself.
+Events are immutable. A correction names `supersedes`; the original remains available. Task updates use the revision mechanism in [§16](#16-task-revisions-and-dependencies) instead of event supersession. The branch or context explicitly selects which version applies. Supersession MUST be acyclic and MUST NOT silently remove evidence from history. A timestamp is optional and cannot break an ordering tie by itself.
 
 Every provenance record declares `mode` (`observed`, `reported`, `derived`, `synthetic`) and `producer`. Optional source entries identify `resource_id` and a locator. Byte locators use zero-based `offset` and `length`; structured locators use an explicitly named syntax and value. Derived/synthetic records MUST name their method and inputs, including an empty input list for newly authored synthetic data. Direct ASIF instrumentation can be observed evidence without a native source file. Hidden reasoning and unobserved policy MUST NOT be fabricated.
 
@@ -226,6 +226,40 @@ Draft.3 requires explicit `kind` on context inputs; draft.2 documents are not si
 
 A correction applies only where a selected history includes the correcting event. A selected correction supersedes its named predecessor for derived current state while both records remain available as evidence. It MUST name an earlier event of the same kind; a corrected decision resolution MUST retain the same request identity. Two effective resolutions of the same request are contradictory and MUST NOT be resolved by choosing the latest timestamp.
 
-A task revision MUST name its selected predecessor when one exists and increase its revision number. Reopening a completed, failed or cancelled task as pending or in progress MUST include a nonempty `reopen_reason`. A partial history lacking its task predecessor cannot claim a fully reconstructed task transition.
+A task revision MUST name its selected predecessor when one exists and increase its revision number. Reopening a completed, failed, cancelled or superseded task as proposed, pending or in progress MUST include a nonempty `reopen_reason`. A partial history lacking its task predecessor cannot claim a fully reconstructed task transition. [§16](#16-task-revisions-and-dependencies) defines dependency selection and partial-history handling.
 
 Within a selected history, a terminal tool result closes that invocation; another result for that invocation requires an explicit correction rather than silently reopening it. Terminal execution transitions cannot return to running under the same execution identity. These rules describe recorded state, not permission to execute, approve or repeat an action.
+
+## 16. Task revisions and dependencies
+
+### Identity and revision selection
+
+`task_id` identifies a logical task within the session. The pair `(task_id, revision)` MUST identify at most one event in a capture and remains stable across captures. Revision numbers need not be contiguous. Divergent revisions of the same task on different branches still use different revision numbers. A task update is a complete recorded state at that revision, not a patch: absent optional fields do not inherit values from earlier revisions.
+
+At a branch boundary, process the selected task updates through that boundary in branch order. The last selected revision of each task is its current recorded state. A later revision MUST name the preceding selected revision in `previous_revision`, and the number MUST be strictly smaller than the new `revision`. A first selected revision may have any nonnegative revision number. Omission of `previous_revision` means no predecessor is declared; it does not imply revision zero or manufacture a creation event. Producers MUST retain a known predecessor relationship when exporting a partial selection.
+
+Task updates MUST NOT carry event-envelope `supersedes`. Corrections and changes append a new task revision using `previous_revision`, preserving the earlier task definition, decision bindings and transition evidence. Status `superseded` records that the task was retired; it does not select a replacement task or redirect references. Reopening terminal tasks follows §15. Other status changes record what the source reported; core ASIF does not impose a scheduler's lifecycle. An `unknown` state does not establish success, failure or permission to restart work.
+
+### Dependency references and their meaning
+
+`dependencies`, when present, is the complete declared list of prerequisite **task IDs in the same session**, not event IDs, revision IDs or continuation-profile dependency IDs. Omission means the dependency list is unknown; `[]` explicitly declares none for that revision. Every listed ID MUST have a `task_update` somewhere in the capture, even with partial task coverage. Self-dependencies and duplicate entries are invalid. IDs are opaque: strings resembling external paths or URLs remain local task IDs and MUST NOT trigger fetching.
+
+At each assessed branch/checkpoint boundary, each dependency binds to that task's latest selected revision through the boundary. It is not pinned to the revision that existed when the dependent task was written. A task present only on another branch, or later in the selected history, has no selected state at that boundary: its dependency state is unknown. Consumers MUST NOT import another branch's state or use a future revision to fill that gap. Forward declarations are permitted when the referenced task identity is included in the capture.
+
+| Selected prerequisite state | Dependency interpretation |
+|---|---|
+| `completed` | Satisfied according to the recorded state; not proof that the objective was achieved. |
+| `proposed`, `pending`, `in_progress`, `failed`, `cancelled`, `superseded` | Unsatisfied according to the recorded state. |
+| `unknown`, or no selected revision | Unknown; never silently satisfied. |
+
+Dependencies are descriptive prerequisites. An unsatisfied or unknown dependency does not make a reported `in_progress` or `completed` dependent task invalid and does not authorize or prohibit execution. Reopening, failing, cancelling or retiring a prerequisite changes its dependency interpretation at later boundaries but MUST NOT silently change dependent task statuses, invalidate historical approvals, or rewrite earlier checkpoints. A changed dependent task requires its own revision; an approval still binds its exact named revision. Exact-revision dependencies, replacement-task substitution and scheduling rules need a separately specified required feature or workflow contract.
+
+### Graphs and incomplete histories
+
+The graph of declared dependency edges among selected current task revisions MUST be acyclic after **each selected task update**, not merely at the branch head. Replacing a dependency list removes the earlier revision's edges for subsequent states. Consumers MUST NOT union edges from different revisions or branches and reject a cycle that exists only in that union. Tasks without selected state or without a known dependency list contribute no known outgoing edges; an acyclic known graph does not establish that unknown dependency information is complete.
+
+When a first selected task update names a predecessor that is not selected, the task coverage record MUST have `status: partial`, and its detail and capture boundary MUST explain the omitted history. The declared predecessor number still MUST be smaller than the current revision. Consumers retain that unresolved transition as a reconstruction gap, even if later revisions form a complete suffix. A predecessor elsewhere in the document or on another branch is not implicitly selected. Partial coverage does not permit skipping a predecessor when an earlier revision of that same task is already selected: the next revision must directly name it.
+
+Partial coverage also does not excuse a dangling dependency ID. To preserve an external or unavailable task that cannot be represented as a local task with honest provenance, retain its native evidence and a coverage/loss explanation rather than inventing a local task or claiming that core `dependencies` resolves it. External task references require a separately specified feature; the external call/request bindings do not bind tasks. A valid partial record can support inspection without proving a complete transition history or continuation readiness.
+
+See the [task examples](examples/README.md#task-revisions-and-dependencies) for branch selection, reopening, retirement and explicit predecessor gaps.
