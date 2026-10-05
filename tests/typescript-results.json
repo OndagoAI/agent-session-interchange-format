@@ -1,8 +1,8 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.4",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 179,
-  "passed": 179,
+  "checks": 237,
+  "passed": 237,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
@@ -332,6 +332,22 @@
       "passed": true
     },
     {
+      "case": "capability hash vector: utf8",
+      "passed": true
+    },
+    {
+      "case": "capability hash vector: escaped",
+      "passed": true
+    },
+    {
+      "case": "capability hash vector: reordered",
+      "passed": true
+    },
+    {
+      "case": "capability hash vector: crlf",
+      "passed": true
+    },
+    {
       "case": "Python parity: report-1",
       "passed": true
     },
@@ -345,6 +361,42 @@
     },
     {
       "case": "Python parity: report-4",
+      "passed": true
+    },
+    {
+      "case": "Python parity: future-profile-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: future-profile-feature-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: future-report-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: previous-core-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: future-core-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: missing-core-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: previous-profile-version-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: previous-profile-feature-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: previous-report-version-refused",
       "passed": true
     },
     {
@@ -508,43 +560,43 @@
       "passed": true
     },
     {
-      "case": "Python parity: report-45",
+      "case": "Python parity: report-54",
       "passed": true
     },
     {
-      "case": "Python parity: report-46",
+      "case": "Python parity: report-55",
       "passed": true
     },
     {
-      "case": "Python parity: report-47",
+      "case": "Python parity: report-56",
       "passed": true
     },
     {
-      "case": "Python parity: report-48",
+      "case": "Python parity: report-57",
       "passed": true
     },
     {
-      "case": "Python parity: report-49",
+      "case": "Python parity: report-58",
       "passed": true
     },
     {
-      "case": "Python parity: session-50",
+      "case": "Python parity: session-59",
       "passed": true
     },
     {
-      "case": "Python parity: session-51",
+      "case": "Python parity: session-60",
       "passed": true
     },
     {
-      "case": "Python parity: session-52",
+      "case": "Python parity: session-61",
       "passed": true
     },
     {
-      "case": "Python parity: session-53",
+      "case": "Python parity: session-62",
       "passed": true
     },
     {
-      "case": "Python parity: session-54",
+      "case": "Python parity: session-63",
       "passed": true
     },
     {
@@ -580,15 +632,195 @@
       "passed": true
     },
     {
-      "case": "Python parity: report-63",
+      "case": "Python parity: report-72",
       "passed": true
     },
     {
-      "case": "Python parity: report-64",
+      "case": "Python parity: report-73",
       "passed": true
     },
     {
-      "case": "Python parity: session-65",
+      "case": "Python parity: session-74",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-required",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-digest-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-noncanonical-base64",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-oversize-declaration",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-invalid-calendar-date",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-invalid-offset",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-excess-time-precision",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-byte-count-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-invalid-base64",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-format-unsupported",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-unavailable-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-version-missing",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-version-invalid-type",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-version-unsupported",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-evidence-missing",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-producer-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-destination-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-runtime-extension-type-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-runtime-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-mode-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-expires-before-report",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-observed-after-assessment",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-duplicate-components",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-component-reference-missing",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-binding-required",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-unknown-component-not-supported",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-dependency-version-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-model-budget-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-workspace-root-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-workspace-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-service-account-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-operation-identity-mismatch",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-feature-missing",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-BOM-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-duplicate-JSON-key",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-invalid-UTF8",
+      "passed": true
+    },
+    {
+      "case": "Python parity: snapshot-nonobject-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-112",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-113",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-114",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-115",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-116",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-117",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-118",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-119",
       "passed": true
     },
     {

@@ -9,12 +9,13 @@ from jsonschema import Draft202012Validator
 from .common import Invalid, need, unique, relative, acyclic, pointer
 from .core import validate_document, Validator, SUPPORTED
 from .requirements import plan_requirements
+from .capabilities import inspect_capabilities
 from .workspace import workspace_states, check_git
 
 ROOT=Path(__file__).resolve().parents[1]
 SESSION=Draft202012Validator(json.loads((ROOT/'schemas/session.schema.json').read_text()))
 REPORT=Validator(json.loads((ROOT/'schemas/continuation-report.schema.json').read_text()))
-FEATURE='asif.portable-continuation/0.1'
+FEATURE='asif.portable-continuation/0.2'
 def subject(kind,id,owner=None):
     s={'kind':kind,'id':id}
     if owner is not None:s['owner_id']=owner
@@ -143,7 +144,7 @@ def inspect_session(doc,folder):
         plan_subjects[plan['id']]=plan_requirements(doc,plan,states)
     return plan_subjects
 
-def inspect_report(doc,raw,report,folder,*,now):
+def inspect_report(doc,raw,report,folder,*,now,current_snapshot=None):
     expected=inspect_session(doc,folder);REPORT.validate(report)
     source=report['source'];need(source['session_id']==doc['session']['id'] and source['capture_id']==doc['capture']['id'],'report source mismatch')
     need(source['document_sha256']==hashlib.sha256(raw).hexdigest(),'report digest mismatch')
@@ -264,4 +265,5 @@ def inspect_report(doc,raw,report,folder,*,now):
     reasons={key(r['subject']) for r in report['blocking_reasons']}
     need({key(a['subject']) for a in blockers}==reasons,'missing or extraneous blocking reason')
     if not blockers:need(not reasons,'nonblocking report has blocking reasons')
-    return {'outcome':predicted,'operational_authorization':False,'evaluation_mode':report['evaluation_mode']}
+    current=inspect_capabilities(report,plan,now,current_snapshot,doc)
+    return {'outcome':predicted,'operational_authorization':False,'evaluation_mode':report['evaluation_mode'],'current_snapshot_matches':current}

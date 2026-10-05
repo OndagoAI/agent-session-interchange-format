@@ -33,7 +33,7 @@ ASIF records the conversation, selected inputs, files, decisions and unfinished 
 <div class="asif-session-demo" aria-label="Illustration of a portable agent session" markdown="0">
 <div class="asif-demo-caption"><span>ONE SESSION. MORE POSSIBILITIES.</span><span aria-hidden="true">↗</span></div>
 <div class="asif-session-card">
-<div class="asif-session-heading"><span class="asif-file-icon" aria-hidden="true">{ }</span><div><strong>workshop-plan</strong><span>Agent session / ASIF 0.3</span></div><span class="asif-file-type">JSON</span></div>
+<div class="asif-session-heading"><span class="asif-file-icon" aria-hidden="true">{ }</span><div><strong>workshop-plan</strong><span>Agent session / ASIF 0.4</span></div><span class="asif-file-type">JSON</span></div>
 <div class="asif-demo-tabs" role="tablist" aria-label="Explore the session">
 <button type="button" role="tab" id="tab-context" aria-selected="true" aria-controls="demo-context">Context</button>
 <button type="button" role="tab" id="tab-agents" aria-selected="false" aria-controls="demo-agents" tabindex="-1">Agents</button>

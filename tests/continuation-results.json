@@ -1,9 +1,9 @@
 {
-  "asif_version": "0.3",
-  "profile": "asif.portable-continuation/0.1",
+  "asif_version": "0.4",
+  "profile": "asif.portable-continuation/0.2",
   "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
-  "checks": 65,
-  "passed": 65,
+  "checks": 119,
+  "passed": 119,
   "real_runtime_tests": 0,
   "independent_implementations": 0,
   "operational_authorization": false,
@@ -27,6 +27,51 @@
       "case": "pending-remote-operation",
       "passed": true,
       "outcome": "blocked"
+    },
+    {
+      "case": "future-profile-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "future-profile-feature-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "future-report-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "future-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-profile-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-profile-feature-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-report-version-refused",
+      "passed": true,
+      "outcome": "rejected"
     },
     {
       "case": "profile-not-gated",
@@ -332,6 +377,231 @@
       "case": "unavailable-unselected-history-outside-inventory",
       "passed": true,
       "outcome": "accepted"
+    },
+    {
+      "case": "snapshot-required",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-digest-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-noncanonical-base64",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-oversize-declaration",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-invalid-calendar-date",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-invalid-offset",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-excess-time-precision",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-byte-count-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-invalid-base64",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-format-unsupported",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-unavailable-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-version-missing",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-version-invalid-type",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-version-unsupported",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-evidence-missing",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-producer-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-destination-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-runtime-extension-type-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-runtime-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-mode-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-expires-before-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-observed-after-assessment",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-duplicate-components",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-component-reference-missing",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-binding-required",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-unknown-component-not-supported",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-dependency-version-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-model-budget-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-workspace-root-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-workspace-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-service-account-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-operation-identity-mismatch",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-feature-missing",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-BOM-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-duplicate-JSON-key",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-invalid-UTF8",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "snapshot-nonobject-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "caller-current-snapshot-matches",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "reserialized-snapshot-requires-new-fingerprint",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "current-runtime-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "current-dependency-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "current-policy-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "current-model-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "current-service-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "current-workspace-change-invalidates-report",
+      "passed": true,
+      "outcome": "rejected"
     }
   ]
 }

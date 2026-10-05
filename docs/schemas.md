@@ -1,6 +1,6 @@
 # JSON schemas
 
-These ASIF **0.3** schemas validate document structure. Semantic requirements in the [session rules](../SEMANTICS.md) and [continuation profile](../CONTINUATION.md) also apply.
+These ASIF **0.4** schemas validate document structure. Semantic requirements in the [session rules](../SEMANTICS.md) and [continuation profile](../CONTINUATION.md) also apply.
 
 | Schema | Use | Object reference |
 |---|---|---|
@@ -11,3 +11,5 @@ These ASIF **0.3** schemas validate document structure. Semantic requirements in
 The [local reference CLIs](../REFERENCE.md) combine schema validation with selected semantic checks. The [conformance plan](../CONFORMANCE.md) describes the broader acceptance requirements, and [gaps](../GAPS.md) records what remains unimplemented or unproven.
 
 Schema downloads and [complete example documents](../examples/README.md) are published at their repository-relative paths. Example attachment bytes are preserved, including Markdown resources whose content is covered by resource digests.
+
+Destination capability snapshots use the versioned `capability_snapshot` definition in the report schema; their exact-byte envelope and component bindings are documented in the [snapshot contract](../CAPABILITIES.md).

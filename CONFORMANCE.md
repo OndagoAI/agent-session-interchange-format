@@ -72,3 +72,7 @@ On Node.js 24+, run `npm ci`, `npm run typecheck`, and `npm test`. The TypeScrip
 With the Python environment and Node available, run `.venv/bin/python tests/check_typescript_exchange.py` to verify packages/signatures produced by each CLI using the other CLI. The checker also compares request/report/redaction outputs and restored bytes. Use `.venv/bin/python tests/build_typescript_parity.py` to refresh shared expected results when the Python continuation tests change.
 
 Results: [TypeScript checks](tests/typescript-results.json) and [cross-language exchange](tests/typescript-exchange-results.json). Shared authorship means independent interoperability remains unproven.
+
+## Destination fingerprint acceptance cases
+
+The [snapshot contract](CAPABILITIES.md) is checked by the shared continuation corpus and fixed exact-byte vectors. Checks cover digest/length/base64 mismatch, missing evidence/components, unknown formats/versions, expiry, destination/runtime/account/model/workspace differences, current snapshot comparison and changed runtime/tool/policy/model/service/workspace revisions. Schema-invalid, semantically invalid, unsupported and valid-but-blocked outcomes remain distinct. CLI exchange tests check identical Python/TypeScript results and exit codes, including `--current-capabilities`.

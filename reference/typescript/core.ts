@@ -40,6 +40,17 @@ const reportValidator = ajv.compile(
     ),
   ),
 );
+const snapshotValidator = ajv.compile({
+  $ref:
+    String(reportValidator.schema && (reportValidator.schema as Obj).$id) +
+    "#/$defs/capability_snapshot",
+});
+export function snapshotShape(doc: Obj): void {
+  if (!snapshotValidator(doc))
+    throw new SchemaInvalid(
+      (snapshotValidator.errors?.[0].schemaPath ?? "").split("/").slice(1),
+    );
+}
 export function shape(doc: Obj, report = false): void {
   const v = report ? reportValidator : sessionValidator;
   if (!v(doc))
@@ -48,7 +59,7 @@ export function shape(doc: Obj, report = false): void {
     );
 }
 export const SUPPORTED = new Set([
-  "asif.portable-continuation/0.1",
+  "asif.portable-continuation/0.2",
   "asif.streams/0.1",
   "asif.external-bindings/0.1",
 ]);

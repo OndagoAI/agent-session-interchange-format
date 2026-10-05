@@ -21,6 +21,7 @@ import {
   MAX_DOCUMENT,
 } from "../reference/typescript/common.ts";
 import {
+  snapshotShape,
   validateDocument,
   historyState,
 } from "../reference/typescript/core.ts";
@@ -68,7 +69,7 @@ after(() => {
     path.join(ROOT, "tests/typescript-results.json"),
     JSON.stringify(
       {
-        asif_version: "0.3",
+        asif_version: "0.4",
         scope:
           "Local TypeScript port, shared Python expectations, CLI and package checks",
         checks: results.length,
@@ -222,6 +223,19 @@ check("call progression retains immutable evidence across captures", () => {
     { event_id: "call-complete" },
   ]);
 });
+const snapshotVectors = JSON.parse(
+  fs.readFileSync(
+    path.join(ROOT, "tests/capability-snapshot-vectors.json"),
+    "utf8",
+  ),
+);
+for (const vector of snapshotVectors.vectors)
+  check("capability hash vector: " + vector.name, () => {
+    const raw = Buffer.from(vector.utf8, "utf8");
+    assert.equal(raw.length, vector.bytes);
+    assert.equal(hash(raw), vector.sha256);
+    snapshotShape(decode(raw));
+  });
 for (const item of corpus.cases)
   check("Python parity: " + item.name, () => {
     const execute = () =>
@@ -233,6 +247,10 @@ for (const item of corpus.cases)
             item.report,
             path.join(ROOT, item.folder),
             date(item.now),
+            undefined,
+            item.current_snapshot
+              ? Buffer.from(item.current_snapshot, "base64")
+              : undefined,
           );
     if (item.expected.accepted)
       assert.deepEqual(
@@ -243,7 +261,11 @@ for (const item of corpus.cases)
       assert.throws(execute, (e) =>
         item.expected.schema_error
           ? e instanceof SchemaInvalid
-          : e instanceof Invalid && !(e instanceof SchemaInvalid),
+          : item.expected.unsupported
+            ? e instanceof Unsupported
+            : e instanceof Invalid &&
+              !(e instanceof SchemaInvalid) &&
+              !(e instanceof Unsupported),
       );
   });
 check("strict parser duplicate keys", () =>

@@ -15,6 +15,7 @@ source=ROOT/'examples/continuation/another-computer.session.json';doc=json.loads
 compare('validate','validate',source)
 compare('request','request',source,doc['contexts'][0]['id'])
 compare('report','validate-report',source,source.with_name('another-computer.report.json'),'--at','2026-09-26T12:30:00Z')
+compare('current-snapshot-matches','validate-report',source,source.with_name('another-computer.report.json'),'--at','2026-09-26T12:30:00Z','--current-capabilities',source.with_name('another-computer.capabilities.json'))
 with tempfile.TemporaryDirectory() as tmp:
  tmp=Path(tmp);private=tmp/'private.key';private.write_bytes(bytes(range(32)));public=ROOT/'examples/package-test-public.key'
  image=ROOT/'examples/image-and-document.session.json'
@@ -38,5 +39,18 @@ with tempfile.TemporaryDirectory() as tmp:
  # A valid core document with an unsupported required feature remains inspectable.
  value=json.loads((ROOT/'examples/awaiting-approval.session.json').read_text());value['required_features']=['example.unknown/1'];unknown=tmp/'unknown.json';unknown.write_text(json.dumps(value))
  compare('unsupported-feature-exit-3','validate',unknown,expected=3)
-result={'asif_version':'0.3','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
+with tempfile.TemporaryDirectory() as tmp:
+ tmp=Path(tmp);receipt=json.loads(source.with_name('another-computer.report.json').read_text())
+ r=tmp/'report.json';r.write_text(json.dumps(receipt))
+ changed=tmp/'current.json';changed.write_bytes(source.with_name('another-computer.capabilities.json').read_bytes()+b' ')
+ compare('changed-current-snapshot-exit-2','validate-report',source,r,'--at','2026-09-26T12:30:00Z','--current-capabilities',changed,expected=2)
+ receipt['destination']['capabilities_snapshot']['format']='example.unknown/1';r.write_text(json.dumps(receipt))
+ compare('unsupported-snapshot-exit-3','validate-report',source,r,'--at','2026-09-26T12:30:00Z',expected=3)
+ receipt['destination']['capabilities_snapshot']['format']='asif.destination-capabilities/0.1';receipt['destination']['capabilities_sha256']='0'*64;r.write_text(json.dumps(receipt))
+ compare('mismatched-snapshot-exit-2','validate-report',source,r,'--at','2026-09-26T12:30:00Z',expected=2)
+with tempfile.TemporaryDirectory() as tmp:
+ receipt=json.loads(source.with_name('another-computer.report.json').read_text());e=receipt['destination']['capabilities_snapshot'];e.pop('data');e.pop('bytes');e.update(availability='unavailable',explanation='Evidence not supplied.')
+ r=Path(tmp)/'unavailable.json';r.write_text(json.dumps(receipt))
+ compare('unavailable-snapshot-exit-3','validate-report',source,r,'--at','2026-09-26T12:30:00Z',expected=3)
+result={'asif_version':'0.4','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
 (ROOT/'tests/typescript-exchange-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='results'},indent=2))

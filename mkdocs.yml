@@ -78,9 +78,11 @@ nav:
       - Reference CLIs: REFERENCE.md
   - Specification:
       - Introduction: SPEC.md
+      - Changes and migration: MIGRATION.md
       - Session semantics: SEMANTICS.md
       - Profiles: PROFILES.md
       - Portable continuation: CONTINUATION.md
+      - Destination snapshots: CAPABILITIES.md
       - Streaming and external bindings: STREAMING.md
       - Package transport: TRANSPORT.md
   - Object reference:

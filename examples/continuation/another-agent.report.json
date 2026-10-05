@@ -1,12 +1,12 @@
 {
-  "report_version": "0.1",
+  "report_version": "0.2",
   "evaluation_mode": "synthetic",
   "id": "assessment-another-agent",
   "source": {
     "session_id": "session-another-agent",
     "capture_id": "capture-another-agent",
     "plan_id": "continue-main",
-    "document_sha256": "d32b30525d3670ff919d46a7bd56129f10bc6b3b95176cbba98a9b08a3a95708"
+    "document_sha256": "fe150480075ea66081a68478faa58b2a8190a1c42d3d128efc75f2356ac57994"
   },
   "destination": {
     "id": "example-agent-b-runtime",
@@ -23,7 +23,14 @@
       "os": "linux",
       "architecture": "x86_64"
     },
-    "capabilities_sha256": "53ed9bdbb19f79e9237aec78918633f31252cc2d1b339ac38dd29a451dfcf60c"
+    "capabilities_sha256": "4546229b53ea156ac6eb64867bc797a7213ec1b7064e2c82e68f6a0c9c0a2d47",
+    "capabilities_snapshot": {
+      "format": "asif.destination-capabilities/0.1",
+      "availability": "supplied",
+      "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtYW5vdGhlci1hZ2VudCIsCiAgImRlc3RpbmF0aW9uX2lkIjogImV4YW1wbGUtYWdlbnQtYi1ydW50aW1lIiwKICAicHJvZHVjZXIiOiAiYXNpZi1leGFtcGxlcyIsCiAgImV2YWx1YXRpb25fbW9kZSI6ICJzeW50aGV0aWMiLAogICJvYnNlcnZlZF9hdCI6ICIyMDI2LTA5LTI2VDEyOjAwOjAwWiIsCiAgImV4cGlyZXNfYXQiOiAiMjAyNi0wOS0yNlQxMzowMDowMFoiLAogICJydW50aW1lIjogewogICAgImFnZW50IjogewogICAgICAiaWQiOiAiZXhhbXBsZS1hZ2VudC1iIiwKICAgICAgInZlcnNpb24iOiAiMiIsCiAgICAgICJzdGF0ZV9mb3JtYXQiOiAiZXhhbXBsZS1iLzIiCiAgICB9LAogICAgImFkYXB0ZXIiOiB7CiAgICAgICJpZCI6ICJleGFtcGxlLWEtdG8tYiIsCiAgICAgICJ2ZXJzaW9uIjogIjEiCiAgICB9LAogICAgIm9zIjogImxpbnV4IiwKICAgICJhcmNoaXRlY3R1cmUiOiAieDg2XzY0IgogIH0sCiAgInJ1bnRpbWVfcmV2aXNpb24iOiAic3ludGhldGljLXJ1bnRpbWUtMSIsCiAgInN1cHBvcnRlZF9mZWF0dXJlcyI6IFsKICAgICJhc2lmLnBvcnRhYmxlLWNvbnRpbnVhdGlvbi8wLjIiCiAgXSwKICAiY29tcG9uZW50cyI6IFsKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1iIiwKICAgICAgInZlcnNpb24iOiAiMiIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYiIsCiAgICAgICAgInJldmlzaW9uIjogIjIiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0yIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1iIiwKICAgICAgInZlcnNpb24iOiAiMiIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYiIsCiAgICAgICAgInJldmlzaW9uIjogIjIiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0zIiwKICAgICAgImtpbmQiOiAiY29uZmlndXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNvbmZpZ3VyYXRpb24uZWZmZWN0aXZlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC00IiwKICAgICAgImtpbmQiOiAiY29uZmlndXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmluc3RydWN0aW9uLndvcmtzcGFjZS1ydWxlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC01IiwKICAgICAgImtpbmQiOiAiY2FwYWJpbGl0eSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNhcGFiaWxpdHkuc3VtbWFyeS1za2lsbCIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNiIsCiAgICAgICJraW5kIjogInBvbGljeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLnBvbGljeS53b3Jrc3BhY2Utb25seSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNyIsCiAgICAgICJraW5kIjogImRlcGVuZGVuY3kiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS1hZ2VudC1iIiwKICAgICAgInZlcnNpb24iOiAiMiIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC04IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLWIuaW52ZW50b3J5IiwKICAgICAgInZlcnNpb24iOiAiMiIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC05IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmludmVudG9yeS1zdW1tYXJ5IiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xMCIsCiAgICAgICJraW5kIjogIndvcmtzcGFjZSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLndvcmtzcGFjZS53b3Jrc3BhY2UtaGVhZCIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIsCiAgICAgICJyb290X2lkIjogInByb2plY3QiLAogICAgICAiZGVzdGluYXRpb25fcGF0aCI6ICIvd29yay9wcm9qZWN0IiwKICAgICAgImNhc2Vfc2Vuc2l0aXZlIjogdHJ1ZSwKICAgICAgInVuaWNvZGVfbm9ybWFsaXphdGlvbiI6ICJub25lIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xMSIsCiAgICAgICJraW5kIjogImVudmlyb25tZW50IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUuZW52aXJvbm1lbnQucHJvamVjdC1lbnYiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTEyIiwKICAgICAgImtpbmQiOiAibmF0aXZlX2ltcG9ydCIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLWEtdG8tYiIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0KICBdCn0K",
+      "bytes": 3879,
+      "evidence_id": "snapshot-inspection"
+    }
   },
   "assessed_at": "2026-09-26T12:00:00Z",
   "expires_at": "2026-09-26T13:00:00Z",
@@ -39,7 +46,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -51,6 +59,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-1"
       ]
     },
     {
@@ -63,6 +74,9 @@
       "detail": "Substitute the target model after measuring its input budget; no identical-output guarantee.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-2"
       ]
     },
     {
@@ -75,19 +89,23 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-3"
       ]
     },
     {
       "subject": {
         "kind": "feature",
-        "id": "asif.portable-continuation/0.1"
+        "id": "asif.portable-continuation/0.2"
       },
       "status": "supported",
       "required": true,
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -99,7 +117,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -111,7 +130,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -123,7 +143,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -136,6 +157,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-4"
       ]
     },
     {
@@ -149,6 +173,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-5"
       ]
     },
     {
@@ -161,7 +188,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -174,6 +202,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-6"
       ]
     },
     {
@@ -190,7 +221,10 @@
       "resolved": {
         "identity": "example-agent-a",
         "version": "1"
-      }
+      },
+      "component_ids": [
+        "component-7"
+      ]
     },
     {
       "subject": {
@@ -206,7 +240,10 @@
       "resolved": {
         "identity": "example.inventory.summarize",
         "version": "1"
-      }
+      },
+      "component_ids": [
+        "component-8"
+      ]
     },
     {
       "subject": {
@@ -222,7 +259,10 @@
       "resolved": {
         "identity": "example.inventory-summary",
         "version": "1"
-      }
+      },
+      "component_ids": [
+        "component-9"
+      ]
     },
     {
       "subject": {
@@ -234,6 +274,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-10"
       ]
     },
     {
@@ -246,6 +289,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-11"
       ]
     },
     {
@@ -258,6 +304,9 @@
       "detail": "Create a target-native representation with mapped identities and target ordering/index rules.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-12"
       ]
     },
     {
@@ -270,7 +319,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     }
   ],
   "path_bindings": [
@@ -380,6 +430,13 @@
       "time": "2026-09-26T12:00:00Z",
       "kind": "synthetic",
       "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+    },
+    {
+      "id": "snapshot-inspection",
+      "producer": "asif-examples",
+      "time": "2026-09-26T12:00:00Z",
+      "kind": "synthetic",
+      "detail": "Authored destination snapshot; no live inspection or credential lookup."
     }
   ],
   "import_result": {

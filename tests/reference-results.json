@@ -1,8 +1,8 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.4",
   "scope": "Local vendor-neutral reference implementation checks",
-  "checks": 131,
-  "passed": 131,
+  "checks": 135,
+  "passed": 135,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -528,6 +528,22 @@
     },
     {
       "case": "redaction-duplicates-base64-no-value-leak",
+      "passed": true
+    },
+    {
+      "case": "capability-hash-vector-utf8",
+      "passed": true
+    },
+    {
+      "case": "capability-hash-vector-escaped",
+      "passed": true
+    },
+    {
+      "case": "capability-hash-vector-reordered",
+      "passed": true
+    },
+    {
+      "case": "capability-hash-vector-crlf",
       "passed": true
     }
   ]

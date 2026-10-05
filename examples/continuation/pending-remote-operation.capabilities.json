@@ -1,0 +1,119 @@
+{
+  "snapshot_version": "0.1",
+  "id": "snapshot-assessment-pending-remote-operation",
+  "destination_id": "example-cloud-runtime",
+  "producer": "asif-examples",
+  "evaluation_mode": "synthetic",
+  "observed_at": "2026-09-26T12:00:00Z",
+  "expires_at": "2026-09-26T13:00:00Z",
+  "runtime": {
+    "agent": {
+      "id": "example-agent-a",
+      "version": "1",
+      "state_format": "example-native/1"
+    },
+    "adapter": {
+      "id": "example-adapter",
+      "version": "1"
+    },
+    "os": "linux",
+    "architecture": "x86_64"
+  },
+  "runtime_revision": "synthetic-runtime-1",
+  "supported_features": [
+    "asif.portable-continuation/0.2"
+  ],
+  "components": [
+    {
+      "id": "component-1",
+      "kind": "model",
+      "identity": "example/model-a",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "model": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "tokenizer": "example-tokenizer/1",
+      "input_limit": 8000,
+      "media_types": [
+        "text/csv",
+        "text/markdown"
+      ],
+      "capabilities": [
+        "text",
+        "tool_calls"
+      ]
+    },
+    {
+      "id": "component-2",
+      "kind": "model",
+      "identity": "example/model-a",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "model": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "tokenizer": "example-tokenizer/1",
+      "input_limit": 8000,
+      "media_types": [
+        "text/csv",
+        "text/markdown"
+      ],
+      "capabilities": [
+        "text",
+        "tool_calls"
+      ]
+    },
+    {
+      "id": "component-3",
+      "kind": "configuration",
+      "identity": "example.configuration.effective",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-4",
+      "kind": "dependency",
+      "identity": "example.inventory.publish",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-5",
+      "kind": "service",
+      "identity": "example.service.publisher-service",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "unknown",
+      "account": {
+        "provider": "example",
+        "subject": "account-A"
+      },
+      "audience": "example.publisher",
+      "scopes": [],
+      "secret_handles": [],
+      "endpoint": "https://publisher.example.invalid"
+    },
+    {
+      "id": "component-6",
+      "kind": "operation",
+      "identity": "example.operation.publish-operation",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "unknown",
+      "recovery_strategy": "reconcile",
+      "external_identity": {
+        "namespace": "example.publisher/account-A",
+        "value": "operation-42"
+      }
+    }
+  ]
+}

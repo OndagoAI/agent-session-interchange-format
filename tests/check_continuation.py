@@ -1,4 +1,5 @@
 """Synthetic profile/report acceptance checks; never starts or imports an agent."""
+import base64
 import copy
 from datetime import datetime, timezone
 import hashlib
@@ -16,6 +17,7 @@ fixtures={}
 for file in sorted(FOLDER.glob('*.session.json')):
     slug=file.name.removesuffix('.session.json');raw=file.read_bytes();doc=json.loads(raw)
     report=json.loads(file.with_name(slug+'.report.json').read_text())
+    assert file.with_name(slug+'.capabilities.json').read_bytes()==base64.b64decode(report['destination']['capabilities_snapshot']['data'])
     outcome=inspect_report(doc,raw,report,FOLDER,now=NOW)
     assert outcome['operational_authorization'] is False
     fixtures[slug]=(doc,raw,report)
@@ -40,6 +42,15 @@ def negative_report(name,mutate,expected,fixture='another-computer',mutate_sourc
     else:raise AssertionError('invalid report accepted: '+name)
     results.append({'case':name,'passed':True,'outcome':'rejected'})
 
+negative_source('future-profile-version-refused',lambda d:d['continuation'].update(profile_version='0.3'),None)
+negative_source('future-profile-feature-refused',lambda d:d.update(required_features=['asif.portable-continuation/0.3']),None)
+negative_report('future-report-version-refused',lambda r:r.update(report_version='0.3'),None)
+negative_source('previous-core-version-refused',lambda d:d.update(asif_version='0.3'),None)
+negative_source('future-core-version-refused',lambda d:d.update(asif_version='0.5'),None)
+negative_source('missing-core-version-refused',lambda d:d.pop('asif_version'),None)
+negative_source('previous-profile-version-refused',lambda d:d['continuation'].update(profile_version='0.1'),None)
+negative_source('previous-profile-feature-refused',lambda d:d.update(required_features=['asif.portable-continuation/0.1']),None)
+negative_report('previous-report-version-refused',lambda r:r.update(report_version='0.1'),None)
 negative_source('profile-not-gated',lambda d:d.update(required_features=[]),None)
 negative_source('profile-declaration-without-data',lambda d:d.pop('continuation'),None)
 negative_source('untyped-context',lambda d:d['contexts'][0]['inputs'][0].pop('kind'),None)
@@ -97,6 +108,7 @@ results.append({'case':'accepted-adaptations-simulated','passed':True,'outcome':
 action_doc,action_raw,_=fixtures['action-specific']
 for action in ['await_decision','reconcile_operation','model_request','resume_native']:
     receipt=json.loads((FOLDER/('action-specific-'+action+'.report.json')).read_text())
+    assert (FOLDER/('action-specific-'+action+'.capabilities.json')).read_bytes()==base64.b64decode(receipt['destination']['capabilities_snapshot']['data'])
     fixtures[action]=(action_doc,action_raw,receipt)
     outcome=inspect_report(action_doc,action_raw,receipt,FOLDER,now=NOW)
     assert outcome['outcome']==('blocked' if action in ('model_request','resume_native') else 'ready')
@@ -149,6 +161,73 @@ doc=copy.deepcopy(action_doc)
 doc['resources'].append({'id':'unused-history','media_type':'text/plain','purpose':'input','availability':'unavailable','explanation':'Unselected historical attachment.'})
 assert all(not any(x['subject']=={'kind':'resource','id':'unused-history'} for x in subjects) for subjects in inspect_session(doc,FOLDER).values())
 results.append({'case':'unavailable-unselected-history-outside-inventory','passed':True,'outcome':'accepted'})
-summary={'asif_version':'0.3','profile':'asif.portable-continuation/0.1','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
+# Snapshot bytes are the evidence: never hash a parsed/reserialized approximation.
+def supplied(r):return base64.b64decode(r['destination']['capabilities_snapshot']['data'])
+def supply(r,raw):
+    r['destination']['capabilities_snapshot'].update(data=base64.b64encode(raw).decode(),bytes=len(raw))
+    r['destination']['capabilities_sha256']=hashlib.sha256(raw).hexdigest()
+def snapshot_change(r,mutate):
+    value=json.loads(supplied(r));mutate(value);supply(r,(json.dumps(value,ensure_ascii=False)+'\n').encode())
+def component(s,kind):return next(c for c in s['components'] if c['kind']==kind)
+negative_report('snapshot-required',lambda r:r['destination'].pop('capabilities_snapshot'),None)
+negative_report('snapshot-digest-mismatch',lambda r:r['destination'].update(capabilities_sha256='0'*64),'capability snapshot digest mismatch')
+negative_report('snapshot-noncanonical-base64',lambda r:r['destination']['capabilities_snapshot'].update(data='e31=',bytes=2),'noncanonical snapshot base64')
+negative_report('snapshot-oversize-declaration',lambda r:r['destination']['capabilities_snapshot'].update(bytes=1048577),None)
+negative_report('snapshot-invalid-calendar-date',lambda r:snapshot_change(r,lambda s:s.update(observed_at='2026-09-31T12:00:00Z')),'invalid snapshot time')
+negative_report('snapshot-invalid-offset',lambda r:snapshot_change(r,lambda s:s.update(observed_at='2026-09-26T12:00:00+00:60')),'invalid snapshot time')
+negative_report('snapshot-excess-time-precision',lambda r:snapshot_change(r,lambda s:s.update(observed_at='2026-09-26T12:00:00.0001Z')),'invalid snapshot time')
+negative_report('snapshot-byte-count-mismatch',lambda r:r['destination']['capabilities_snapshot'].update(bytes=1),'capability snapshot byte count')
+negative_report('snapshot-invalid-base64',lambda r:r['destination']['capabilities_snapshot'].update(data='!'),'invalid snapshot base64')
+negative_report('snapshot-format-unsupported',lambda r:r['destination']['capabilities_snapshot'].update(format='example.other/1'),'unsupported capability snapshot format')
+def unavailable(r):
+    e=r['destination']['capabilities_snapshot'];e.pop('data');e.pop('bytes');e.update(availability='unavailable',explanation='Snapshot evidence was not supplied.')
+negative_report('snapshot-unavailable-refused',unavailable,'capability snapshot unavailable')
+negative_report('snapshot-version-missing',lambda r:snapshot_change(r,lambda s:s.pop('snapshot_version')),'missing or invalid snapshot version')
+negative_report('snapshot-version-invalid-type',lambda r:snapshot_change(r,lambda s:s.update(snapshot_version=1)),'missing or invalid snapshot version')
+negative_report('snapshot-version-unsupported',lambda r:snapshot_change(r,lambda s:s.update(snapshot_version='99')),'unsupported capability snapshot version')
+negative_report('snapshot-evidence-missing',lambda r:r['destination']['capabilities_snapshot'].update(evidence_id='absent'),'missing snapshot evidence')
+negative_report('snapshot-producer-mismatch',lambda r:snapshot_change(r,lambda s:s.update(producer='different-producer')),'snapshot evidence mismatch')
+negative_report('snapshot-destination-mismatch',lambda r:snapshot_change(r,lambda s:s.update(destination_id='different-destination')),'snapshot destination mismatch')
+def runtime_type_mismatch(r):
+    r['destination']['runtime']['extension_flag']=True
+    snapshot_change(r,lambda s:s['runtime'].update(extension_flag=1))
+negative_report('snapshot-runtime-extension-type-mismatch',runtime_type_mismatch,'snapshot destination mismatch')
+negative_report('snapshot-runtime-mismatch',lambda r:snapshot_change(r,lambda s:s['runtime'].update(os='different-os')),'snapshot destination mismatch')
+negative_report('snapshot-mode-mismatch',lambda r:snapshot_change(r,lambda s:s.update(evaluation_mode='observed')),'snapshot evaluation mode mismatch')
+negative_report('snapshot-expires-before-report',lambda r:snapshot_change(r,lambda s:s.update(expires_at='2026-09-26T12:15:00Z')),'snapshot assessment interval mismatch')
+negative_report('snapshot-observed-after-assessment',lambda r:snapshot_change(r,lambda s:s.update(observed_at='2026-09-26T12:01:00Z')),'snapshot assessment interval mismatch')
+negative_report('snapshot-duplicate-components',lambda r:snapshot_change(r,lambda s:s['components'].append(copy.deepcopy(s['components'][0]))),'duplicate id')
+negative_report('snapshot-component-reference-missing',lambda r:selected(r,'dependency').update(component_ids=['absent']),'missing snapshot component')
+negative_report('snapshot-binding-required',lambda r:selected(r,'dependency').update(component_ids=[]),'missing or ambiguous destination component binding')
+negative_report('snapshot-unknown-component-not-supported',lambda r:snapshot_change(r,lambda s:component(s,'dependency').update(status='unknown')),'unavailable snapshot component claimed supported')
+negative_report('snapshot-dependency-version-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'dependency').update(version='2')),'snapshot dependency mismatch')
+negative_report('snapshot-model-budget-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'model').update(input_limit=600)),'snapshot model budget mismatch')
+negative_report('snapshot-workspace-root-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'workspace').update(root_id='other-root')),'snapshot workspace root mismatch')
+negative_report('snapshot-workspace-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'workspace').update(destination_path='/elsewhere')),'snapshot workspace mismatch')
+negative_report('snapshot-service-account-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'service')['account'].update(subject='account-B')),'snapshot service mismatch','reconcile_operation')
+negative_report('snapshot-operation-identity-mismatch',lambda r:snapshot_change(r,lambda s:component(s,'operation')['external_identity'].update(value='job-other')),'snapshot operation mismatch','reconcile_operation')
+negative_report('snapshot-feature-missing',lambda r:snapshot_change(r,lambda s:s.update(supported_features=[])),'snapshot feature unsupported')
+negative_report('snapshot-BOM-refused',lambda r:supply(r,b'\xef\xbb\xbf'+supplied(r)),'snapshot UTF-8 BOM forbidden')
+negative_report('snapshot-duplicate-JSON-key',lambda r:supply(r,supplied(r).replace(b'{',b'{"id":"duplicate",',1)),'duplicate JSON key')
+negative_report('snapshot-invalid-UTF8',lambda r:supply(r,b'\xff'),'invalid JSON')
+negative_report('snapshot-nonobject-refused',lambda r:supply(r,b'[]'),'snapshot must be an object')
+doc,source,receipt=copy.deepcopy(fixtures['another-computer'])
+assert inspect_report(doc,source,receipt,FOLDER,now=NOW,current_snapshot=supplied(receipt))['current_snapshot_matches'] is True
+results.append({'case':'caller-current-snapshot-matches','passed':True,'outcome':'ready'})
+# Reformatting produces a different digest, while preserving valid JSON semantics.
+old=supplied(receipt);snapshot_change(receipt,lambda s:None)
+assert supplied(receipt)!=old
+assert inspect_report(doc,source,receipt,FOLDER,now=NOW)['current_snapshot_matches'] is False
+results.append({'case':'reserialized-snapshot-requires-new-fingerprint','passed':True,'outcome':'ready'})
+for kind in ['runtime','dependency','policy','model','service','workspace']:
+    doc,source,receipt=copy.deepcopy(fixtures['reconcile_operation' if kind=='service' else 'another-computer'])
+    current=json.loads(supplied(receipt))
+    if kind=='runtime':current['runtime_revision']='changed'
+    else:component(current,kind)['revision']='changed'
+    try:inspect_report(doc,source,receipt,FOLDER,now=NOW,current_snapshot=json.dumps(current).encode())
+    except Invalid as exc:assert 'destination capabilities changed' in str(exc)
+    else:raise AssertionError('reused report after '+kind+' changed')
+    results.append({'case':'current-'+kind+'-change-invalidates-report','passed':True,'outcome':'rejected'})
+summary={'asif_version':'0.4','profile':'asif.portable-continuation/0.2','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
 (ROOT/'tests/continuation-results.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='results'},indent=2))

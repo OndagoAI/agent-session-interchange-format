@@ -1,6 +1,6 @@
 # Portable-continuation scenarios
 
-These examples use ASIF **0.3** and `asif.portable-continuation/0.1`. All agent names, native formats, dependency behavior and destination checks are invented. Each report has `evaluation_mode: synthetic`, `import_result: not_attempted`, and `continuation_result: not_tested`. Even the example with outcome `ready` cannot authorize a real import or execution.
+These examples use ASIF **0.4** and `asif.portable-continuation/0.2`. All agent names, native formats, dependency behavior and destination checks are invented. Each report has `evaluation_mode: synthetic`, `import_result: not_attempted`, and `continuation_result: not_tested`. Even the example with outcome `ready` cannot authorize a real import or execution.
 
 | Scenario | Source document | Destination report | Main behavior |
 |---|---|---|---|
@@ -45,3 +45,9 @@ Run `.venv/bin/python tests/check_continuation.py` from the project root. Regene
 | Resume native | [Report](action-specific-resume_native.report.json) | Blocked by the same agent prerequisites |
 
 Regenerate this capture and its five reports with `examples/build_action_examples.py` after the original generator. Missing media remains explicitly unavailable; none of these synthetic outcomes demonstrates real execution.
+
+## Supplied destination snapshots
+
+Every report now embeds an exact-byte capability snapshot and binds assessments to its components. The corresponding `.capabilities.json` file is a readable copy of those same bytes, for example [another computer](another-computer.capabilities.json), [another agent](another-agent.capabilities.json) and [remote operation](pending-remote-operation.capabilities.json). Both example generators rebuild reports and snapshots together. Snapshot declarations and revision tokens are invented; they contain no credentials or live observations.
+
+The [snapshot contract](../../CAPABILITIES.md) defines exact hashing, currentness, component coverage and invalidation. [Fixed hash vectors](../../tests/capability-snapshot-vectors.json) cover different byte representations of the same object. The current fixture hashes are reproducible; they are not stand-ins for unspecified capability data.

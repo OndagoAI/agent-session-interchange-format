@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:asif:0.3:session",
+  "$id": "urn:asif:0.4:session",
   "title": "ASIF session structure",
   "description": "Structural draft only. SPEC.md additionally requires semantic, integrity and capability validation.",
   "type": "object",
   "properties": {
     "asif_version": {
-      "const": "0.3"
+      "const": "0.4"
     },
     "capture": {
       "type": "object",
@@ -2768,12 +2768,12 @@
     },
     "continuation": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "$id": "urn:asif:portable-continuation:0.1",
-      "title": "ASIF portable continuation 0.1",
+      "$id": "urn:asif:portable-continuation:0.2",
+      "title": "ASIF portable continuation 0.2",
       "type": "object",
       "properties": {
         "profile_version": {
-          "const": "0.1"
+          "const": "0.2"
         },
         "source_runtime": {
           "$ref": "#/$defs/runtime"
@@ -4834,7 +4834,7 @@
         "properties": {
           "required_features": {
             "contains": {
-              "const": "asif.portable-continuation/0.1"
+              "const": "asif.portable-continuation/0.2"
             }
           }
         }
@@ -4845,7 +4845,7 @@
         "properties": {
           "required_features": {
             "contains": {
-              "const": "asif.portable-continuation/0.1"
+              "const": "asif.portable-continuation/0.2"
             }
           }
         },

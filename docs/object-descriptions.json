@@ -120,7 +120,10 @@
     "Transformation": "Declares a proposed or accepted adaptation, its target, rule, losses and acceptance evidence.",
     "Result": "Common result shape for an attempted import or continuation operation, including explanatory evidence.",
     "External Request Option": "One selectable option of an externally bound decision request.",
-    "Assessment Resolved External Identity": "Identifies the exact remote operation being reconciled; must match its source namespace and identity."
+    "Assessment Resolved External Identity": "Identifies the exact remote operation being reconciled; must match its source namespace and identity.",
+    "Capability Snapshot": "Immutable, versioned destination state declarations, hashed over their exact supplied JSON bytes.",
+    "Capability Component": "A destination component with identity, revision, availability and kind-specific facts. Its revision is an opaque non-secret token, not a digest.",
+    "Snapshot Evidence": "Supplies exact snapshot bytes and links their observation evidence; unavailable evidence cannot establish report validity."
   },
   "fields": {
     "id": "Opaque, case-sensitive identity within the object's declared scope.",
@@ -390,7 +393,7 @@
     "continuation_result": "Observed or explicitly untested continuation outcome.",
     "plan_id": "ID of the exact continuation plan being assessed.",
     "document_sha256": "SHA-256 of the exact source session JSON bytes, not a reserialized equivalent.",
-    "capabilities_sha256": "Digest of the destination capability snapshot used for this assessment.",
+    "capabilities_sha256": "Lowercase SHA-256 of the exact decoded snapshot bytes, with no reserialization or canonicalization.",
     "destination_path": "Absolute path selected by the destination for the logical root.",
     "case_sensitive": "Whether the destination distinguishes path spelling by case.",
     "unicode_normalization": "Normalization applied when checking destination path collisions.",
@@ -409,7 +412,17 @@
     "accepted": "Whether the declared transformation has been accepted with the required evidence.",
     "runtime": "Agent, adapter and platform of the assessed runtime.",
     "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress.",
-    "recovery_strategy": "Resolved reconcile or reconnect strategy; must match the selected source operation."
+    "recovery_strategy": "Resolved reconcile or reconnect strategy; must match the selected source operation.",
+    "component_ids": "Unique references to destination snapshot components used by this assessment.",
+    "snapshot_version": "Exact version of the destination capability snapshot contract.",
+    "destination_id": "Identity of the assessed destination; must match the report.",
+    "runtime_revision": "Opaque non-secret generation for the runtime deployment and effective global settings.",
+    "supported_features": "Exact feature identifiers supported in this assessed snapshot.",
+    "components": "Destination component inventory covering all claimed assessment support.",
+    "format": "Exact versioned snapshot format identifier.",
+    "evidence_id": "Reference to the snapshot observation evidence in the containing report.",
+    "capabilities_snapshot": "Supplied immutable snapshot bytes, format, availability and evidence binding.",
+    "observed_at": "Snapshot observation instant, no later than report assessment."
   },
   "session:/properties/capture": {
     "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."
@@ -608,5 +621,14 @@
       "mode": "POSIX permission bits expressed as a decimal integer, from 0 through 511 (octal 0777)."
     },
     "rules": "See [workspace rules](../CONTINUATION.md#5-workspace-snapshots-roots-and-paths). A file requires mode and resource_id; a directory requires mode; a symlink requires target. The local reference restorer explicitly refuses symlinks."
+  },
+  "continuation-report:/$defs/capability_snapshot": {
+    "rules": "See the [destination capability snapshot contract](../CAPABILITIES.md) for exact bytes, required inventory, component bindings, evidence, currentness and refusal rules."
+  },
+  "continuation-report:/$defs/capability_component": {
+    "rules": "See the [destination capability snapshot contract](../CAPABILITIES.md) for exact bytes, required inventory, component bindings, evidence, currentness and refusal rules."
+  },
+  "continuation-report:/$defs/snapshot_evidence": {
+    "rules": "See the [destination capability snapshot contract](../CAPABILITIES.md) for exact bytes, required inventory, component bindings, evidence, currentness and refusal rules."
   }
 }

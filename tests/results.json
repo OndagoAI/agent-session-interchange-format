@@ -1,9 +1,9 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.4",
   "scope": "JSON Schema structure only",
   "schema_valid": true,
-  "checks": 27,
-  "passed": 27,
+  "checks": 30,
+  "passed": 30,
   "semantic_conformance_tested": false,
   "interoperability_tested": false,
   "continuation_tested": false,
@@ -16,6 +16,21 @@
     {
       "case": "unknown-optional-property",
       "expected_shape": "valid",
+      "passed": true
+    },
+    {
+      "case": "0.3-version-rejected",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "future-version-rejected",
+      "expected_shape": "invalid",
+      "passed": true
+    },
+    {
+      "case": "missing-version-rejected",
+      "expected_shape": "invalid",
       "passed": true
     },
     {

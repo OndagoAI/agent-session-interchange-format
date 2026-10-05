@@ -1,8 +1,8 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.4",
   "scope": "Python/TypeScript CLI and package exchange, shared authorship",
-  "checks": 10,
-  "passed": 10,
+  "checks": 15,
+  "passed": 15,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -16,6 +16,10 @@
     },
     {
       "case": "report",
+      "passed": true
+    },
+    {
+      "case": "current-snapshot-matches",
       "passed": true
     },
     {
@@ -44,6 +48,22 @@
     },
     {
       "case": "unsupported-feature-exit-3",
+      "passed": true
+    },
+    {
+      "case": "changed-current-snapshot-exit-2",
+      "passed": true
+    },
+    {
+      "case": "unsupported-snapshot-exit-3",
+      "passed": true
+    },
+    {
+      "case": "mismatched-snapshot-exit-2",
+      "passed": true
+    },
+    {
+      "case": "unavailable-snapshot-exit-3",
       "passed": true
     }
   ]

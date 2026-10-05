@@ -1,0 +1,30 @@
+{
+  "format": "asif.destination-capabilities/0.1",
+  "description": "Decode the utf8 JSON string and encode as UTF-8 exactly. No canonicalization. The four snapshots are semantically equal but byte-distinct. Digests cross-checked with shasum -a 256.",
+  "vectors": [
+    {
+      "name": "utf8",
+      "utf8": "{\"snapshot_version\":\"0.1\",\"id\":\"vector-é\",\"destination_id\":\"example-cloud-runtime\",\"producer\":\"asif-examples\",\"evaluation_mode\":\"synthetic\",\"observed_at\":\"2026-09-26T12:00:00Z\",\"expires_at\":\"2026-09-26T13:00:00Z\",\"runtime\":{\"agent\":{\"id\":\"example-agent-a\",\"version\":\"1\",\"state_format\":\"example-native/1\"},\"adapter\":{\"id\":\"example-adapter\",\"version\":\"1\"},\"os\":\"linux\",\"architecture\":\"x86_64\"},\"runtime_revision\":\"synthetic-runtime-1\",\"supported_features\":[\"asif.portable-continuation/0.1\"],\"components\":[]}\n",
+      "bytes": 507,
+      "sha256": "50a181014493ac3cf845f3cfd03e8bc289b8723d2d1939064a51feb551db4a1c"
+    },
+    {
+      "name": "escaped",
+      "utf8": "{\"snapshot_version\":\"0.1\",\"id\":\"vector-\\u00e9\",\"destination_id\":\"example-cloud-runtime\",\"producer\":\"asif-examples\",\"evaluation_mode\":\"synthetic\",\"observed_at\":\"2026-09-26T12:00:00Z\",\"expires_at\":\"2026-09-26T13:00:00Z\",\"runtime\":{\"agent\":{\"id\":\"example-agent-a\",\"version\":\"1\",\"state_format\":\"example-native/1\"},\"adapter\":{\"id\":\"example-adapter\",\"version\":\"1\"},\"os\":\"linux\",\"architecture\":\"x86_64\"},\"runtime_revision\":\"synthetic-runtime-1\",\"supported_features\":[\"asif.portable-continuation/0.1\"],\"components\":[]}\n",
+      "bytes": 511,
+      "sha256": "eed137ab896470b48ba309fc9f32da6ab133d0606dd9a23dd2c82262c98762ea"
+    },
+    {
+      "name": "reordered",
+      "utf8": "{\"components\":[],\"supported_features\":[\"asif.portable-continuation/0.1\"],\"runtime_revision\":\"synthetic-runtime-1\",\"runtime\":{\"agent\":{\"id\":\"example-agent-a\",\"version\":\"1\",\"state_format\":\"example-native/1\"},\"adapter\":{\"id\":\"example-adapter\",\"version\":\"1\"},\"os\":\"linux\",\"architecture\":\"x86_64\"},\"expires_at\":\"2026-09-26T13:00:00Z\",\"observed_at\":\"2026-09-26T12:00:00Z\",\"evaluation_mode\":\"synthetic\",\"producer\":\"asif-examples\",\"destination_id\":\"example-cloud-runtime\",\"id\":\"vector-é\",\"snapshot_version\":\"0.1\"}\n",
+      "bytes": 507,
+      "sha256": "e14709d599351020d6db31481d0eb120cbb2f01e4d25944a3c3328ea106548e8"
+    },
+    {
+      "name": "crlf",
+      "utf8": "{\r\n  \"snapshot_version\": \"0.1\",\r\n  \"id\": \"vector-é\",\r\n  \"destination_id\": \"example-cloud-runtime\",\r\n  \"producer\": \"asif-examples\",\r\n  \"evaluation_mode\": \"synthetic\",\r\n  \"observed_at\": \"2026-09-26T12:00:00Z\",\r\n  \"expires_at\": \"2026-09-26T13:00:00Z\",\r\n  \"runtime\": {\r\n    \"agent\": {\r\n      \"id\": \"example-agent-a\",\r\n      \"version\": \"1\",\r\n      \"state_format\": \"example-native/1\"\r\n    },\r\n    \"adapter\": {\r\n      \"id\": \"example-adapter\",\r\n      \"version\": \"1\"\r\n    },\r\n    \"os\": \"linux\",\r\n    \"architecture\": \"x86_64\"\r\n  },\r\n  \"runtime_revision\": \"synthetic-runtime-1\",\r\n  \"supported_features\": [\r\n    \"asif.portable-continuation/0.1\"\r\n  ],\r\n  \"components\": []\r\n}\r\n",
+      "bytes": 664,
+      "sha256": "50d77b0cc188c4636756add659f286504e3ddf31cfce42e910752960e15ce956"
+    }
+  ]
+}

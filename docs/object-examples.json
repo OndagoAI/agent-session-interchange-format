@@ -1,11 +1,11 @@
 {
   "session:": {
-    "asif_version": "0.3",
+    "asif_version": "0.4",
     "capture": {
       "id": "capture-hello",
       "producer": {
         "name": "ASIF examples",
-        "version": "0.3"
+        "version": "0.4"
       },
       "consistency": "consistent",
       "boundary": "One authored greeting; no agent request was captured."
@@ -713,7 +713,7 @@
     "label": "Deny"
   },
   "continuation:": {
-    "profile_version": "0.1",
+    "profile_version": "0.2",
     "source_runtime": {
       "agent": {
         "id": "example-agent-a",
@@ -1001,7 +1001,8 @@
           "overflow_policy": "block"
         },
         "next_action": {
-          "kind": "await_user"
+          "kind": "resume_native",
+          "native_import_id": "native"
         }
       }
     ]
@@ -1382,14 +1383,14 @@
     "overflow_policy": "block"
   },
   "continuation-report:": {
-    "report_version": "0.1",
+    "report_version": "0.2",
     "evaluation_mode": "synthetic",
     "id": "assessment-pending-remote-operation",
     "source": {
       "session_id": "session-pending-remote-operation",
       "capture_id": "capture-pending-remote-operation",
       "plan_id": "continue-main",
-      "document_sha256": "966361de8e573d9c451c09f108e695de169d9a8736956b34ec9c93a0b3ed3837"
+      "document_sha256": "dc12ec7e916d78633e33355378f998f90097d6cc569eb04d93878c53df778187"
     },
     "destination": {
       "id": "example-cloud-runtime",
@@ -1406,7 +1407,14 @@
         "os": "linux",
         "architecture": "x86_64"
       },
-      "capabilities_sha256": "c65340514a2aa2fcddeb38c3fa589b94aa324245a18534cb92f5d9687bb55a54"
+      "capabilities_sha256": "c4062f8e1e916b40aa06ddac802ce8af488b592dd9ccd7279ae051bfecdcab1c",
+      "capabilities_snapshot": {
+        "format": "asif.destination-capabilities/0.1",
+        "availability": "supplied",
+        "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtcGVuZGluZy1yZW1vdGUtb3BlcmF0aW9uIiwKICAiZGVzdGluYXRpb25faWQiOiAiZXhhbXBsZS1jbG91ZC1ydW50aW1lIiwKICAicHJvZHVjZXIiOiAiYXNpZi1leGFtcGxlcyIsCiAgImV2YWx1YXRpb25fbW9kZSI6ICJzeW50aGV0aWMiLAogICJvYnNlcnZlZF9hdCI6ICIyMDI2LTA5LTI2VDEyOjAwOjAwWiIsCiAgImV4cGlyZXNfYXQiOiAiMjAyNi0wOS0yNlQxMzowMDowMFoiLAogICJydW50aW1lIjogewogICAgImFnZW50IjogewogICAgICAiaWQiOiAiZXhhbXBsZS1hZ2VudC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJzdGF0ZV9mb3JtYXQiOiAiZXhhbXBsZS1uYXRpdmUvMSIKICAgIH0sCiAgICAiYWRhcHRlciI6IHsKICAgICAgImlkIjogImV4YW1wbGUtYWRhcHRlciIsCiAgICAgICJ2ZXJzaW9uIjogIjEiCiAgICB9LAogICAgIm9zIjogImxpbnV4IiwKICAgICJhcmNoaXRlY3R1cmUiOiAieDg2XzY0IgogIH0sCiAgInJ1bnRpbWVfcmV2aXNpb24iOiAic3ludGhldGljLXJ1bnRpbWUtMSIsCiAgInN1cHBvcnRlZF9mZWF0dXJlcyI6IFsKICAgICJhc2lmLnBvcnRhYmxlLWNvbnRpbnVhdGlvbi8wLjIiCiAgXSwKICAiY29tcG9uZW50cyI6IFsKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0yIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0zIiwKICAgICAgImtpbmQiOiAiY29uZmlndXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNvbmZpZ3VyYXRpb24uZWZmZWN0aXZlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC00IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmludmVudG9yeS5wdWJsaXNoIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC01IiwKICAgICAgImtpbmQiOiAic2VydmljZSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLnNlcnZpY2UucHVibGlzaGVyLXNlcnZpY2UiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJ1bmtub3duIiwKICAgICAgImFjY291bnQiOiB7CiAgICAgICAgInByb3ZpZGVyIjogImV4YW1wbGUiLAogICAgICAgICJzdWJqZWN0IjogImFjY291bnQtQSIKICAgICAgfSwKICAgICAgImF1ZGllbmNlIjogImV4YW1wbGUucHVibGlzaGVyIiwKICAgICAgInNjb3BlcyI6IFtdLAogICAgICAic2VjcmV0X2hhbmRsZXMiOiBbXSwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vcHVibGlzaGVyLmV4YW1wbGUuaW52YWxpZCIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNiIsCiAgICAgICJraW5kIjogIm9wZXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLm9wZXJhdGlvbi5wdWJsaXNoLW9wZXJhdGlvbiIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogInVua25vd24iLAogICAgICAicmVjb3Zlcnlfc3RyYXRlZ3kiOiAicmVjb25jaWxlIiwKICAgICAgImV4dGVybmFsX2lkZW50aXR5IjogewogICAgICAgICJuYW1lc3BhY2UiOiAiZXhhbXBsZS5wdWJsaXNoZXIvYWNjb3VudC1BIiwKICAgICAgICAidmFsdWUiOiAib3BlcmF0aW9uLTQyIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
+        "bytes": 2923,
+        "evidence_id": "snapshot-inspection"
+      }
     },
     "assessed_at": "2026-09-26T12:00:00Z",
     "expires_at": "2026-09-26T13:00:00Z",
@@ -1422,7 +1430,8 @@
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
-        ]
+        ],
+        "component_ids": []
       },
       {
         "subject": {
@@ -1434,6 +1443,9 @@
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
+        ],
+        "component_ids": [
+          "component-1"
         ]
       },
       {
@@ -1446,6 +1458,9 @@
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
+        ],
+        "component_ids": [
+          "component-2"
         ]
       },
       {
@@ -1458,19 +1473,23 @@
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
+        ],
+        "component_ids": [
+          "component-3"
         ]
       },
       {
         "subject": {
           "kind": "feature",
-          "id": "asif.portable-continuation/0.1"
+          "id": "asif.portable-continuation/0.2"
         },
         "status": "supported",
         "required": true,
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
-        ]
+        ],
+        "component_ids": []
       },
       {
         "subject": {
@@ -1482,7 +1501,8 @@
         "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
         "evidence_ids": [
           "scenario"
-        ]
+        ],
+        "component_ids": []
       },
       {
         "subject": {
@@ -1498,7 +1518,10 @@
         "resolved": {
           "identity": "example.inventory.publish",
           "version": "1"
-        }
+        },
+        "component_ids": [
+          "component-4"
+        ]
       },
       {
         "subject": {
@@ -1510,6 +1533,9 @@
         "detail": "Remote outcome or destination login must be verified before any continuation.",
         "evidence_ids": [
           "scenario"
+        ],
+        "component_ids": [
+          "component-5"
         ]
       },
       {
@@ -1522,6 +1548,9 @@
         "detail": "Remote outcome or destination login must be verified before any continuation.",
         "evidence_ids": [
           "scenario"
+        ],
+        "component_ids": [
+          "component-6"
         ]
       }
     ],
@@ -1568,6 +1597,13 @@
         "time": "2026-09-26T12:00:00Z",
         "kind": "synthetic",
         "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+      },
+      {
+        "id": "snapshot-inspection",
+        "producer": "asif-examples",
+        "time": "2026-09-26T12:00:00Z",
+        "kind": "synthetic",
+        "detail": "Authored destination snapshot; no live inspection or credential lookup."
       }
     ],
     "import_result": {
@@ -1582,27 +1618,34 @@
     }
   },
   "continuation-report:/properties/source": {
-    "session_id": "session-another-agent",
-    "capture_id": "capture-another-agent",
+    "session_id": "session-pending-remote-operation",
+    "capture_id": "capture-pending-remote-operation",
     "plan_id": "continue-main",
-    "document_sha256": "0a0684e757513cd81b7bbf5f92901ba745a50c0e6442aca7cf9b9a7a9fbc9f91"
+    "document_sha256": "dc12ec7e916d78633e33355378f998f90097d6cc569eb04d93878c53df778187"
   },
   "continuation-report:/properties/destination": {
-    "id": "example-agent-b-runtime",
+    "id": "example-cloud-runtime",
     "runtime": {
       "agent": {
-        "id": "example-agent-b",
-        "version": "2",
-        "state_format": "example-b/2"
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
       },
       "adapter": {
-        "id": "example-a-to-b",
+        "id": "example-adapter",
         "version": "1"
       },
       "os": "linux",
       "architecture": "x86_64"
     },
-    "capabilities_sha256": "53ed9bdbb19f79e9237aec78918633f31252cc2d1b339ac38dd29a451dfcf60c"
+    "capabilities_sha256": "c4062f8e1e916b40aa06ddac802ce8af488b592dd9ccd7279ae051bfecdcab1c",
+    "capabilities_snapshot": {
+      "format": "asif.destination-capabilities/0.1",
+      "availability": "supplied",
+      "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtcGVuZGluZy1yZW1vdGUtb3BlcmF0aW9uIiwKICAiZGVzdGluYXRpb25faWQiOiAiZXhhbXBsZS1jbG91ZC1ydW50aW1lIiwKICAicHJvZHVjZXIiOiAiYXNpZi1leGFtcGxlcyIsCiAgImV2YWx1YXRpb25fbW9kZSI6ICJzeW50aGV0aWMiLAogICJvYnNlcnZlZF9hdCI6ICIyMDI2LTA5LTI2VDEyOjAwOjAwWiIsCiAgImV4cGlyZXNfYXQiOiAiMjAyNi0wOS0yNlQxMzowMDowMFoiLAogICJydW50aW1lIjogewogICAgImFnZW50IjogewogICAgICAiaWQiOiAiZXhhbXBsZS1hZ2VudC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJzdGF0ZV9mb3JtYXQiOiAiZXhhbXBsZS1uYXRpdmUvMSIKICAgIH0sCiAgICAiYWRhcHRlciI6IHsKICAgICAgImlkIjogImV4YW1wbGUtYWRhcHRlciIsCiAgICAgICJ2ZXJzaW9uIjogIjEiCiAgICB9LAogICAgIm9zIjogImxpbnV4IiwKICAgICJhcmNoaXRlY3R1cmUiOiAieDg2XzY0IgogIH0sCiAgInJ1bnRpbWVfcmV2aXNpb24iOiAic3ludGhldGljLXJ1bnRpbWUtMSIsCiAgInN1cHBvcnRlZF9mZWF0dXJlcyI6IFsKICAgICJhc2lmLnBvcnRhYmxlLWNvbnRpbnVhdGlvbi8wLjIiCiAgXSwKICAiY29tcG9uZW50cyI6IFsKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0yIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0zIiwKICAgICAgImtpbmQiOiAiY29uZmlndXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNvbmZpZ3VyYXRpb24uZWZmZWN0aXZlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC00IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmludmVudG9yeS5wdWJsaXNoIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC01IiwKICAgICAgImtpbmQiOiAic2VydmljZSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLnNlcnZpY2UucHVibGlzaGVyLXNlcnZpY2UiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJ1bmtub3duIiwKICAgICAgImFjY291bnQiOiB7CiAgICAgICAgInByb3ZpZGVyIjogImV4YW1wbGUiLAogICAgICAgICJzdWJqZWN0IjogImFjY291bnQtQSIKICAgICAgfSwKICAgICAgImF1ZGllbmNlIjogImV4YW1wbGUucHVibGlzaGVyIiwKICAgICAgInNjb3BlcyI6IFtdLAogICAgICAic2VjcmV0X2hhbmRsZXMiOiBbXSwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vcHVibGlzaGVyLmV4YW1wbGUuaW52YWxpZCIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNiIsCiAgICAgICJraW5kIjogIm9wZXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLm9wZXJhdGlvbi5wdWJsaXNoLW9wZXJhdGlvbiIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogInVua25vd24iLAogICAgICAicmVjb3Zlcnlfc3RyYXRlZ3kiOiAicmVjb25jaWxlIiwKICAgICAgImV4dGVybmFsX2lkZW50aXR5IjogewogICAgICAgICJuYW1lc3BhY2UiOiAiZXhhbXBsZS5wdWJsaXNoZXIvYWNjb3VudC1BIiwKICAgICAgICAidmFsdWUiOiAib3BlcmF0aW9uLTQyIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
+      "bytes": 2923,
+      "evidence_id": "snapshot-inspection"
+    }
   },
   "continuation-report:/properties/path_bindings/items": {
     "root_id": "project",
@@ -1683,15 +1726,16 @@
   },
   "continuation-report:/$defs/assessment": {
     "subject": {
-      "kind": "resource",
-      "id": "report"
+      "kind": "plan",
+      "id": "continue-main"
     },
     "status": "supported",
     "required": true,
     "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
     "evidence_ids": [
       "scenario"
-    ]
+    ],
+    "component_ids": []
   },
   "continuation-report:/$defs/assessment/properties/resolved": {},
   "continuation-report:/$defs/assessment/properties/resolved/properties/account": {
@@ -1729,5 +1773,193 @@
   "continuation-report:/$defs/assessment/properties/resolved/properties/external_identity": {
     "namespace": "example.jobs/account-A",
     "value": "job-42"
+  },
+  "continuation-report:/$defs/capability_snapshot": {
+    "snapshot_version": "0.1",
+    "id": "snapshot-assessment-another-computer",
+    "destination_id": "example-cloud-runtime",
+    "producer": "asif-examples",
+    "evaluation_mode": "synthetic",
+    "observed_at": "2026-09-26T12:00:00Z",
+    "expires_at": "2026-09-26T13:00:00Z",
+    "runtime": {
+      "agent": {
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
+      },
+      "adapter": {
+        "id": "example-adapter",
+        "version": "1"
+      },
+      "os": "linux",
+      "architecture": "x86_64"
+    },
+    "runtime_revision": "synthetic-runtime-1",
+    "supported_features": [
+      "asif.portable-continuation/0.2"
+    ],
+    "components": [
+      {
+        "id": "component-1",
+        "kind": "model",
+        "identity": "example/model-a",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available",
+        "model": {
+          "provider": "example",
+          "id": "model-a",
+          "revision": "1"
+        },
+        "tokenizer": "example-tokenizer/1",
+        "input_limit": 8000,
+        "media_types": [
+          "text/csv",
+          "text/markdown"
+        ],
+        "capabilities": [
+          "text",
+          "tool_calls"
+        ]
+      },
+      {
+        "id": "component-2",
+        "kind": "model",
+        "identity": "example/model-a",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available",
+        "model": {
+          "provider": "example",
+          "id": "model-a",
+          "revision": "1"
+        },
+        "tokenizer": "example-tokenizer/1",
+        "input_limit": 8000,
+        "media_types": [
+          "text/csv",
+          "text/markdown"
+        ],
+        "capabilities": [
+          "text",
+          "tool_calls"
+        ]
+      },
+      {
+        "id": "component-3",
+        "kind": "configuration",
+        "identity": "example.configuration.effective",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-4",
+        "kind": "configuration",
+        "identity": "example.instruction.workspace-rule",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-5",
+        "kind": "capability",
+        "identity": "example.capability.summary-skill",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-6",
+        "kind": "policy",
+        "identity": "example.policy.workspace-only",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-7",
+        "kind": "dependency",
+        "identity": "example-agent-a",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-8",
+        "kind": "dependency",
+        "identity": "example.inventory.summarize",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-9",
+        "kind": "dependency",
+        "identity": "example.inventory-summary",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-10",
+        "kind": "workspace",
+        "identity": "example.workspace.workspace-head",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available",
+        "root_id": "project",
+        "destination_path": "/work/project",
+        "case_sensitive": true,
+        "unicode_normalization": "none"
+      },
+      {
+        "id": "component-11",
+        "kind": "environment",
+        "identity": "example.environment.project-env",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      },
+      {
+        "id": "component-12",
+        "kind": "native_import",
+        "identity": "example-adapter",
+        "version": "1",
+        "revision": "synthetic-state-1",
+        "status": "available"
+      }
+    ]
+  },
+  "continuation-report:/$defs/capability_component": {
+    "id": "component-1",
+    "kind": "model",
+    "identity": "example/model-a",
+    "version": "1",
+    "revision": "synthetic-state-1",
+    "status": "available",
+    "model": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "tokenizer": "example-tokenizer/1",
+    "input_limit": 8000,
+    "media_types": [
+      "text/csv",
+      "text/markdown"
+    ],
+    "capabilities": [
+      "text",
+      "tool_calls"
+    ]
+  },
+  "continuation-report:/$defs/snapshot_evidence": {
+    "format": "asif.destination-capabilities/0.1",
+    "availability": "supplied",
+    "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtYW5vdGhlci1jb21wdXRlciIsCiAgImRlc3RpbmF0aW9uX2lkIjogImV4YW1wbGUtY2xvdWQtcnVudGltZSIsCiAgInByb2R1Y2VyIjogImFzaWYtZXhhbXBsZXMiLAogICJldmFsdWF0aW9uX21vZGUiOiAic3ludGhldGljIiwKICAib2JzZXJ2ZWRfYXQiOiAiMjAyNi0wOS0yNlQxMjowMDowMFoiLAogICJleHBpcmVzX2F0IjogIjIwMjYtMDktMjZUMTM6MDA6MDBaIiwKICAicnVudGltZSI6IHsKICAgICJhZ2VudCI6IHsKICAgICAgImlkIjogImV4YW1wbGUtYWdlbnQtYSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAic3RhdGVfZm9ybWF0IjogImV4YW1wbGUtbmF0aXZlLzEiCiAgICB9LAogICAgImFkYXB0ZXIiOiB7CiAgICAgICJpZCI6ICJleGFtcGxlLWFkYXB0ZXIiLAogICAgICAidmVyc2lvbiI6ICIxIgogICAgfSwKICAgICJvcyI6ICJsaW51eCIsCiAgICAiYXJjaGl0ZWN0dXJlIjogIng4Nl82NCIKICB9LAogICJydW50aW1lX3JldmlzaW9uIjogInN5bnRoZXRpYy1ydW50aW1lLTEiLAogICJzdXBwb3J0ZWRfZmVhdHVyZXMiOiBbCiAgICAiYXNpZi5wb3J0YWJsZS1jb250aW51YXRpb24vMC4yIgogIF0sCiAgImNvbXBvbmVudHMiOiBbCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMSIsCiAgICAgICJraW5kIjogIm1vZGVsIiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUvbW9kZWwtYSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIsCiAgICAgICJtb2RlbCI6IHsKICAgICAgICAicHJvdmlkZXIiOiAiZXhhbXBsZSIsCiAgICAgICAgImlkIjogIm1vZGVsLWEiLAogICAgICAgICJyZXZpc2lvbiI6ICIxIgogICAgICB9LAogICAgICAidG9rZW5pemVyIjogImV4YW1wbGUtdG9rZW5pemVyLzEiLAogICAgICAiaW5wdXRfbGltaXQiOiA4MDAwLAogICAgICAibWVkaWFfdHlwZXMiOiBbCiAgICAgICAgInRleHQvY3N2IiwKICAgICAgICAidGV4dC9tYXJrZG93biIKICAgICAgXSwKICAgICAgImNhcGFiaWxpdGllcyI6IFsKICAgICAgICAidGV4dCIsCiAgICAgICAgInRvb2xfY2FsbHMiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMiIsCiAgICAgICJraW5kIjogIm1vZGVsIiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUvbW9kZWwtYSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIsCiAgICAgICJtb2RlbCI6IHsKICAgICAgICAicHJvdmlkZXIiOiAiZXhhbXBsZSIsCiAgICAgICAgImlkIjogIm1vZGVsLWEiLAogICAgICAgICJyZXZpc2lvbiI6ICIxIgogICAgICB9LAogICAgICAidG9rZW5pemVyIjogImV4YW1wbGUtdG9rZW5pemVyLzEiLAogICAgICAiaW5wdXRfbGltaXQiOiA4MDAwLAogICAgICAibWVkaWFfdHlwZXMiOiBbCiAgICAgICAgInRleHQvY3N2IiwKICAgICAgICAidGV4dC9tYXJrZG93biIKICAgICAgXSwKICAgICAgImNhcGFiaWxpdGllcyI6IFsKICAgICAgICAidGV4dCIsCiAgICAgICAgInRvb2xfY2FsbHMiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMyIsCiAgICAgICJraW5kIjogImNvbmZpZ3VyYXRpb24iLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5jb25maWd1cmF0aW9uLmVmZmVjdGl2ZSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNCIsCiAgICAgICJraW5kIjogImNvbmZpZ3VyYXRpb24iLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5pbnN0cnVjdGlvbi53b3Jrc3BhY2UtcnVsZSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNSIsCiAgICAgICJraW5kIjogImNhcGFiaWxpdHkiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5jYXBhYmlsaXR5LnN1bW1hcnktc2tpbGwiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTYiLAogICAgICAia2luZCI6ICJwb2xpY3kiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5wb2xpY3kud29ya3NwYWNlLW9ubHkiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTciLAogICAgICAia2luZCI6ICJkZXBlbmRlbmN5IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUtYWdlbnQtYSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtOCIsCiAgICAgICJraW5kIjogImRlcGVuZGVuY3kiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5pbnZlbnRvcnkuc3VtbWFyaXplIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC05IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmludmVudG9yeS1zdW1tYXJ5IiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xMCIsCiAgICAgICJraW5kIjogIndvcmtzcGFjZSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLndvcmtzcGFjZS53b3Jrc3BhY2UtaGVhZCIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIsCiAgICAgICJyb290X2lkIjogInByb2plY3QiLAogICAgICAiZGVzdGluYXRpb25fcGF0aCI6ICIvd29yay9wcm9qZWN0IiwKICAgICAgImNhc2Vfc2Vuc2l0aXZlIjogdHJ1ZSwKICAgICAgInVuaWNvZGVfbm9ybWFsaXphdGlvbiI6ICJub25lIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xMSIsCiAgICAgICJraW5kIjogImVudmlyb25tZW50IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUuZW52aXJvbm1lbnQucHJvamVjdC1lbnYiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTEyIiwKICAgICAgImtpbmQiOiAibmF0aXZlX2ltcG9ydCIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLWFkYXB0ZXIiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9CiAgXQp9Cg==",
+    "bytes": 3895,
+    "evidence_id": "snapshot-inspection"
   }
 }
