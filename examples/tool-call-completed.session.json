@@ -1,0 +1,452 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-call-completed",
+    "producer": {
+      "name": "asif-example",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Synthetic later capture retaining partial evidence, completed arguments and a late terminal result. No real tool was executed."
+  },
+  "session": {
+    "id": "session-call-progression",
+    "title": "A partial tool call completed in a later capture",
+    "objective": [
+      {
+        "kind": "text",
+        "text": "Summarize the selected meeting notes."
+      }
+    ],
+    "native_ids": [],
+    "lineage": [
+      {
+        "relation": "continuation",
+        "session_id": "session-call-progression",
+        "capture_id": "capture-call-partial"
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "person",
+      "kind": "human"
+    },
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "e1",
+      "sequence": 0,
+      "actor_id": "person",
+      "kind": "message",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-example",
+        "method": "authored conformance example",
+        "inputs": []
+      },
+      "data": {
+        "role": "user",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Summarize the selected meeting notes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "call-partial",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "tool_call",
+      "causes": [
+        {
+          "event_id": "e1"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-example",
+        "method": "authored conformance example",
+        "inputs": []
+      },
+      "data": {
+        "call_id": "call-1",
+        "tool_id": "read-notes",
+        "arguments": {},
+        "arguments_status": "partial"
+      },
+      "execution_id": "run-1"
+    },
+    {
+      "id": "call-complete",
+      "sequence": 2,
+      "actor_id": "agent",
+      "kind": "tool_call",
+      "causes": [
+        {
+          "event_id": "call-partial"
+        }
+      ],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-example",
+        "method": "authored conformance example",
+        "inputs": [
+          {
+            "event_id": "call-partial"
+          }
+        ]
+      },
+      "data": {
+        "call_id": "call-1",
+        "tool_id": "read-notes",
+        "arguments": {
+          "document_id": "meeting-42"
+        },
+        "arguments_status": "complete"
+      },
+      "execution_id": "run-1",
+      "supersedes": {
+        "event_id": "call-partial"
+      }
+    },
+    {
+      "id": "result-late",
+      "sequence": 3,
+      "actor_id": "agent",
+      "kind": "tool_result",
+      "causes": [
+        {
+          "event_id": "call-complete"
+        }
+      ],
+      "execution_id": "run-1",
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-example",
+        "method": "authored late-result fixture; no tool executed",
+        "inputs": [
+          {
+            "event_id": "call-complete"
+          }
+        ]
+      },
+      "data": {
+        "call_id": "call-1",
+        "result_index": 0,
+        "terminal": true,
+        "outcome": "success",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Meeting notes: agree on the workshop outline."
+          }
+        ]
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "e1",
+        "call-partial",
+        "call-complete",
+        "result-late"
+      ],
+      "head_event_id": "result-late"
+    }
+  ],
+  "executions": [
+    {
+      "id": "run-1",
+      "participant_id": "agent",
+      "status": "unknown",
+      "context_ids": [
+        "context-1",
+        "context-completed"
+      ]
+    }
+  ],
+  "contexts": [
+    {
+      "id": "context-1",
+      "branch_id": "main",
+      "at_event_id": "e1",
+      "purpose": "model_request",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "input-1",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Summarize the selected meeting notes."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            }
+          ],
+          "kind": "message"
+        }
+      ],
+      "tool_ids": [
+        "read-notes"
+      ],
+      "configuration_id": "config-1"
+    },
+    {
+      "id": "context-completed",
+      "branch_id": "main",
+      "at_event_id": "result-late",
+      "purpose": "continuation",
+      "fidelity": "reconstructed",
+      "inputs": [
+        {
+          "id": "input-1",
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Summarize the selected meeting notes."
+            }
+          ],
+          "source_events": [
+            {
+              "event_id": "e1"
+            }
+          ],
+          "kind": "message"
+        },
+        {
+          "id": "input-call",
+          "kind": "tool_call",
+          "role": "assistant",
+          "parts": [],
+          "source_events": [
+            {
+              "event_id": "call-complete"
+            }
+          ],
+          "call_id": "call-1",
+          "tool_id": "read-notes",
+          "arguments": {
+            "document_id": "meeting-42"
+          },
+          "arguments_status": "complete"
+        },
+        {
+          "id": "input-result",
+          "kind": "tool_result",
+          "role": "tool",
+          "source_events": [
+            {
+              "event_id": "result-late"
+            }
+          ],
+          "call_id": "call-1",
+          "result_index": 0,
+          "terminal": true,
+          "outcome": "success",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Meeting notes: agree on the workshop outline."
+            }
+          ]
+        }
+      ],
+      "tool_ids": [
+        "read-notes"
+      ],
+      "configuration_id": "config-1"
+    }
+  ],
+  "configurations": [
+    {
+      "id": "config-1",
+      "instructions": [],
+      "capabilities": [],
+      "policies": [],
+      "secret_requirements": [],
+      "knowledge": "partial"
+    }
+  ],
+  "tools": [
+    {
+      "id": "read-notes",
+      "name": "example.notes.read",
+      "description": "Read a meeting document by logical identifier.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "document_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "resources": [
+    {
+      "id": "arguments-prefix",
+      "media_type": "application/json",
+      "purpose": "native",
+      "availability": "embedded",
+      "text": "{\"document_id\":\"meeting-",
+      "bytes": 24,
+      "sha256": "fb8d78841e7670909a982dafb1923afa21cef761abb0d2bee9d3dd6cbb75290e"
+    },
+    {
+      "id": "arguments-suffix",
+      "media_type": "application/json",
+      "purpose": "native",
+      "availability": "embedded",
+      "text": "42\"}",
+      "bytes": 4,
+      "sha256": "fb9c1ce2bc0b87522946e8bc0ebac6f6219f91c603092056252946040712508f"
+    }
+  ],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "checkpoint-completed",
+      "branch_id": "main",
+      "at_event_id": "result-late",
+      "knowledge": "derived",
+      "status": "idle",
+      "context_id": "context-completed",
+      "configuration_id": "config-1",
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [],
+      "requirements": []
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "conversation",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "executions",
+      "status": "partial",
+      "detail": "Argument generation is captured; no execution lifecycle is asserted."
+    },
+    {
+      "scope": "contexts",
+      "status": "partial",
+      "detail": "Reconstructed user input only; provider-specific request details are unknown."
+    },
+    {
+      "scope": "configuration",
+      "status": "partial",
+      "detail": "Tool interface is declared; effective instructions and runtime policy are unknown."
+    },
+    {
+      "scope": "tools",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No records in this authored synthetic scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "known_empty",
+      "detail": "No records in this authored synthetic scenario."
+    },
+    {
+      "scope": "resources",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "environment",
+      "status": "known_empty",
+      "detail": "No records in this authored synthetic scenario."
+    },
+    {
+      "scope": "native",
+      "status": "complete",
+      "detail": "Complete for this authored synthetic capture boundary."
+    },
+    {
+      "scope": "usage",
+      "status": "known_empty",
+      "detail": "No records in this authored synthetic scenario."
+    }
+  ],
+  "losses": [],
+  "required_features": [
+    "asif.streams/0.1"
+  ],
+  "streams": [
+    {
+      "id": "stream-partial",
+      "kind": "tool_arguments",
+      "event_id": "call-partial",
+      "call_id": "call-1",
+      "status": "partial",
+      "segments": [
+        {
+          "index": 0,
+          "resource_id": "arguments-prefix",
+          "offset": 0,
+          "length": 24,
+          "terminal": false
+        }
+      ]
+    },
+    {
+      "id": "stream-complete",
+      "kind": "tool_arguments",
+      "event_id": "call-complete",
+      "call_id": "call-1",
+      "status": "complete",
+      "segments": [
+        {
+          "index": 0,
+          "resource_id": "arguments-prefix",
+          "offset": 0,
+          "length": 24,
+          "terminal": false
+        },
+        {
+          "index": 1,
+          "resource_id": "arguments-suffix",
+          "offset": 0,
+          "length": 4,
+          "terminal": true
+        }
+      ]
+    }
+  ]
+}

@@ -110,6 +110,22 @@ No terminal result means outcome unresolved, not proof of failure or permission 
 
 A decision resolution binds the exact request and, where relevant, call or task revision. No recorded resolution means unknown outcome. Historical approval is evidence; a receiving runtime must make its own authorization decision. A task completion record is a reported state, not proof that its objective was achieved.
 
+### Tool-call progression across captures
+
+An invocation can be observed before its arguments are complete. Further knowledge of that **same invocation** is recorded as a new `tool_call` event with a new event ID and a local `supersedes` reference to its earlier version. The original event remains unchanged and included in the document, even when copied from an earlier capture. The session and `call_id` stay the same; a later capture has a new capture ID. Repeating a `call_id` without this amendment relationship is invalid.
+
+A call amendment MUST preserve `call_id`, `tool_id`, event `actor_id`, event `execution_id` (including absence), and `retry_of` (including absence). Its predecessor MUST be an earlier local `tool_call`. Argument knowledge may stay `unknown`, progress from `unknown` to `partial` or `complete`, or progress from `partial` to `partial` or `complete`. It MUST NOT regress from `partial` to `unknown`, and a `complete` call MUST NOT be amended through this mechanism. Each event carries its own exact known `arguments` value; consumers MUST NOT merge those values or concatenate them to guess complete arguments. Protocol fragments are recorded separately using [streams](STREAMING.md).
+
+A selected history may select only the final call version while retaining its predecessors elsewhere in the document. If it selects multiple versions of the invocation, each later selected version MUST directly supersede the preceding selected version. Conflicting successors may exist on different branches but MUST NOT both be selected in one history. A selected history cannot skip an intermediate amendment while selecting versions on both sides of it. A branch selecting only the original retains its original argument knowledge.
+
+State derivation processes selected call versions in branch order and updates the known arguments for that invocation. It preserves call/result/decision correlation already established at the first selected version. An amendment recorded after a result changes captured argument knowledge; it does not remove the result, reopen a terminal invocation, or authorize execution. At an earlier checkpoint, later amendments do not apply. A model context explicitly selects one typed call input per invocation at its declared boundary; it does not replay the amendment history as several calls.
+
+A retry is a different invocation and MUST receive a new `call_id`, even when its arguments are identical. Optional `retry_of` identifies the prior invocation and MUST NOT equal the retry's own ID. A retry MUST NOT supersede the earlier invocation. Amendments do not establish whether an operation ran, and complete arguments do not establish authorization to run it.
+
+An external call descriptor alone is insufficient to verify an amendment's event identity, actor and execution. To amend a call from an earlier capture, include the authentic predecessor event and its required references locally, preserving its event ID, contents and provenance; remove any external binding for that same invocation. A call amendment with an external-only `supersedes` reference is invalid. If the predecessor cannot be included, preserve the new evidence as a note or opaque resource with an explicit limitation rather than inventing a local observed call. External bindings still support correlation of a late result with an unchanged external invocation.
+
+See the [two-capture example](examples/README.md#tool-call-progression-across-captures). These rules use existing fields; they add inter-event semantic checks, not a new JSON representation.
+
 ## 7. Branches and selected history
 
 A branch requires `id`, ordered `event_ids[]`, `head_event_id` (nullable for an empty branch), and optional `fork` with source session/capture/branch/event and inclusive choice. A branch contains no duplicate event IDs. Its head MUST equal its final selected event. An included causal predecessor MUST occur earlier if it appears in the same selected branch; cross-branch causality remains explicit and does not automatically import another branch's history.

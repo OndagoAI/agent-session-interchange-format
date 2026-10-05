@@ -48,7 +48,7 @@ Use the context and workspace IDs recorded in the document. Output is JSON. Exit
 | Area | Implemented | Limits |
 |---|---|---|
 | Parsing | Bounded UTF-8 JSON and duplicate-key rejection; Python preserves decimal values, while TypeScript refuses numbers outside its supported exact round-trip range. | No unbounded-size or streaming parser claim. See language differences below. |
-| Core semantics | IDs/references, causal and supersession graphs, selected-history state, checkpoint consistency, provenance spans, resource hashes. | Some lifecycle, requirement, task-dependency and coverage semantics still need complete validation. |
+| Core semantics | IDs/references, causal and supersession graphs, selected-history state, incomplete-call amendments and retry identity, checkpoint consistency, provenance spans, resource hashes. | Some lifecycle, requirement, task-dependency and coverage semantics still need complete validation. |
 | Continuation | Selected dependency closure, configuration bindings, typed calls/results, workspace bases, Git declaration checks, report source hash/expiry and readiness consistency. | Reports remain declarations; no live checks or complete cryptographic verification of runtime evidence. |
 | Request projection | Ordered typed inputs, selected tool definitions, model settings and required content references. | JSON output is a neutral projection. Provider encoding, token measurement and adaptation are not implemented. |
 | Configuration | Explicit order, scope matching, neutral predicates, merge groups and declarative policy precedence. | Only the neutral dialect below is evaluated. No equivalence claim for vendor dialects or runtime enforcement. |

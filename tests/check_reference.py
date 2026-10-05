@@ -21,6 +21,44 @@ def rejects(fn,expected):
 def equal(a,b):assert a==b,(a,b)
 for file in sorted((ROOT/'examples').rglob('*.session.json')):
     check('validate-'+file.stem,lambda f=file:validate_document(load(f)[0],f.parent))
+
+def progression_case(case):
+    d=load(ROOT/'examples'/case['fixture'])[0]
+    for edit in case['edits']:
+        target=d
+        for key in edit['path'][:-1]:target=target[int(key) if isinstance(target,list) else key]
+        key=int(edit['path'][-1]) if isinstance(target,list) else edit['path'][-1]
+        if edit.get('remove'):del target[key]
+        elif isinstance(target,list) and key==len(target):target.append(copy.deepcopy(edit['value']))
+        else:target[key]=copy.deepcopy(edit['value'])
+    if 'error' in case:
+        rejects(lambda:validate_document(d,ROOT/'examples'),case['error'])
+    else:
+        validate_document(d,ROOT/'examples')
+        events={e['id']:e for e in d['events']}
+        external_calls={b['id']:b['descriptor'] for b in d.get('external_bindings',[]) if b['kind']=='call'}
+        state=history_state([events[id] for id in d['branches'][0]['event_ids']],external_calls)
+        actual={'calls':{id:{k:call[k] for k in ('arguments','arguments_status')} for id,call in state['calls'].items()},'closed_calls':state['closed_calls']}
+        equal(actual,case['expected'])
+
+for case in json.loads((ROOT/'tests/tool-call-progression-cases.json').read_text())['cases']:
+    check('call-progression-'+case['name'],lambda c=case:progression_case(c))
+
+def preserved_partial_capture():
+    partial=load(ROOT/'examples/tool-call-partial.session.json')[0]
+    completed=load(ROOT/'examples/tool-call-completed.session.json')[0]
+    equal(partial['session']['id'],completed['session']['id'])
+    assert partial['capture']['id']!=completed['capture']['id']
+    for collection in ('events','resources','streams','contexts'):
+        later={x['id']:x for x in completed[collection]}
+        for record in partial[collection]:equal(record,later[record['id']])
+    validated=validate_document(completed,ROOT/'examples')
+    inputs=reconstruct_request(completed,validated,'context-completed')['inputs']
+    calls=[item for item in inputs if item['kind']=='tool_call']
+    equal(len(calls),1);equal(calls[0]['arguments'],{'document_id':'meeting-42'})
+    equal(calls[0]['source_events'],[{'event_id':'call-complete'}])
+check('call-progression-retains-immutable-evidence',preserved_partial_capture)
+
 folder=ROOT/'examples/continuation';doc,raw=load(folder/'another-computer.session.json');validated=validate_document(doc,folder)
 check('strict-duplicate-key',lambda:rejects(lambda:decode(b'{"a":1,"a":2}'),'duplicate JSON key'))
 check('strict-nonfinite',lambda:rejects(lambda:decode(b'{"a":NaN}'),'non-JSON numeric constant'))

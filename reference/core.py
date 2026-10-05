@@ -18,10 +18,18 @@ def effective(events):
 
 def history_state(events,external_calls=None,external_requests=None):
     calls=dict(external_calls or {});requests=dict(external_requests or {});closed={};decisions={};tasks={};indices={};executions={}
-    for event in effective(events):
+    call_events={};selected={e['id'] for e in effective(events)}
+    for event in events:
+        # Fold call amendments in place: removing the original could orphan a
+        # result or decision recorded before the amendment was captured.
+        if event['kind']!='tool_call' and event['id'] not in selected:continue
         data=event['data'];kind=event['kind']
         if kind=='tool_call':
-            need(data['call_id'] not in calls,'duplicate call identity');calls[data['call_id']]=data
+            id=data['call_id']
+            if id in calls:
+                prior=event.get('supersedes',{})
+                need(id in call_events and 'capture_id' not in prior and prior.get('event_id')==call_events[id],'conflicting selected call versions')
+            calls[id]=data;call_events[id]=event['id']
         elif kind=='tool_result':
             id=data['call_id'];need(id in calls,'orphan tool result');need(id not in closed,'tool result after terminal')
             need(data['result_index']>indices.get(id,-1),'tool result index order');indices[id]=data['result_index']
@@ -107,7 +115,17 @@ def validate_document(doc,folder):
         for name in ('parts','prompt','answer'):
             if name in d:parts(d[name])
         if kind=='tool_call':
-            need(d['call_id'] not in calls and d['call_id'] not in external_calls,'duplicate call identity')
+            need(d['call_id'] not in external_calls,'duplicate call identity')
+            if 'supersedes' in e:
+                need('capture_id' not in e['supersedes'],'call amendment requires local predecessor')
+                prior=events[e['supersedes']['event_id']];previous=prior['data']
+                need(d['call_id']==previous['call_id'] and d['tool_id']==previous['tool_id'],'call amendment changed invocation')
+                need(d.get('retry_of')==previous.get('retry_of'),'call amendment changed retry relationship')
+                need(e['actor_id']==prior['actor_id'] and e.get('execution_id')==prior.get('execution_id'),'call amendment changed actor or execution')
+                need(previous['arguments_status']!='complete','completed call cannot be amended')
+                need(previous['arguments_status']!='partial' or d['arguments_status']!='unknown','call argument knowledge regressed')
+            else:need(d['call_id'] not in calls,'duplicate call identity')
+            need(d.get('retry_of')!=d['call_id'],'retry must use new call identity')
             need(d['tool_id'] in collections['tools'],'missing tool definition');calls[d['call_id']]=d
         elif kind=='decision_request':
             need(d['request_id'] not in requests and d['request_id'] not in external_requests,'duplicate decision request')

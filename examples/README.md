@@ -16,6 +16,21 @@ For the benefits behind these records, see [use cases](../docs/use-cases.md): mo
 | [Redacted attachment](redacted-attachment.session.json) | Original content marked redacted; a distinct sanitized resource with its own bytes/hash; loss report and explicit substitution in model input. |
 | [Compaction with an attachment](compaction-with-attachment.session.json) | Original notes retained in history; a summary memory selected into a separate continuation context. |
 | [Awaiting approval](awaiting-approval.session.json) | Tool call and approval request without a recorded answer or tool result. |
+| [Partial call](tool-call-partial.session.json) → [completed call](tool-call-completed.session.json) | Two captures of the same invocation, preserving immutable partial arguments and stream bytes, then an amendment and a late result. |
+
+## Tool-call progression across captures
+
+The [first capture](tool-call-partial.session.json) ends at `call-partial`, with `arguments_status: partial`, one nonterminal stream segment, and `call-1` marked `outcome_unknown`. The [second capture](tool-call-completed.session.json) retains that event, its stream, and its fragment resource unchanged. It adds `call-complete`, whose `supersedes` points to `call-partial`, followed by the terminal `result-late` for the same `call-1`. A new complete stream reuses the original fragment and adds the final bytes. The proposed context contains one completed typed call input and its result.
+
+Both documents use `session-call-progression`; their capture IDs differ. The later capture's lineage names the earlier one. This is recorded knowledge of one invocation, not a second execution. A retry would use a new call ID. All evidence is synthetic; neither fixture authorizes execution or claims runtime continuation readiness.
+
+The [shared progression cases](../tests/tool-call-progression-cases.json) cover selected and historical branches, competing amendments, late amendment after a terminal result, partial/unknown argument refinement, retry identity, and external-predecessor refusal. Both reference test suites consume the same cases and verify that the earlier capture's events, resources, streams and contexts survive unchanged.
+
+```sh
+.venv/bin/python asif.py validate examples/tool-call-partial.session.json
+.venv/bin/python asif.py validate examples/tool-call-completed.session.json
+node asif.ts request examples/tool-call-completed.session.json context-completed
+```
 
 ## Agents with different roles
 
@@ -95,7 +110,7 @@ Content type does not determine storage: an image could use either base64 or a f
 - [summary.md](assets/summary.md): generated-output report fixture.
 - [project-notes.md](assets/project-notes.md): notes retained after context compaction.
 
-To copy an example elsewhere, copy its JSON document and all resources referenced by `path`, preserving their relative paths. Inline resources need no extra files. The examples share this directory only for convenience; there is no implied relationship among their distinct session IDs.
+To copy an example elsewhere, copy its JSON document and all resources referenced by `path`, preserving their relative paths. Inline resources need no extra files. Apart from the explicitly related tool-call captures above, the examples have distinct session IDs and no implied relationship.
 
 ## Checks and regeneration
 
@@ -106,6 +121,6 @@ From the project root:
 .venv/bin/python tests/check_examples.py
 ```
 
-The second check validates all eight documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. It is not a complete ASIF semantic validator or an interoperability test.
+The second check validates all ten documents against the schema, verifies embedded resource bytes and references, and checks selected event/branch/context relationships. It also checks that corrupt digests, missing resources and unsafe paths are rejected by the fixture checker. Run `.venv/bin/python tests/check_reference.py` and `npm test` for the shared tool-call progression cases. These are not complete ASIF conformance or interoperability tests.
 
-`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples, their five file assets, and the collaboration example. It does not replace the existing approval example. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.
+`python3 examples/build_examples.py` deterministically rebuilds the six attachment examples, their five file assets, and the collaboration example. It does not replace the existing approval example or the two hand-authored tool-call captures. All contexts remain explicitly reconstructed; none claims a real provider request or successful continuation.

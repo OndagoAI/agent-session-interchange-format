@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local vendor-neutral reference implementation checks",
-  "checks": 61,
-  "passed": 61,
+  "checks": 93,
+  "passed": 93,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -47,7 +47,135 @@
       "passed": true
     },
     {
+      "case": "validate-tool-call-completed.session",
+      "passed": true
+    },
+    {
+      "case": "validate-tool-call-partial.session",
+      "passed": true
+    },
+    {
       "case": "validate-tool-generated-files.session",
+      "passed": true
+    },
+    {
+      "case": "call-progression-partial capture",
+      "passed": true
+    },
+    {
+      "case": "call-progression-completion and late result",
+      "passed": true
+    },
+    {
+      "case": "call-progression-select completed version only",
+      "passed": true
+    },
+    {
+      "case": "call-progression-unlinked duplicate invocation",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment changed invocation ID",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment changed tool",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment changed actor",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment dropped execution",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment changed execution",
+      "passed": true
+    },
+    {
+      "case": "call-progression-completed predecessor cannot be retried by amendment",
+      "passed": true
+    },
+    {
+      "case": "call-progression-partial knowledge cannot regress to unknown",
+      "passed": true
+    },
+    {
+      "case": "call-progression-external-only predecessor is not verifiable",
+      "passed": true
+    },
+    {
+      "case": "call-progression-missing local predecessor",
+      "passed": true
+    },
+    {
+      "case": "call-progression-wrong predecessor kind",
+      "passed": true
+    },
+    {
+      "case": "call-progression-future predecessor",
+      "passed": true
+    },
+    {
+      "case": "call-progression-conflicting selected amendments",
+      "passed": true
+    },
+    {
+      "case": "call-progression-separate branches select separate amendments",
+      "passed": true
+    },
+    {
+      "case": "call-progression-historical branch retains partial state",
+      "passed": true
+    },
+    {
+      "case": "call-progression-late amendment preserves terminal result",
+      "passed": true
+    },
+    {
+      "case": "call-progression-partial to partial refinement",
+      "passed": true
+    },
+    {
+      "case": "call-progression-unknown to partial refinement",
+      "passed": true
+    },
+    {
+      "case": "call-progression-unknown to complete refinement",
+      "passed": true
+    },
+    {
+      "case": "call-progression-three-version refinement chain",
+      "passed": true
+    },
+    {
+      "case": "call-progression-selected chain cannot skip its intermediate version",
+      "passed": true
+    },
+    {
+      "case": "call-progression-retry uses new invocation identity",
+      "passed": true
+    },
+    {
+      "case": "call-progression-external binding cannot also declare a local invocation",
+      "passed": true
+    },
+    {
+      "case": "call-progression-amendment changed retry relationship",
+      "passed": true
+    },
+    {
+      "case": "call-progression-retry cannot reference its own identity",
+      "passed": true
+    },
+    {
+      "case": "call-progression-unchanged external invocation accepts a late result",
+      "passed": true
+    },
+    {
+      "case": "call-progression-retains-immutable-evidence",
       "passed": true
     },
     {
