@@ -2072,7 +2072,7 @@ One logical invocation and its known arguments. Partial arguments cannot be exec
 
 ### Rules
 
-See [normative session rules](../SEMANTICS.md#6-core-event-meanings).
+See [tool-call progression rules](../SEMANTICS.md#tool-call-progression-across-captures). A partial or unknown invocation can gain arguments through a new event with local `supersedes`, retaining its call/tool/actor/execution/retry identity. Completed calls cannot be amended through this mechanism; retries use a new call ID. Selected histories must choose a single amendment chain. These are inter-event semantic checks beyond JSON Schema.
 
 Additional properties are permitted and MUST be preserved when relaying supported JSON values. They do not acquire execution semantics without a declared feature or dialect.
 

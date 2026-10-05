@@ -97,6 +97,88 @@ const corpus = JSON.parse(
     "utf8",
   ),
 );
+const progression = JSON.parse(
+  fs.readFileSync(
+    path.join(ROOT, "tests/tool-call-progression-cases.json"),
+    "utf8",
+  ),
+);
+for (const item of progression.cases)
+  check("call progression: " + item.name, () => {
+    const d = load(path.join(ROOT, "examples", item.fixture))[0];
+    for (const edit of item.edits) {
+      let target = d;
+      for (const key of edit.path.slice(0, -1)) target = target[key];
+      const key = edit.path.at(-1);
+      if (edit.remove) {
+        if (Array.isArray(target)) target.splice(Number(key), 1);
+        else delete target[key];
+      } else target[key] = structuredClone(edit.value);
+    }
+    if (item.error) {
+      assert.throws(
+        () => validateDocument(d, path.join(ROOT, "examples")),
+        (error) =>
+          error instanceof Invalid && error.message.includes(item.error),
+      );
+    } else {
+      const validated = validateDocument(d, path.join(ROOT, "examples"));
+      const externalCalls = Object.fromEntries(
+        (d.external_bindings ?? [])
+          .filter((b: Obj) => b.kind === "call")
+          .map((b: Obj) => [b.id, b.descriptor]),
+      );
+      const state = historyState(
+        d.branches[0].event_ids.map(
+          (id: string) => validated.collections.events[id],
+        ),
+        externalCalls,
+      );
+      const actual = {
+        calls: Object.fromEntries(
+          Object.entries<Obj>(state.calls).map(([id, call]) => [
+            id,
+            {
+              arguments: call.arguments,
+              arguments_status: call.arguments_status,
+            },
+          ]),
+        ),
+        closed_calls: state.closed_calls,
+      };
+      assert.deepEqual(JSON.parse(JSON.stringify(actual)), item.expected);
+    }
+  });
+check("call progression retains immutable evidence across captures", () => {
+  const partial = load(
+    path.join(ROOT, "examples/tool-call-partial.session.json"),
+  )[0];
+  const completed = load(
+    path.join(ROOT, "examples/tool-call-completed.session.json"),
+  )[0];
+  assert.equal(partial.session.id, completed.session.id);
+  assert.notEqual(partial.capture.id, completed.capture.id);
+  for (const collection of ["events", "resources", "streams", "contexts"])
+    for (const record of partial[collection])
+      assert.deepEqual(
+        completed[collection].find((r: Obj) => r.id === record.id),
+        record,
+      );
+  const validated = validateDocument(completed, path.join(ROOT, "examples"));
+  const inputs = reconstructRequest(
+    completed,
+    validated,
+    "context-completed",
+  ).inputs;
+  const calls = inputs.filter((item: Obj) => item.kind === "tool_call");
+  assert.equal(calls.length, 1);
+  assert.deepEqual(JSON.parse(JSON.stringify(calls[0].arguments)), {
+    document_id: "meeting-42",
+  });
+  assert.deepEqual(JSON.parse(JSON.stringify(calls[0].source_events)), [
+    { event_id: "call-complete" },
+  ]);
+});
 for (const item of corpus.cases)
   check("Python parity: " + item.name, () => {
     const execute = () =>

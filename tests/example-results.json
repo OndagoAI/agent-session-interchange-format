@@ -1,8 +1,8 @@
 {
   "scope": "Synthetic fixture structure, embedded bytes and selected references only",
-  "examples_passed": 8,
+  "examples_passed": 10,
   "negative_checks_passed": 5,
-  "embedded_resources_verified": 12,
+  "embedded_resources_verified": 15,
   "file_attachments_verified": 5,
   "full_semantic_conformance_tested": false,
   "interoperability_tested": false,
@@ -51,6 +51,18 @@
     },
     {
       "example": "redacted-attachment.session.json",
+      "passed": true,
+      "embedded_resources_verified": 1,
+      "file_paths": []
+    },
+    {
+      "example": "tool-call-completed.session.json",
+      "passed": true,
+      "embedded_resources_verified": 2,
+      "file_paths": []
+    },
+    {
+      "example": "tool-call-partial.session.json",
       "passed": true,
       "embedded_resources_verified": 1,
       "file_paths": []

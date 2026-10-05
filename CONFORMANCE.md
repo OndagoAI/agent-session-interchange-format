@@ -36,6 +36,7 @@ The checker conservatively assesses every selected dependency/resource as requir
 | Interchange | Required unknown event extension | Refuse the unsupported semantic capability. |
 | Interchange | Branch, edit, retry, merge | Preserve each selected history, fork boundaries and explicit context. |
 | Interchange | Parallel tool calls and streamed results | Match call IDs and chunk indexes; terminal state is explicit. |
+| Interchange | Partial call followed by an amendment in another capture | Keep the original event/stream, correlate one invocation, select versions per branch, reject conflicting amendments and retries that reuse identity, and preserve late terminal results. |
 | Interchange | Missing terminal tool result | Outcome unknown; no automatic repeat of a possible side effect. |
 | Interchange | Approval without answer | Pending only with evidence; otherwise outcome unknown. |
 | Interchange | Task revisions and plan approval | Resolution applies to the exact named revision. |

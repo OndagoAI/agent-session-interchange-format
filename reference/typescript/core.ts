@@ -77,14 +77,28 @@ export function historyState(
     decisions = object(),
     tasks = object(),
     indices = object(),
-    executions = object();
-  for (const event of effective(events)) {
+    executions = object(),
+    callEvents = object();
+  const selected = new Set(effective(events).map((e) => e.id));
+  for (const event of events) {
+    // Keep calls in their recorded positions so late amendments do not orphan
+    // results or decisions. The fold updates knowledge, not execution state.
+    if (event.kind !== "tool_call" && !selected.has(event.id)) continue;
     const d = event.data,
       id = d.call_id;
     switch (event.kind) {
       case "tool_call":
-        need(!own(calls, id), "duplicate call identity");
+        if (own(calls, id)) {
+          const prior = event.supersedes ?? object();
+          need(
+            own(callEvents, id) &&
+              !own(prior, "capture_id") &&
+              prior.event_id === callEvents[id],
+            "conflicting selected call versions",
+          );
+        }
         calls[id] = d;
+        callEvents[id] = event.id;
         break;
       case "tool_result":
         need(own(calls, id), "orphan tool result");
@@ -303,10 +317,38 @@ export function validateDocument(doc: Obj, folder: string): Validated {
     for (const name of ["parts", "prompt", "answer"])
       if (own(d, name)) parts(d[name]);
     if (e.kind === "tool_call") {
-      need(
-        !own(calls, d.call_id) && !own(externalCalls, d.call_id),
-        "duplicate call identity",
-      );
+      need(!own(externalCalls, d.call_id), "duplicate call identity");
+      if (e.supersedes) {
+        need(
+          !own(e.supersedes, "capture_id"),
+          "call amendment requires local predecessor",
+        );
+        const prior = events[e.supersedes.event_id],
+          previous = prior.data;
+        need(
+          d.call_id === previous.call_id && d.tool_id === previous.tool_id,
+          "call amendment changed invocation",
+        );
+        need(
+          d.retry_of === previous.retry_of,
+          "call amendment changed retry relationship",
+        );
+        need(
+          e.actor_id === prior.actor_id &&
+            e.execution_id === prior.execution_id,
+          "call amendment changed actor or execution",
+        );
+        need(
+          previous.arguments_status !== "complete",
+          "completed call cannot be amended",
+        );
+        need(
+          previous.arguments_status !== "partial" ||
+            d.arguments_status !== "unknown",
+          "call argument knowledge regressed",
+        );
+      } else need(!own(calls, d.call_id), "duplicate call identity");
+      need(d.retry_of !== d.call_id, "retry must use new call identity");
       need(own(collections.tools, d.tool_id), "missing tool definition");
       calls[d.call_id] = d;
     } else if (e.kind === "decision_request") {
