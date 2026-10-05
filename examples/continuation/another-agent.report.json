@@ -6,7 +6,7 @@
     "session_id": "session-another-agent",
     "capture_id": "capture-another-agent",
     "plan_id": "continue-main",
-    "document_sha256": "0a0684e757513cd81b7bbf5f92901ba745a50c0e6442aca7cf9b9a7a9fbc9f91"
+    "document_sha256": "d32b30525d3670ff919d46a7bd56129f10bc6b3b95176cbba98a9b08a3a95708"
   },
   "destination": {
     "id": "example-agent-b-runtime",
@@ -91,8 +91,83 @@
     },
     {
       "subject": {
-        "kind": "workspace",
-        "id": "workspace-head"
+        "kind": "resource",
+        "id": "source-csv"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "output-csv"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "report"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "instruction",
+        "id": "workspace-rule",
+        "owner_id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "capability",
+        "id": "summary-skill",
+        "owner_id": "effective"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "skill-template"
+      },
+      "status": "supported",
+      "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "policy",
+        "id": "workspace-only",
+        "owner_id": "effective"
       },
       "status": "supported",
       "required": true,
@@ -151,9 +226,8 @@
     },
     {
       "subject": {
-        "kind": "instruction",
-        "id": "workspace-rule",
-        "owner_id": "effective"
+        "kind": "workspace",
+        "id": "workspace-head"
       },
       "status": "supported",
       "required": true,
@@ -164,22 +238,8 @@
     },
     {
       "subject": {
-        "kind": "capability",
-        "id": "summary-skill",
-        "owner_id": "effective"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "policy",
-        "id": "workspace-only",
-        "owner_id": "effective"
+        "kind": "environment",
+        "id": "project-env"
       },
       "status": "supported",
       "required": true,
@@ -204,54 +264,6 @@
       "subject": {
         "kind": "resource",
         "id": "native-state"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "resource",
-        "id": "output-csv"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "resource",
-        "id": "report"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "resource",
-        "id": "skill-template"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "resource",
-        "id": "source-csv"
       },
       "status": "supported",
       "required": true,

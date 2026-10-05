@@ -848,6 +848,13 @@
   },
   {
     "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/assessment/properties/resolved/properties/external_identity",
+    "example_key": "continuation-report:/$defs/assessment/properties/resolved/properties/external_identity",
+    "page": "report-objects.md",
+    "anchor": "assessment-resolved-external-identity-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
     "pointer": "/$defs/evidence",
     "example_key": "continuation-report:/$defs/evidence",
     "page": "report-objects.md",

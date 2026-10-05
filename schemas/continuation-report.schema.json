@@ -477,7 +477,10 @@
             "resource",
             "operation",
             "native_import",
-            "feature"
+            "feature",
+            "environment",
+            "checkpoint_requirement",
+            "environment_requirement"
           ]
         },
         "id": {
@@ -587,6 +590,35 @@
               },
               "minItems": 0,
               "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "available"
+              ]
+            },
+            "recovery_strategy": {
+              "enum": [
+                "reconcile",
+                "reconnect"
+              ]
+            },
+            "external_identity": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "namespace",
+                "value"
+              ],
+              "additionalProperties": true
             }
           },
           "required": [],

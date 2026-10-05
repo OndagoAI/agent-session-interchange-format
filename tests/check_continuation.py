@@ -93,6 +93,62 @@ for transformation in receipt['transformations']:transformation['accepted']=True
 receipt['outcome']='ready'
 assert inspect_report(doc,source,receipt,FOLDER,now=NOW)['operational_authorization'] is False
 results.append({'case':'accepted-adaptations-simulated','passed':True,'outcome':'ready'})
+# One unchanged capture is assessed independently for all five next actions.
+action_doc,action_raw,_=fixtures['action-specific']
+for action in ['await_decision','reconcile_operation','model_request','resume_native']:
+    receipt=json.loads((FOLDER/('action-specific-'+action+'.report.json')).read_text())
+    fixtures[action]=(action_doc,action_raw,receipt)
+    outcome=inspect_report(action_doc,action_raw,receipt,FOLDER,now=NOW)
+    assert outcome['outcome']==('blocked' if action in ('model_request','resume_native') else 'ready')
+    results.append({'case':'same-capture-'+action,'passed':True,'outcome':outcome['outcome']})
+
+def selected(receipt,kind,id=None):
+    return next(a for a in receipt['assessments'] if a['subject']['kind']==kind and (id is None or a['subject']['id']==id))
+
+def requirement_case(name,mutate,expected):
+    doc=copy.deepcopy(action_doc);mutate(doc)
+    actual=inspect_session(doc,FOLDER)
+    for action,kind,id,required in expected:
+        assert next(x['required'] for x in actual[action] if x['subject']['kind']==kind and x['subject']['id']==id)==required,name
+    results.append({'case':name,'passed':True,'outcome':'accepted'})
+
+requirement_case('action-scopes-and-transitive-empty-dependency',lambda d:None,[
+ ('await_user','dependency','summary-tool',False),('reconcile_operation','dependency','summary-tool',True),
+ ('await_user','dependency','media-decoder',False),('model_request','dependency','media-decoder',True),
+ ('await_user','resource','missing-media',False),('model_request','resource','missing-media',True),
+ ('model_request','capability','optional-formatting',False),('model_request','resource','optional-asset',False),
+ ('await_user','checkpoint_requirement','viewer',True),('await_user','checkpoint_requirement','media-input',False),
+ ('await_decision','resource','decision-guide',True)])
+requirement_case('shared-resource-requiredness-union',lambda d:d['checkpoints'][0]['requirements'][0].update(resource_id='optional-asset'),[
+ ('await_user','resource','optional-asset',True),('model_request','resource','optional-asset',True)])
+requirement_case('core-requirement-promotes-optional-capability',lambda d:d['checkpoints'][0]['requirements'][0].update(capability_id='optional-formatting'),[
+ ('await_user','capability','optional-formatting',True),('await_user','resource','optional-asset',True)])
+requirement_case('environment-requirements-follow-parent-and-scope',lambda d:d['environments'][0]['requirements'].append({'id':'env-media','kind':'example.input','description':'Required environment media.','required_for':['continue'],'status':'unavailable','resource_id':'optional-asset'}),[
+ ('await_user','environment_requirement','env-media',False),('reconcile_operation','environment_requirement','env-media',True),('reconcile_operation','resource','optional-asset',True)])
+requirement_case('opaque-resource-lookalikes-ignored',lambda d:d['configurations'][0]['capabilities'][-1]['definition'].update(resource_id='absent',resource_ids=['absent']),[
+ ('model_request','resource','optional-asset',False)])
+negative_report('optional-subject-must-be-inventoried',lambda r:r['assessments'].remove(selected(r,'model')),'missing subject assessment','action-specific')
+negative_report('optional-flag-cannot-be-promoted',lambda r:selected(r,'model').update(required=True),'optional subject marked required','action-specific')
+negative_report('core-requirement-needs-destination-evidence',lambda r:selected(r,'checkpoint_requirement','viewer').update(evidence_ids=[]),'unverified core requirement','action-specific')
+negative_report('recovery-identity-must-match',lambda r:selected(r,'operation')['resolved'].update(external_identity={'namespace':'wrong','value':'job-42'}),'unverified operation recovery','reconcile_operation')
+negative_report('recovery-refusal-cannot-be-ready',lambda r:None,'known blocker marked supported','reconcile_operation',mutate_source=lambda d:d['continuation']['operations'][0]['recovery'].update(strategy='refuse'))
+negative_report('unknown-model-fit-cannot-be-supported',lambda r:selected(r,'model').update(status='supported'),'known blocker marked supported','model_request')
+negative_report('optional-unavailable-resource-cannot-claim-support',lambda r:selected(r,'resource','missing-media').update(status='supported'),'known blocker marked supported','action-specific')
+negative_report('extra-subject-refused',lambda r:r['assessments'].append(dict(selected(r,'model'),subject={'kind':'resource','id':'absent'})),'unexpected subject assessment','action-specific')
+doc,source,receipt=copy.deepcopy(fixtures['action-specific'])
+selected(receipt,'model').update(status='unsupported')
+assert inspect_report(doc,source,receipt,FOLDER,now=NOW)['outcome']=='ready'
+results.append({'case':'optional-unsupported-does-not-block-wait','passed':True,'outcome':'ready'})
+doc,source,receipt=copy.deepcopy(fixtures['action-specific'])
+selected(receipt,'capability','optional-formatting').update(status='adapted')
+t=copy.deepcopy(fixtures['another-agent'][2]['transformations'][0]);t['subject']=selected(receipt,'capability','optional-formatting')['subject'];t['accepted']=False
+receipt['transformations']=[t]
+assert inspect_report(doc,source,receipt,FOLDER,now=NOW)['outcome']=='ready'
+results.append({'case':'optional-unaccepted-adaptation-does-not-block-wait','passed':True,'outcome':'ready'})
+doc=copy.deepcopy(action_doc)
+doc['resources'].append({'id':'unused-history','media_type':'text/plain','purpose':'input','availability':'unavailable','explanation':'Unselected historical attachment.'})
+assert all(not any(x['subject']=={'kind':'resource','id':'unused-history'} for x in subjects) for subjects in inspect_session(doc,FOLDER).values())
+results.append({'case':'unavailable-unselected-history-outside-inventory','passed':True,'outcome':'accepted'})
 summary={'asif_version':'0.3','profile':'asif.portable-continuation/0.1','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
 (ROOT/'tests/continuation-results.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='results'},indent=2))

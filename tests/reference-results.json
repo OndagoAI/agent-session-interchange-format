@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local vendor-neutral reference implementation checks",
-  "checks": 130,
-  "passed": 130,
+  "checks": 131,
+  "passed": 131,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -20,6 +20,10 @@
     },
     {
       "case": "validate-compaction-with-attachment.session",
+      "passed": true
+    },
+    {
+      "case": "validate-action-specific.session",
       "passed": true
     },
     {

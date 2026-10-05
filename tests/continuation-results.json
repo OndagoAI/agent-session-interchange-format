@@ -2,12 +2,17 @@
   "asif_version": "0.3",
   "profile": "asif.portable-continuation/0.1",
   "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
-  "checks": 44,
-  "passed": 44,
+  "checks": 65,
+  "passed": 65,
   "real_runtime_tests": 0,
   "independent_implementations": 0,
   "operational_authorization": false,
   "results": [
+    {
+      "case": "action-specific",
+      "passed": true,
+      "outcome": "ready"
+    },
     {
       "case": "another-agent",
       "passed": true,
@@ -227,6 +232,106 @@
       "case": "accepted-adaptations-simulated",
       "passed": true,
       "outcome": "ready"
+    },
+    {
+      "case": "same-capture-await_decision",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "same-capture-reconcile_operation",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "same-capture-model_request",
+      "passed": true,
+      "outcome": "blocked"
+    },
+    {
+      "case": "same-capture-resume_native",
+      "passed": true,
+      "outcome": "blocked"
+    },
+    {
+      "case": "action-scopes-and-transitive-empty-dependency",
+      "passed": true,
+      "outcome": "accepted"
+    },
+    {
+      "case": "shared-resource-requiredness-union",
+      "passed": true,
+      "outcome": "accepted"
+    },
+    {
+      "case": "core-requirement-promotes-optional-capability",
+      "passed": true,
+      "outcome": "accepted"
+    },
+    {
+      "case": "environment-requirements-follow-parent-and-scope",
+      "passed": true,
+      "outcome": "accepted"
+    },
+    {
+      "case": "opaque-resource-lookalikes-ignored",
+      "passed": true,
+      "outcome": "accepted"
+    },
+    {
+      "case": "optional-subject-must-be-inventoried",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "optional-flag-cannot-be-promoted",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "core-requirement-needs-destination-evidence",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "recovery-identity-must-match",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "recovery-refusal-cannot-be-ready",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "unknown-model-fit-cannot-be-supported",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "optional-unavailable-resource-cannot-claim-support",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "extra-subject-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "optional-unsupported-does-not-block-wait",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "optional-unaccepted-adaptation-does-not-block-wait",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "unavailable-unselected-history-outside-inventory",
+      "passed": true,
+      "outcome": "accepted"
     }
   ]
 }

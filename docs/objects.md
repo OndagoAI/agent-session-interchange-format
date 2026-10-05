@@ -985,7 +985,7 @@ Describes a skill, plugin, hook, connection or other runtime facility and its su
 | <a id="capability-object-type"></a>`type` | string | Yes | Namespaced semantic type or entity type, as defined by the enclosing object. Minimum length: `1`. |
 | <a id="capability-object-definition"></a>`definition` | JSON value | Yes | Dialect-specific definition retained without guessing unknown semantics. |
 | <a id="capability-object-resource_ids"></a>`resource_ids` | array of string | Yes | IDs of supporting resources; their availability is declared separately. Items MUST be unique. |
-| <a id="capability-object-required"></a>`required` | boolean | Yes | Whether this subject is required for the selected capability. |
+| <a id="capability-object-required"></a>`required` | boolean | Yes | Whether the action-specific prerequisite closure requires this subject; reports must match the computed flag exactly. |
 
 ### Rules
 

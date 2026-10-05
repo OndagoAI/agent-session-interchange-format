@@ -114,12 +114,13 @@
     "Continuation Result": "Records whether continuation was tested and the evidence for its outcome.",
     "Subject": "Identifies the exact entity or capability being assessed, including its owner where IDs are scoped.",
     "Assessment": "Records support, adaptation or a blocker for one subject, with evidence and any resolved binding.",
-    "Assessment Resolved": "Carries the destination's resolved dependency or service binding for comparison with source requirements.",
+    "Assessment Resolved": "Destination dependency, service, operation recovery or core requirement binding, checked against its source declaration.",
     "Assessment Resolved Account": "Identifies the resolved destination account for comparison with the expected service account.",
     "Evidence": "Identifies the producer, time and kind of evidence supporting an assessment or execution result.",
     "Transformation": "Declares a proposed or accepted adaptation, its target, rule, losses and acceptance evidence.",
     "Result": "Common result shape for an attempted import or continuation operation, including explanatory evidence.",
-    "External Request Option": "One selectable option of an externally bound decision request."
+    "External Request Option": "One selectable option of an externally bound decision request.",
+    "Assessment Resolved External Identity": "Identifies the exact remote operation being reconciled; must match its source namespace and identity."
   },
   "fields": {
     "id": "Opaque, case-sensitive identity within the object's declared scope.",
@@ -136,7 +137,7 @@
     "state": "Recorded pending or observed state; it is not a live process assertion.",
     "mode": "Representation or interpretation mode selected by the enclosing object.",
     "purpose": "Intended use of the record or resource.",
-    "required": "Whether this subject is required for the selected capability.",
+    "required": "Whether the action-specific prerequisite closure requires this subject; reports must match the computed flag exactly.",
     "required_for": "Capabilities that depend on this prerequisite.",
     "required_features": "Feature identifiers whose semantics a consumer must understand for its capability claim.",
     "asif_version": "Exact ASIF draft version used by this document.",
@@ -401,13 +402,14 @@
     "input_limit": "Destination input capacity, or null when unknown.",
     "output_reserve": "Capacity reserved for the next output.",
     "fit": "Whether the measured context fits the destination budget.",
-    "owner_id": "Owner identity for a subject whose ID is scoped, such as an instruction.",
+    "owner_id": "Configuration owner for instruction/capability/policy subjects, checkpoint owner for checkpoint_requirement, or environment owner for environment_requirement.",
     "evidence_ids": "IDs of evidence records supporting this declaration.",
     "resolved": "Destination-resolved dependency or service values.",
     "rule": "Explicit transformation rule rather than an implicit substitution.",
     "accepted": "Whether the declared transformation has been accepted with the required evidence.",
     "runtime": "Agent, adapter and platform of the assessed runtime.",
-    "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress."
+    "reopen_reason": "Required nonempty explanation when reopening a completed, failed or cancelled task as pending or in progress.",
+    "recovery_strategy": "Resolved reconcile or reconnect strategy; must match the selected source operation."
   },
   "session:/properties/capture": {
     "rules": "See [normative session rules](../SEMANTICS.md#3-identity-capture-and-references)."

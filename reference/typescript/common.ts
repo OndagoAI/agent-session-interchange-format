@@ -43,8 +43,11 @@ export const subset = (a: Iterable<any>, b: Iterable<any>): boolean => {
   const set = new Set(b);
   return [...a].every((x) => set.has(x));
 };
-export const setEqual = (a: Iterable<any>, b: Iterable<any>): boolean =>
-  subset(a, b) && subset(b, a);
+export const setEqual = (a: Iterable<any>, b: Iterable<any>): boolean => {
+  const left = new Set(a),
+    right = new Set(b);
+  return left.size === right.size && subset(left, right);
+};
 export const object = (): Obj => Object.create(null);
 export function utf8(raw: Uint8Array): string {
   try {

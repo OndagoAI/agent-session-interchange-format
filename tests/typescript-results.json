@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 157,
-  "passed": 157,
+  "checks": 179,
+  "passed": 179,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
@@ -53,6 +53,10 @@
     },
     {
       "case": "core fixture tool-generated-files.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture action-specific.session.json",
       "passed": true
     },
     {
@@ -340,6 +344,10 @@
       "passed": true
     },
     {
+      "case": "Python parity: report-4",
+      "passed": true
+    },
+    {
       "case": "Python parity: profile-not-gated",
       "passed": true
     },
@@ -500,7 +508,87 @@
       "passed": true
     },
     {
-      "case": "Python parity: report-44",
+      "case": "Python parity: report-45",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-46",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-47",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-48",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-49",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-50",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-51",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-52",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-53",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-54",
+      "passed": true
+    },
+    {
+      "case": "Python parity: optional-subject-must-be-inventoried",
+      "passed": true
+    },
+    {
+      "case": "Python parity: optional-flag-cannot-be-promoted",
+      "passed": true
+    },
+    {
+      "case": "Python parity: core-requirement-needs-destination-evidence",
+      "passed": true
+    },
+    {
+      "case": "Python parity: recovery-identity-must-match",
+      "passed": true
+    },
+    {
+      "case": "Python parity: recovery-refusal-cannot-be-ready",
+      "passed": true
+    },
+    {
+      "case": "Python parity: unknown-model-fit-cannot-be-supported",
+      "passed": true
+    },
+    {
+      "case": "Python parity: optional-unavailable-resource-cannot-claim-support",
+      "passed": true
+    },
+    {
+      "case": "Python parity: extra-subject-refused",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-63",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-64",
+      "passed": true
+    },
+    {
+      "case": "Python parity: session-65",
       "passed": true
     },
     {

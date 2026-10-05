@@ -23,6 +23,7 @@ Every example below is JSON Schema checked. Object fragments use IDs resolved by
 - [Assessment Object](report-objects.md#assessment-object)
 - [Assessment Resolved Object](report-objects.md#assessment-resolved-object)
 - [Assessment Resolved Account Object](report-objects.md#assessment-resolved-account-object)
+- [Assessment Resolved External Identity Object](report-objects.md#assessment-resolved-external-identity-object)
 - [Evidence Object](report-objects.md#evidence-object)
 - [Transformation Object](report-objects.md#transformation-object)
 - [Result Object](report-objects.md#result-object)
@@ -113,7 +114,7 @@ Additional properties are permitted and MUST be preserved when relaying supporte
         "id": "continue-context"
       },
       "status": "supported",
-      "required": true,
+      "required": false,
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
@@ -125,7 +126,7 @@ Additional properties are permitted and MUST be preserved when relaying supporte
         "id": "continue-main"
       },
       "status": "supported",
-      "required": true,
+      "required": false,
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
@@ -150,6 +151,18 @@ Additional properties are permitted and MUST be preserved when relaying supporte
       },
       "status": "supported",
       "required": true,
+      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "source-csv"
+      },
+      "status": "supported",
+      "required": false,
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
@@ -191,18 +204,6 @@ Additional properties are permitted and MUST be preserved when relaying supporte
       "status": "unresolved",
       "required": true,
       "detail": "Remote outcome or destination login must be verified before any continuation.",
-      "evidence_ids": [
-        "scenario"
-      ]
-    },
-    {
-      "subject": {
-        "kind": "resource",
-        "id": "source-csv"
-      },
-      "status": "supported",
-      "required": true,
-      "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
       ]
@@ -678,9 +679,9 @@ Identifies the exact entity or capability being assessed, including its owner wh
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| <a id="subject-object-kind"></a>`kind` | enum | Yes | Discriminator selecting this object's interpretation. One of `"plan"`, `"context"`, `"model"`, `"workspace"`, `"dependency"`, `"service"`, `"configuration"`, `"instruction"`, `"capability"`, `"policy"`, `"resource"`, `"operation"`, `"native_import"`, `"feature"`. |
+| <a id="subject-object-kind"></a>`kind` | enum | Yes | Discriminator selecting this object's interpretation. One of `"plan"`, `"context"`, `"model"`, `"workspace"`, `"dependency"`, `"service"`, `"configuration"`, `"instruction"`, `"capability"`, `"policy"`, `"resource"`, `"operation"`, `"native_import"`, `"feature"`, `"environment"`, `"checkpoint_requirement"`, `"environment_requirement"`. |
 | <a id="subject-object-id"></a>`id` | string | Yes | Opaque, case-sensitive identity within the object's declared scope. Minimum length: `1`. |
-| <a id="subject-object-owner_id"></a>`owner_id` | string | No | Owner identity for a subject whose ID is scoped, such as an instruction. Minimum length: `1`. |
+| <a id="subject-object-owner_id"></a>`owner_id` | string | No | Configuration owner for instruction/capability/policy subjects, checkpoint owner for checkpoint_requirement, or environment owner for environment_requirement. Minimum length: `1`. |
 
 ### Rules
 
@@ -709,7 +710,7 @@ Records support, adaptation or a blocker for one subject, with evidence and any 
 | --- | --- | --- | --- |
 | <a id="assessment-object-subject"></a>`subject` | [Subject Object](report-objects.md#subject-object) | Yes | Account identity or assessed subject, as defined by the containing object. |
 | <a id="assessment-object-status"></a>`status` | enum | Yes | Recorded state at the relevant boundary; see the allowed values. One of `"supported"`, `"adapted"`, `"omitted"`, `"unresolved"`, `"unsupported"`. |
-| <a id="assessment-object-required"></a>`required` | boolean | Yes | Whether this subject is required for the selected capability. |
+| <a id="assessment-object-required"></a>`required` | boolean | Yes | Whether the action-specific prerequisite closure requires this subject; reports must match the computed flag exactly. |
 | <a id="assessment-object-detail"></a>`detail` | string | Yes | Explanation of the stated status or evidence. Minimum length: `1`. |
 | <a id="assessment-object-evidence_ids"></a>`evidence_ids` | array of string | Yes | IDs of evidence records supporting this declaration. Minimum items: `0`. Items MUST be unique. |
 | <a id="assessment-object-resolved"></a>`resolved` | [Assessment Resolved Object](report-objects.md#assessment-resolved-object) | No | Destination-resolved dependency or service values. |
@@ -741,7 +742,7 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 
 ## Assessment Resolved Object
 
-Carries the destination's resolved dependency or service binding for comparison with source requirements.
+Destination dependency, service, operation recovery or core requirement binding, checked against its source declaration.
 
 ### Fixed fields
 
@@ -754,6 +755,9 @@ Carries the destination's resolved dependency or service binding for comparison 
 | <a id="assessment-resolved-object-audience"></a>`audience` | string | No | Intended service audience for access credentials. Minimum length: `1`. |
 | <a id="assessment-resolved-object-endpoint"></a>`endpoint` | string | No | Recorded or resolved endpoint declaration. Minimum length: `1`. |
 | <a id="assessment-resolved-object-secret_handles"></a>`secret_handles` | array of string | No | Logical credential handles to resolve separately at the destination. Minimum items: `0`. Items MUST be unique. |
+| <a id="assessment-resolved-object-status"></a>`status` | enum | No | Recorded state at the relevant boundary; see the allowed values. One of `"available"`. |
+| <a id="assessment-resolved-object-recovery_strategy"></a>`recovery_strategy` | enum | No | Resolved reconcile or reconnect strategy; must match the selected source operation. One of `"reconcile"`, `"reconnect"`. |
+| <a id="assessment-resolved-object-external_identity"></a>`external_identity` | [Assessment Resolved External Identity Object](report-objects.md#assessment-resolved-external-identity-object) | No | Identifier used to reconcile this operation in its external system. |
 
 ### Rules
 
@@ -792,6 +796,34 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 {
   "provider": "example",
   "subject": "account-A"
+}
+```
+
+<a id="assessment-resolved-external-identity-object"></a>
+
+## Assessment Resolved External Identity Object
+
+Identifies the exact remote operation being reconciled; must match its source namespace and identity.
+
+### Fixed fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| <a id="assessment-resolved-external-identity-object-namespace"></a>`namespace` | string | Yes | Namespace in which the opaque value is meaningful. Minimum length: `1`. |
+| <a id="assessment-resolved-external-identity-object-value"></a>`value` | string | Yes | Value interpreted according to the enclosing schema, dialect or counter. Minimum length: `1`. |
+
+### Rules
+
+See [portable-continuation rules](../CONTINUATION.md).
+
+Additional properties are permitted and MUST be preserved when relaying supported JSON values. They do not acquire execution semantics without a declared feature or dialect.
+
+### Example
+
+```json
+{
+  "namespace": "example.jobs/account-A",
+  "value": "job-42"
 }
 ```
 

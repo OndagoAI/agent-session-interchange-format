@@ -1,0 +1,472 @@
+{
+  "report_version": "0.1",
+  "evaluation_mode": "synthetic",
+  "id": "assessment-resume_native",
+  "source": {
+    "session_id": "session-action-specific",
+    "capture_id": "capture-action-specific",
+    "plan_id": "resume_native",
+    "document_sha256": "c3c5f160fc16abaa3c2756c16ed33a81c73e201478ce301cff86d04ff073cb7f"
+  },
+  "destination": {
+    "id": "example-cloud-runtime",
+    "runtime": {
+      "agent": {
+        "id": "example-agent-a",
+        "version": "1",
+        "state_format": "example-native/1"
+      },
+      "adapter": {
+        "id": "example-adapter",
+        "version": "1"
+      },
+      "os": "linux",
+      "architecture": "x86_64"
+    },
+    "capabilities_sha256": "c65340514a2aa2fcddeb38c3fa589b94aa324245a18534cb92f5d9687bb55a54"
+  },
+  "assessed_at": "2026-09-26T12:00:00Z",
+  "expires_at": "2026-09-26T13:00:00Z",
+  "outcome": "blocked",
+  "assessments": [
+    {
+      "subject": {
+        "kind": "plan",
+        "id": "resume_native"
+      },
+      "required": true,
+      "status": "unresolved",
+      "detail": "Required input, model fit, decision or prior operation outcome is unresolved for this action.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "context",
+        "id": "continue-context"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "model",
+        "id": "resume_native"
+      },
+      "required": true,
+      "status": "unresolved",
+      "detail": "Required input, model fit, decision or prior operation outcome is unresolved for this action.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "configuration",
+        "id": "effective"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "feature",
+        "id": "asif.portable-continuation/0.1"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "source-csv"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "missing-media"
+      },
+      "required": true,
+      "status": "unresolved",
+      "detail": "Required input, model fit, decision or prior operation outcome is unresolved for this action.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "output-csv"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "report"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "instruction",
+        "id": "workspace-rule",
+        "owner_id": "effective"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "capability",
+        "id": "summary-skill",
+        "owner_id": "effective"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "skill-template"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "capability",
+        "id": "optional-formatting",
+        "owner_id": "effective"
+      },
+      "required": false,
+      "status": "omitted",
+      "detail": "Deferred for this action; original source remains preserved.",
+      "evidence_ids": []
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "optional-asset"
+      },
+      "required": false,
+      "status": "omitted",
+      "detail": "Deferred for this action; original source remains preserved.",
+      "evidence_ids": []
+    },
+    {
+      "subject": {
+        "kind": "policy",
+        "id": "workspace-only",
+        "owner_id": "effective"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "agent-runtime"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example-agent-a",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "summary-tool"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example.inventory.summarize",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "summary-skill"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example.inventory-summary",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "dependency",
+        "id": "media-decoder"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "identity": "example.media-decoder",
+        "version": "1"
+      }
+    },
+    {
+      "subject": {
+        "kind": "workspace",
+        "id": "workspace-head"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "environment",
+        "id": "project-env"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "service",
+        "id": "job-service"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "account": {
+          "provider": "example",
+          "subject": "account-A"
+        },
+        "audience": "example.jobs",
+        "scopes": [],
+        "secret_handles": [],
+        "endpoint": "https://jobs.example.invalid"
+      }
+    },
+    {
+      "subject": {
+        "kind": "operation",
+        "id": "remote-job"
+      },
+      "required": true,
+      "status": "unresolved",
+      "detail": "Required input, model fit, decision or prior operation outcome is unresolved for this action.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "native_import",
+        "id": "native"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "native-state"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "subject": {
+        "kind": "checkpoint_requirement",
+        "id": "viewer",
+        "owner_id": "head"
+      },
+      "required": true,
+      "status": "supported",
+      "detail": "Synthetic supported prerequisite.",
+      "evidence_ids": [
+        "scenario"
+      ],
+      "resolved": {
+        "status": "available"
+      }
+    },
+    {
+      "subject": {
+        "kind": "checkpoint_requirement",
+        "id": "media-input",
+        "owner_id": "head"
+      },
+      "required": true,
+      "status": "unresolved",
+      "detail": "Required input, model fit, decision or prior operation outcome is unresolved for this action.",
+      "evidence_ids": [
+        "scenario"
+      ]
+    }
+  ],
+  "path_bindings": [
+    {
+      "root_id": "project",
+      "destination_path": "/work/project",
+      "case_sensitive": true,
+      "unicode_normalization": "none"
+    }
+  ],
+  "identity_mappings": [],
+  "transformations": [],
+  "model_assessment": {
+    "source": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "target": {
+      "provider": "example",
+      "id": "model-a",
+      "revision": "1"
+    },
+    "tokenizer": null,
+    "input_tokens": null,
+    "input_limit": null,
+    "output_reserve": 1000,
+    "fit": "unknown"
+  },
+  "blocking_reasons": [
+    {
+      "subject": {
+        "kind": "plan",
+        "id": "resume_native"
+      },
+      "reason": "Required input, model fit, decision or prior operation outcome is unresolved for this action."
+    },
+    {
+      "subject": {
+        "kind": "model",
+        "id": "resume_native"
+      },
+      "reason": "Required input, model fit, decision or prior operation outcome is unresolved for this action."
+    },
+    {
+      "subject": {
+        "kind": "resource",
+        "id": "missing-media"
+      },
+      "reason": "Required input, model fit, decision or prior operation outcome is unresolved for this action."
+    },
+    {
+      "subject": {
+        "kind": "operation",
+        "id": "remote-job"
+      },
+      "reason": "Required input, model fit, decision or prior operation outcome is unresolved for this action."
+    },
+    {
+      "subject": {
+        "kind": "checkpoint_requirement",
+        "id": "media-input",
+        "owner_id": "head"
+      },
+      "reason": "Required input, model fit, decision or prior operation outcome is unresolved for this action."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "scenario",
+      "producer": "asif-examples",
+      "time": "2026-09-26T12:00:00Z",
+      "kind": "synthetic",
+      "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+    }
+  ],
+  "import_result": {
+    "status": "not_attempted",
+    "evidence_ids": [],
+    "detail": "No import was executed."
+  },
+  "continuation_result": {
+    "status": "not_tested",
+    "evidence_ids": [],
+    "detail": "No agent was started."
+  }
+}

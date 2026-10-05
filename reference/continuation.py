@@ -7,7 +7,8 @@ from pathlib import Path
 import unicodedata
 from jsonschema import Draft202012Validator
 from .common import Invalid, need, unique, relative, acyclic, pointer
-from .core import validate_document, Validator
+from .core import validate_document, Validator, SUPPORTED
+from .requirements import plan_requirements
 from .workspace import workspace_states, check_git
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -135,37 +136,11 @@ def inspect_session(doc,folder):
         for rule in rules.values():
             if rule['scope']['kind']!='global':need(rule['scope']['root_id'] in roots,'instruction root not selected')
             if rule['scope']['kind']=='path_prefix':relative(rule['scope']['relative_path'],True)
-        required_resources=set(plan['boundary']['evidence_resource_ids'])
-        for id in selected_deps:required_resources.update(deps[id]['resource_ids'])
-        for id in plan['workspace_ids']:
-            w=workspaces[id];required_resources.update(e['resource_id'] for e in states[id].values() if e['kind']=='file')
-            if 'git' in w:
-                required_resources.update(w['git']['bundle_resource_ids']);required_resources.update(e['resource_id'] for e in w['git']['index_entries'] if e['resource_id'])
-                required_resources.update(x['resource_id'] for x in w['git']['prerequisites'] if 'resource_id' in x)
-                need(set(w['git']['lfs_dependency_ids'])<=selected_deps,'unselected LFS dependency')
-                need({x['dependency_id'] for x in w['git']['submodules']}<=selected_deps,'unselected submodule dependency')
-        def collect(value):
-            if isinstance(value,dict):
-                if isinstance(value.get('resource_id'),str):required_resources.add(value['resource_id'])
-                if 'resource_ids' in value:required_resources.update(value['resource_ids'])
-                for child in value.values():collect(child)
-            elif isinstance(value,list):
-                for child in value:collect(child)
-        collect(ctx['inputs']);collect(config)
-        for op in selected_ops:required_resources.update(op['evidence_resource_ids']+op['recovery']['evidence_resource_ids'])
-        expected=[subject('plan',plan['id']),subject('context',ctx['id']),subject('model',plan['id']),subject('configuration',config['id'])]
-        expected += [subject('feature',f) for f in doc['required_features']]
-        for collection,kind in [('workspace_ids','workspace'),('dependency_ids','dependency'),('service_binding_ids','service'),('operation_ids','operation')]:expected += [subject(kind,id) for id in plan[collection]]
-        for name,kind in [('instructions','instruction'),('capabilities','capability'),('policies','policy')]:expected += [subject(kind,item['id'],config['id']) for item in config[name]]
         for id in plan['service_binding_ids']:
             svc=services[id];need(set(svc['dependency_ids'])<=selected_deps,'service dependency not selected')
             need(set(svc['secret_handles'])<={x['handle'] for x in config['secret_requirements']},'undeclared secret handle')
-        if plan['native_import_id']:
-            need(plan['native_import_id'] in native,'missing native import');n=native[plan['native_import_id']]
-            required_resources.update(n['resource_ids']);expected.append(subject('native_import',n['id']))
-        need(required_resources<=resources.keys(),'missing required resource')
-        expected += [subject('resource',id) for id in sorted(required_resources)]
-        plan_subjects[plan['id']]=expected
+        if plan['native_import_id']:need(plan['native_import_id'] in native,'missing native import')
+        plan_subjects[plan['id']]=plan_requirements(doc,plan,states)
     return plan_subjects
 
 def inspect_report(doc,raw,report,folder,*,now):
@@ -177,13 +152,17 @@ def inspect_report(doc,raw,report,folder,*,now):
     need(date(report['assessed_at'])<date(report['expires_at']),'invalid assessment interval')
     assessments={key(a['subject']):a for a in report['assessments']}
     need(len(assessments)==len(report['assessments']),'duplicate assessment')
-    needed={key(s) for s in expected[source['plan_id']]}
+    requirements={key(item['subject']):item['required'] for item in expected[source['plan_id']]}
+    needed=set(requirements)
     need(needed<=assessments.keys(),'missing subject assessment')
-    # The local test subset conservatively treats all selected subjects as required.
-    for k in needed:need(assessments[k]['required'],'selected subject downgraded to optional')
+    need(needed==assessments.keys(),'unexpected subject assessment')
+    for k,required in requirements.items():need(assessments[k]['required']==required,'selected subject downgraded to optional' if required else 'optional subject marked required')
     evidence=unique(report['evidence'])
     for a in report['assessments']:need(set(a['evidence_ids'])<=evidence.keys(),'missing assessment evidence')
-    for t in report['transformations']:need(set(t['evidence_ids'])<=evidence.keys(),'missing acceptance evidence')
+    for t in report['transformations']:
+        need(key(t['subject']) in needed,'unexpected transformation subject')
+        need(set(t['evidence_ids'])<=evidence.keys(),'missing acceptance evidence')
+        if assessments[key(t['subject'])]['status']=='omitted':need(bool(t['losses']),'omission transformation requires loss')
     for result in [report['import_result'],report['continuation_result']]:need(set(result['evidence_ids'])<=evidence.keys(),'missing result evidence')
     if report['evaluation_mode']=='synthetic':
         need(report['import_result']['status']=='not_attempted' and report['continuation_result']['status']=='not_tested','synthetic execution claim')
@@ -192,6 +171,10 @@ def inspect_report(doc,raw,report,folder,*,now):
         for result,success,kind in [(report['import_result'],'imported','import'),(report['continuation_result'],'continued','continuation')]:
             if result['status']==success:need(any(evidence[id]['kind']==kind for id in result['evidence_ids']),'missing runtime evidence')
     p=doc['continuation'];plan=next(x for x in p['plans'] if x['id']==source['plan_id'])
+    action=plan['next_action']['kind'];agent=action in ('model_request','resume_native')
+    cp=next(x for x in doc['checkpoints'] if x['id']==plan['checkpoint_id'])
+    if report['import_result']['status']=='imported':need(agent,'import claim exceeds assessed action')
+    if report['continuation_result']['status']=='continued':need(agent or action=='reconcile_operation','continuation claim exceeds assessed action')
     def assessed(kind,id,owner=None):return assessments[key(subject(kind,id,owner))]
     def blocker(kind,id,owner=None):need(assessed(kind,id,owner)['status'] in ('unresolved','unsupported','omitted'),'known blocker marked supported')
     config=next(c for c in doc['configurations'] if c['id']==plan['configuration_id'])
@@ -200,6 +183,7 @@ def inspect_report(doc,raw,report,folder,*,now):
     for rule in binding['instruction_rules']:
         if rule['authority']=='unknown' or rule['merge_behavior']=='unknown':blocker('instruction',rule['instruction_id'],config['id'])
     if plan['boundary']['consistency']!='consistent' or plan['boundary']['method']=='best_effort':blocker('plan',plan['id'])
+    if agent and cp['open_decisions']:blocker('plan',plan['id'])
     ctx=next(c for c in doc['contexts'] if c['id']==plan['context_id'])
     if ctx['fidelity'] in ('partial','unknown'):blocker('context',ctx['id'])
     if any(a['disposition']=='unavailable' for a in plan['context_accounting']):blocker('context',ctx['id'])
@@ -207,7 +191,25 @@ def inspect_report(doc,raw,report,folder,*,now):
         k=key(subject('resource',r['id']))
         if k in needed and r['availability'] in ('unavailable','excluded','redacted','unknown'):blocker('resource',r['id'])
     for op in p['operations']:
-        if op['id'] in plan['operation_ids'] and op['state'] in ('pending','running','outcome_unknown'):blocker('operation',op['id'])
+        if op['id'] not in plan['operation_ids']:continue
+        reconciling=action=='reconcile_operation' and op['id']==plan['next_action']['operation_id']
+        if reconciling:
+            if op['recovery']['strategy'] not in ('reconcile','reconnect'):blocker('operation',op['id'])
+            a=assessed('operation',op['id'])
+            if a['status']=='supported':
+                resolved=a.get('resolved',{})
+                need(bool(a['evidence_ids']) and resolved.get('recovery_strategy')==op['recovery']['strategy'] and op['external_identity'] is not None and resolved.get('external_identity')==op['external_identity'],'unverified operation recovery')
+        elif op['state'] in ('pending','running','outcome_unknown'):blocker('operation',op['id'])
+    for owner_kind,owners in [('checkpoint_requirement',[cp]),('environment_requirement',doc['environments'])]:
+        for owner in owners:
+            for requirement in owner['requirements']:
+                k=key(subject(owner_kind,requirement['id'],owner['id']))
+                if k not in needed:continue
+                a=assessments[k]
+                if a['status']=='supported':
+                    resolved=a.get('resolved',{})
+                    need(bool(a['evidence_ids']) and resolved.get('status')=='available','unverified core requirement')
+                    if 'secret_handle' in requirement:need(requirement['secret_handle'] in resolved.get('secret_handles',[]),'unresolved requirement secret')
     for d in p['dependencies']:
         if d['id'] in plan['dependency_ids']:
             a=assessed('dependency',d['id'])
@@ -229,12 +231,13 @@ def inspect_report(doc,raw,report,folder,*,now):
         if assessed('native_import',n['id'])['status']=='supported':
             need(report['destination']['runtime']['agent']['version'] in n['accepted_target_agent_versions'],'unsupported native target version')
     for f in doc['required_features']:
-        if f!=FEATURE:blocker('feature',f)
-    roots={w['root_id'] for w in p['workspaces'] if w['id'] in plan['workspace_ids']}
-    mappings=unique(report['path_bindings'],'root_id');need(roots==mappings.keys(),'incomplete path bindings')
+        if f not in SUPPORTED:blocker('feature',f)
+    selected_roots={w['root_id'] for w in p['workspaces'] if w['id'] in plan['workspace_ids']}
+    roots={w['root_id'] for w in p['workspaces'] if w['id'] in plan['workspace_ids'] and (assessed('workspace',w['id'])['required'] or assessed('workspace',w['id'])['status'] in ('supported','adapted'))}
+    mappings=unique(report['path_bindings'],'root_id');need(roots<=mappings.keys()<=selected_roots,'incomplete path bindings')
     flattened=workspace_states(p)
     for w in p['workspaces']:
-        if w['id'] not in plan['workspace_ids']:continue
+        if w['id'] not in plan['workspace_ids'] or w['root_id'] not in mappings:continue
         mapping=mappings[w['root_id']];paths=[]
         for e in flattened[w['id']].values():
             value=e['path'];norm=mapping['unicode_normalization']
@@ -250,14 +253,15 @@ def inspect_report(doc,raw,report,folder,*,now):
     required=[a for a in report['assessments'] if a['required']]
     blockers=[a for a in required if a['status'] in ('omitted','unresolved','unsupported')]
     pending=False
-    for a in required:
+    for a in report['assessments']:
         if a['status']=='adapted':
             ts=[t for t in report['transformations'] if key(t['subject'])==key(a['subject'])]
             need(ts,'adaptation without mapping')
-            pending |= any(not t['accepted'] for t in ts)
+            if a['required']:pending |= any(not t['accepted'] for t in ts)
+    pending |= any(requirements[key(t['subject'])] and not t['accepted'] for t in report['transformations'])
     predicted='blocked' if blockers else 'adaptation_required' if pending else 'ready'
     need(report['outcome']==predicted,'incorrect readiness outcome')
     reasons={key(r['subject']) for r in report['blocking_reasons']}
-    need({key(a['subject']) for a in blockers}<=reasons,'missing blocking reason')
+    need({key(a['subject']) for a in blockers}==reasons,'missing or extraneous blocking reason')
     if not blockers:need(not reasons,'nonblocking report has blocking reasons')
     return {'outcome':predicted,'operational_authorization':False,'evaluation_mode':report['evaluation_mode']}

@@ -56,8 +56,8 @@ core['allOf']=[{'if':{'required':['continuation']},'then':{'properties':{'requir
 (ROOT/'session.schema.json').write_text(json.dumps(core,indent=2)+'\n')
 # Reports are separate immutable documents bound to exact source bytes.
 R={'runtime':D['runtime'],'agent':D['agent'],'model':D['model']}
-R['subject']=obj({'kind':enum('plan','context','model','workspace','dependency','service','configuration','instruction','capability','policy','resource','operation','native_import','feature'),'id':S,'owner_id':S},['kind','id'])
-R['assessment']=obj({'subject':ref('subject'),'status':enum('supported','adapted','omitted','unresolved','unsupported'),'required':B,'detail':S,'evidence_ids':ids(),'resolved':obj({'identity':S,'version':null(S),'account':obj({'provider':S,'subject':S}),'scopes':ids(),'audience':S,'endpoint':S,'secret_handles':ids()},[])},['subject','status','required','detail','evidence_ids'])
+R['subject']=obj({'kind':enum('plan','context','model','workspace','dependency','service','configuration','instruction','capability','policy','resource','operation','native_import','feature','environment','checkpoint_requirement','environment_requirement'),'id':S,'owner_id':S},['kind','id'])
+R['assessment']=obj({'subject':ref('subject'),'status':enum('supported','adapted','omitted','unresolved','unsupported'),'required':B,'detail':S,'evidence_ids':ids(),'resolved':obj({'identity':S,'version':null(S),'account':obj({'provider':S,'subject':S}),'scopes':ids(),'audience':S,'endpoint':S,'secret_handles':ids(),'status':enum('available'),'recovery_strategy':enum('reconcile','reconnect'),'external_identity':obj({'namespace':S,'value':S})},[])},['subject','status','required','detail','evidence_ids'])
 R['evidence']=obj({'id':S,'producer':S,'time':S,'kind':enum('inspection','compatibility_test','authorization','acceptance','import','continuation','synthetic'),'detail':S,'reference':S},['id','producer','time','kind','detail'])
 R['transformation']=obj({'id':S,'subject':ref('subject'),'target':S,'rule':S,'losses':arr(S),'accepted':B,'evidence_ids':ids()})
 R['transformation']['allOf']=[when('accepted',True,{'properties':{'evidence_ids':{'minItems':1}}})]
