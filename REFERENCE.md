@@ -194,3 +194,14 @@ When rebuilding schemas, run `schemas/build_continuation_schema.py` followed by 
 ## License
 
 The specification, schemas, examples and both reference implementations use the [MIT license](LICENSE). Third-party data and dependencies retain their own [notices](THIRD-PARTY-NOTICES.md).
+
+## Destination snapshot verification
+
+Reports supply exact-byte [capability snapshots](CAPABILITIES.md). Both CLIs check hashes, byte counts, format/version, observation/expiry, destination identity, evidence and assessment component bindings. The default result verifies an archived report and sets `current_snapshot_matches: false`.
+
+```sh
+.venv/bin/python asif.py validate-report examples/continuation/another-computer.session.json examples/continuation/another-computer.report.json --at 2026-09-26T12:30:00Z --current-capabilities examples/continuation/another-computer.capabilities.json
+node asif.ts validate-report examples/continuation/another-computer.session.json examples/continuation/another-computer.report.json --at 2026-09-26T12:30:00Z --current-capabilities examples/continuation/another-computer.capabilities.json
+```
+
+Matching caller-supplied bytes set `current_snapshot_matches: true`; changed bytes require reassessment. Neither command probes live state or establishes producer trust, and operational authorization remains false. Explicitly unavailable or unsupported snapshots return exit 3; malformed evidence or inconsistent bindings return exit 2. Snapshots are limited to 1 MiB decoded bytes. The ordinary bounded JSON parser limits also apply.

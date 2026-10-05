@@ -23,7 +23,14 @@
       "os": "linux",
       "architecture": "x86_64"
     },
-    "capabilities_sha256": "c65340514a2aa2fcddeb38c3fa589b94aa324245a18534cb92f5d9687bb55a54"
+    "capabilities_sha256": "1a659c7d45e049f81c1207e093efa003486c4849ba9725005b7feacc159bb4a5",
+    "capabilities_snapshot": {
+      "format": "asif.destination-capabilities/0.1",
+      "availability": "supplied",
+      "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtcGVuZGluZy1yZW1vdGUtb3BlcmF0aW9uIiwKICAiZGVzdGluYXRpb25faWQiOiAiZXhhbXBsZS1jbG91ZC1ydW50aW1lIiwKICAicHJvZHVjZXIiOiAiYXNpZi1leGFtcGxlcyIsCiAgImV2YWx1YXRpb25fbW9kZSI6ICJzeW50aGV0aWMiLAogICJvYnNlcnZlZF9hdCI6ICIyMDI2LTA5LTI2VDEyOjAwOjAwWiIsCiAgImV4cGlyZXNfYXQiOiAiMjAyNi0wOS0yNlQxMzowMDowMFoiLAogICJydW50aW1lIjogewogICAgImFnZW50IjogewogICAgICAiaWQiOiAiZXhhbXBsZS1hZ2VudC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJzdGF0ZV9mb3JtYXQiOiAiZXhhbXBsZS1uYXRpdmUvMSIKICAgIH0sCiAgICAiYWRhcHRlciI6IHsKICAgICAgImlkIjogImV4YW1wbGUtYWRhcHRlciIsCiAgICAgICJ2ZXJzaW9uIjogIjEiCiAgICB9LAogICAgIm9zIjogImxpbnV4IiwKICAgICJhcmNoaXRlY3R1cmUiOiAieDg2XzY0IgogIH0sCiAgInJ1bnRpbWVfcmV2aXNpb24iOiAic3ludGhldGljLXJ1bnRpbWUtMSIsCiAgInN1cHBvcnRlZF9mZWF0dXJlcyI6IFsKICAgICJhc2lmLnBvcnRhYmxlLWNvbnRpbnVhdGlvbi8wLjEiCiAgXSwKICAiY29tcG9uZW50cyI6IFsKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0yIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiAiZXhhbXBsZS10b2tlbml6ZXIvMSIsCiAgICAgICJpbnB1dF9saW1pdCI6IDgwMDAsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0zIiwKICAgICAgImtpbmQiOiAiY29uZmlndXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNvbmZpZ3VyYXRpb24uZWZmZWN0aXZlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC00IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmludmVudG9yeS5wdWJsaXNoIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC01IiwKICAgICAgImtpbmQiOiAic2VydmljZSIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLnNlcnZpY2UucHVibGlzaGVyLXNlcnZpY2UiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJ1bmtub3duIiwKICAgICAgImFjY291bnQiOiB7CiAgICAgICAgInByb3ZpZGVyIjogImV4YW1wbGUiLAogICAgICAgICJzdWJqZWN0IjogImFjY291bnQtQSIKICAgICAgfSwKICAgICAgImF1ZGllbmNlIjogImV4YW1wbGUucHVibGlzaGVyIiwKICAgICAgInNjb3BlcyI6IFtdLAogICAgICAic2VjcmV0X2hhbmRsZXMiOiBbXSwKICAgICAgImVuZHBvaW50IjogImh0dHBzOi8vcHVibGlzaGVyLmV4YW1wbGUuaW52YWxpZCIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNiIsCiAgICAgICJraW5kIjogIm9wZXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLm9wZXJhdGlvbi5wdWJsaXNoLW9wZXJhdGlvbiIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogInVua25vd24iLAogICAgICAicmVjb3Zlcnlfc3RyYXRlZ3kiOiAicmVjb25jaWxlIiwKICAgICAgImV4dGVybmFsX2lkZW50aXR5IjogewogICAgICAgICJuYW1lc3BhY2UiOiAiZXhhbXBsZS5wdWJsaXNoZXIvYWNjb3VudC1BIiwKICAgICAgICAidmFsdWUiOiAib3BlcmF0aW9uLTQyIgogICAgICB9CiAgICB9CiAgXQp9Cg==",
+      "bytes": 2923,
+      "evidence_id": "snapshot-inspection"
+    }
   },
   "assessed_at": "2026-09-26T12:00:00Z",
   "expires_at": "2026-09-26T13:00:00Z",
@@ -39,7 +46,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -51,6 +59,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-1"
       ]
     },
     {
@@ -63,6 +74,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-2"
       ]
     },
     {
@@ -75,6 +89,9 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-3"
       ]
     },
     {
@@ -87,7 +104,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -99,7 +117,8 @@
       "detail": "Assumed supported in this synthetic example; no actual destination check occurred.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -115,7 +134,10 @@
       "resolved": {
         "identity": "example.inventory.publish",
         "version": "1"
-      }
+      },
+      "component_ids": [
+        "component-4"
+      ]
     },
     {
       "subject": {
@@ -127,6 +149,9 @@
       "detail": "Remote outcome or destination login must be verified before any continuation.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-5"
       ]
     },
     {
@@ -139,6 +164,9 @@
       "detail": "Remote outcome or destination login must be verified before any continuation.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-6"
       ]
     }
   ],
@@ -185,6 +213,13 @@
       "time": "2026-09-26T12:00:00Z",
       "kind": "synthetic",
       "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+    },
+    {
+      "id": "snapshot-inspection",
+      "producer": "asif-examples",
+      "time": "2026-09-26T12:00:00Z",
+      "kind": "synthetic",
+      "detail": "Authored destination snapshot; no live inspection or credential lookup."
     }
   ],
   "import_result": {

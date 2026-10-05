@@ -23,7 +23,14 @@
       "os": "linux",
       "architecture": "x86_64"
     },
-    "capabilities_sha256": "c65340514a2aa2fcddeb38c3fa589b94aa324245a18534cb92f5d9687bb55a54"
+    "capabilities_sha256": "49b21f2c6c360926d14159ee66670f909d4f33bb3ebdb7c984170c679c16ba26",
+    "capabilities_snapshot": {
+      "format": "asif.destination-capabilities/0.1",
+      "availability": "supplied",
+      "data": "ewogICJzbmFwc2hvdF92ZXJzaW9uIjogIjAuMSIsCiAgImlkIjogInNuYXBzaG90LWFzc2Vzc21lbnQtYXdhaXRfZGVjaXNpb24iLAogICJkZXN0aW5hdGlvbl9pZCI6ICJleGFtcGxlLWNsb3VkLXJ1bnRpbWUiLAogICJwcm9kdWNlciI6ICJhc2lmLWV4YW1wbGVzIiwKICAiZXZhbHVhdGlvbl9tb2RlIjogInN5bnRoZXRpYyIsCiAgIm9ic2VydmVkX2F0IjogIjIwMjYtMDktMjZUMTI6MDA6MDBaIiwKICAiZXhwaXJlc19hdCI6ICIyMDI2LTA5LTI2VDEzOjAwOjAwWiIsCiAgInJ1bnRpbWUiOiB7CiAgICAiYWdlbnQiOiB7CiAgICAgICJpZCI6ICJleGFtcGxlLWFnZW50LWEiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInN0YXRlX2Zvcm1hdCI6ICJleGFtcGxlLW5hdGl2ZS8xIgogICAgfSwKICAgICJhZGFwdGVyIjogewogICAgICAiaWQiOiAiZXhhbXBsZS1hZGFwdGVyIiwKICAgICAgInZlcnNpb24iOiAiMSIKICAgIH0sCiAgICAib3MiOiAibGludXgiLAogICAgImFyY2hpdGVjdHVyZSI6ICJ4ODZfNjQiCiAgfSwKICAicnVudGltZV9yZXZpc2lvbiI6ICJzeW50aGV0aWMtcnVudGltZS0xIiwKICAic3VwcG9ydGVkX2ZlYXR1cmVzIjogWwogICAgImFzaWYucG9ydGFibGUtY29udGludWF0aW9uLzAuMSIKICBdLAogICJjb21wb25lbnRzIjogWwogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTEiLAogICAgICAia2luZCI6ICJtb2RlbCIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlL21vZGVsLWEiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiLAogICAgICAibW9kZWwiOiB7CiAgICAgICAgInByb3ZpZGVyIjogImV4YW1wbGUiLAogICAgICAgICJpZCI6ICJtb2RlbC1hIiwKICAgICAgICAicmV2aXNpb24iOiAiMSIKICAgICAgfSwKICAgICAgInRva2VuaXplciI6IG51bGwsCiAgICAgICJpbnB1dF9saW1pdCI6IG51bGwsCiAgICAgICJtZWRpYV90eXBlcyI6IFsKICAgICAgICAidGV4dC9jc3YiLAogICAgICAgICJ0ZXh0L21hcmtkb3duIgogICAgICBdLAogICAgICAiY2FwYWJpbGl0aWVzIjogWwogICAgICAgICJ0ZXh0IiwKICAgICAgICAidG9vbF9jYWxscyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0yIiwKICAgICAgImtpbmQiOiAibW9kZWwiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS9tb2RlbC1hIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgIm1vZGVsIjogewogICAgICAgICJwcm92aWRlciI6ICJleGFtcGxlIiwKICAgICAgICAiaWQiOiAibW9kZWwtYSIsCiAgICAgICAgInJldmlzaW9uIjogIjEiCiAgICAgIH0sCiAgICAgICJ0b2tlbml6ZXIiOiBudWxsLAogICAgICAiaW5wdXRfbGltaXQiOiBudWxsLAogICAgICAibWVkaWFfdHlwZXMiOiBbCiAgICAgICAgInRleHQvY3N2IiwKICAgICAgICAidGV4dC9tYXJrZG93biIKICAgICAgXSwKICAgICAgImNhcGFiaWxpdGllcyI6IFsKICAgICAgICAidGV4dCIsCiAgICAgICAgInRvb2xfY2FsbHMiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMyIsCiAgICAgICJraW5kIjogImNvbmZpZ3VyYXRpb24iLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5jb25maWd1cmF0aW9uLmVmZmVjdGl2ZSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNCIsCiAgICAgICJraW5kIjogImNvbmZpZ3VyYXRpb24iLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5pbnN0cnVjdGlvbi53b3Jrc3BhY2UtcnVsZSIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtNSIsCiAgICAgICJraW5kIjogImNhcGFiaWxpdHkiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5jYXBhYmlsaXR5LnN1bW1hcnktc2tpbGwiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTYiLAogICAgICAia2luZCI6ICJjYXBhYmlsaXR5IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUuY2FwYWJpbGl0eS5vcHRpb25hbC1mb3JtYXR0aW5nIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC03IiwKICAgICAgImtpbmQiOiAicG9saWN5IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUucG9saWN5LndvcmtzcGFjZS1vbmx5IiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC04IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJhZ2VudC1ydW50aW1lIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC05IiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJzdW1tYXJ5LXRvb2wiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiCiAgICB9LAogICAgewogICAgICAiaWQiOiAiY29tcG9uZW50LTEwIiwKICAgICAgImtpbmQiOiAiZGVwZW5kZW5jeSIsCiAgICAgICJpZGVudGl0eSI6ICJzdW1tYXJ5LXNraWxsIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xMSIsCiAgICAgICJraW5kIjogImRlcGVuZGVuY3kiLAogICAgICAiaWRlbnRpdHkiOiAibWVkaWEtZGVjb2RlciIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMTIiLAogICAgICAia2luZCI6ICJ3b3Jrc3BhY2UiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS53b3Jrc3BhY2Uud29ya3NwYWNlLWhlYWQiLAogICAgICAidmVyc2lvbiI6ICIxIiwKICAgICAgInJldmlzaW9uIjogInN5bnRoZXRpYy1zdGF0ZS0xIiwKICAgICAgInN0YXR1cyI6ICJhdmFpbGFibGUiLAogICAgICAicm9vdF9pZCI6ICJwcm9qZWN0IiwKICAgICAgImRlc3RpbmF0aW9uX3BhdGgiOiAiL3dvcmsvcHJvamVjdCIsCiAgICAgICJjYXNlX3NlbnNpdGl2ZSI6IHRydWUsCiAgICAgICJ1bmljb2RlX25vcm1hbGl6YXRpb24iOiAibm9uZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMTMiLAogICAgICAia2luZCI6ICJlbnZpcm9ubWVudCIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmVudmlyb25tZW50LnByb2plY3QtZW52IiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xNCIsCiAgICAgICJraW5kIjogInNlcnZpY2UiLAogICAgICAiaWRlbnRpdHkiOiAiZXhhbXBsZS5zZXJ2aWNlLmpvYi1zZXJ2aWNlIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgImFjY291bnQiOiB7CiAgICAgICAgInByb3ZpZGVyIjogImV4YW1wbGUiLAogICAgICAgICJzdWJqZWN0IjogImFjY291bnQtQSIKICAgICAgfSwKICAgICAgImF1ZGllbmNlIjogImV4YW1wbGUuam9icyIsCiAgICAgICJzY29wZXMiOiBbXSwKICAgICAgInNlY3JldF9oYW5kbGVzIjogW10sCiAgICAgICJlbmRwb2ludCI6ICJodHRwczovL2pvYnMuZXhhbXBsZS5pbnZhbGlkIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xNSIsCiAgICAgICJraW5kIjogIm9wZXJhdGlvbiIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLm9wZXJhdGlvbi5yZW1vdGUtam9iIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIiwKICAgICAgInJlY292ZXJ5X3N0cmF0ZWd5IjogInJlY29uY2lsZSIsCiAgICAgICJleHRlcm5hbF9pZGVudGl0eSI6IHsKICAgICAgICAibmFtZXNwYWNlIjogImV4YW1wbGUuam9icy9hY2NvdW50LUEiLAogICAgICAgICJ2YWx1ZSI6ICJqb2ItNDIiCiAgICAgIH0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMTYiLAogICAgICAia2luZCI6ICJuYXRpdmVfaW1wb3J0IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUtYWRhcHRlciIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0sCiAgICB7CiAgICAgICJpZCI6ICJjb21wb25lbnQtMTciLAogICAgICAia2luZCI6ICJlbnZpcm9ubWVudCIsCiAgICAgICJpZGVudGl0eSI6ICJleGFtcGxlLmNoZWNrcG9pbnRfcmVxdWlyZW1lbnQudmlld2VyIiwKICAgICAgInZlcnNpb24iOiAiMSIsCiAgICAgICJyZXZpc2lvbiI6ICJzeW50aGV0aWMtc3RhdGUtMSIsCiAgICAgICJzdGF0dXMiOiAiYXZhaWxhYmxlIgogICAgfSwKICAgIHsKICAgICAgImlkIjogImNvbXBvbmVudC0xOCIsCiAgICAgICJraW5kIjogImVudmlyb25tZW50IiwKICAgICAgImlkZW50aXR5IjogImV4YW1wbGUuY2hlY2twb2ludF9yZXF1aXJlbWVudC5tZWRpYS1pbnB1dCIsCiAgICAgICJ2ZXJzaW9uIjogIjEiLAogICAgICAicmV2aXNpb24iOiAic3ludGhldGljLXN0YXRlLTEiLAogICAgICAic3RhdHVzIjogImF2YWlsYWJsZSIKICAgIH0KICBdCn0K",
+      "bytes": 5466,
+      "evidence_id": "snapshot-inspection"
+    }
   },
   "assessed_at": "2026-09-26T12:00:00Z",
   "expires_at": "2026-09-26T13:00:00Z",
@@ -39,7 +46,8 @@
       "detail": "Synthetic supported prerequisite.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -49,7 +57,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-1"
+      ]
     },
     {
       "subject": {
@@ -59,7 +70,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-2"
+      ]
     },
     {
       "subject": {
@@ -71,6 +85,9 @@
       "detail": "Synthetic supported prerequisite.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-3"
       ]
     },
     {
@@ -83,7 +100,8 @@
       "detail": "Synthetic supported prerequisite.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -93,7 +111,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -103,7 +122,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -113,7 +133,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -123,7 +144,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -134,7 +156,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-4"
+      ]
     },
     {
       "subject": {
@@ -145,7 +170,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-5"
+      ]
     },
     {
       "subject": {
@@ -155,7 +183,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -166,7 +195,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-6"
+      ]
     },
     {
       "subject": {
@@ -176,7 +208,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -189,6 +222,9 @@
       "detail": "Synthetic supported prerequisite.",
       "evidence_ids": [
         "scenario"
+      ],
+      "component_ids": [
+        "component-7"
       ]
     },
     {
@@ -199,7 +235,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-8"
+      ]
     },
     {
       "subject": {
@@ -209,7 +248,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-9"
+      ]
     },
     {
       "subject": {
@@ -219,7 +261,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-10"
+      ]
     },
     {
       "subject": {
@@ -229,7 +274,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-11"
+      ]
     },
     {
       "subject": {
@@ -239,7 +287,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-12"
+      ]
     },
     {
       "subject": {
@@ -249,7 +300,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-13"
+      ]
     },
     {
       "subject": {
@@ -259,7 +313,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-14"
+      ]
     },
     {
       "subject": {
@@ -269,7 +326,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-15"
+      ]
     },
     {
       "subject": {
@@ -279,7 +339,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-16"
+      ]
     },
     {
       "subject": {
@@ -289,7 +352,8 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": []
     },
     {
       "subject": {
@@ -301,7 +365,8 @@
       "detail": "Synthetic supported prerequisite.",
       "evidence_ids": [
         "scenario"
-      ]
+      ],
+      "component_ids": []
     },
     {
       "subject": {
@@ -317,7 +382,10 @@
       ],
       "resolved": {
         "status": "available"
-      }
+      },
+      "component_ids": [
+        "component-17"
+      ]
     },
     {
       "subject": {
@@ -328,7 +396,10 @@
       "required": false,
       "status": "omitted",
       "detail": "Deferred for this action; original source remains preserved.",
-      "evidence_ids": []
+      "evidence_ids": [],
+      "component_ids": [
+        "component-18"
+      ]
     }
   ],
   "path_bindings": [],
@@ -359,6 +430,13 @@
       "time": "2026-09-26T12:00:00Z",
       "kind": "synthetic",
       "detail": "Authored assumptions only. This receipt cannot authorize import or continuation."
+    },
+    {
+      "id": "snapshot-inspection",
+      "producer": "asif-examples",
+      "time": "2026-09-26T12:00:00Z",
+      "kind": "synthetic",
+      "detail": "Authored destination snapshot; no live inspection or credential lookup."
     }
   ],
   "import_result": {

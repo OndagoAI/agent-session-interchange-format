@@ -7,6 +7,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tests'))
 from continuation_checks import inspect_session, subject, key
+from capability_fixtures import bind_snapshot
 OUT=ROOT/'examples/continuation';OUT.mkdir(exist_ok=True)
 BASE=json.loads((ROOT/'examples/tool-generated-files.session.json').read_text())
 FEATURE='asif.portable-continuation/0.1'
@@ -48,11 +49,12 @@ def doc_for(slug):
 def report_for(d,raw,slug):
  expected=inspect_session(d,OUT)['continue-main']
  model=copy.deepcopy(d['continuation']['plans'][0]['model_requirements']['source_model'])
- return {'report_version':'0.1','evaluation_mode':'synthetic','id':'assessment-'+slug,'source':{'session_id':d['session']['id'],'capture_id':d['capture']['id'],'plan_id':'continue-main','document_sha256':hashlib.sha256(raw).hexdigest()},'destination':{'id':'example-cloud-runtime','runtime':{'agent':{'id':'example-agent-a','version':'1','state_format':'example-native/1'},'adapter':{'id':'example-adapter','version':'1'},'os':'linux','architecture':'x86_64'},'capabilities_sha256':hashlib.sha256(b'invented destination capability snapshot').hexdigest()},'assessed_at':'2026-09-26T12:00:00Z','expires_at':'2026-09-26T13:00:00Z','outcome':'ready','assessments':[{'subject':item['subject'],'status':'supported','required':item['required'],'detail':'Assumed supported in this synthetic example; no actual destination check occurred.','evidence_ids':['scenario'],**({'resolved':{'identity':next(x['identity'] for x in d['continuation']['dependencies'] if x['id']==item['subject']['id']),'version':'1'}} if item['subject']['kind']=='dependency' else {})} for item in expected],'path_bindings':[{'root_id':'project','destination_path':'/work/project','case_sensitive':True,'unicode_normalization':'none'}] if d['continuation']['workspaces'] else [],'identity_mappings':[{'entity_type':'native_session','source_id':'source-native','target_id':'source-native','target_namespace':'example-cloud-runtime'}] if d['continuation']['native_imports'] else [],'transformations':[],'model_assessment':{'source':model,'target':model,'tokenizer':'example-tokenizer/1','input_tokens':700,'input_limit':8000,'output_reserve':1000,'fit':'fits'},'blocking_reasons':[],'evidence':[{'id':'scenario','producer':'asif-examples','time':'2026-09-26T12:00:00Z','kind':'synthetic','detail':'Authored assumptions only. This receipt cannot authorize import or continuation.'}],'import_result':{'status':'not_attempted','evidence_ids':[],'detail':'No import was executed.'},'continuation_result':{'status':'not_tested','evidence_ids':[],'detail':'No agent was started.'}}
+ return {'report_version':'0.1','evaluation_mode':'synthetic','id':'assessment-'+slug,'source':{'session_id':d['session']['id'],'capture_id':d['capture']['id'],'plan_id':'continue-main','document_sha256':hashlib.sha256(raw).hexdigest()},'destination':{'id':'example-cloud-runtime','runtime':{'agent':{'id':'example-agent-a','version':'1','state_format':'example-native/1'},'adapter':{'id':'example-adapter','version':'1'},'os':'linux','architecture':'x86_64'},'capabilities_sha256':'0'*64},'assessed_at':'2026-09-26T12:00:00Z','expires_at':'2026-09-26T13:00:00Z','outcome':'ready','assessments':[{'subject':item['subject'],'status':'supported','required':item['required'],'detail':'Assumed supported in this synthetic example; no actual destination check occurred.','evidence_ids':['scenario'],**({'resolved':{'identity':next(x['identity'] for x in d['continuation']['dependencies'] if x['id']==item['subject']['id']),'version':'1'}} if item['subject']['kind']=='dependency' else {})} for item in expected],'path_bindings':[{'root_id':'project','destination_path':'/work/project','case_sensitive':True,'unicode_normalization':'none'}] if d['continuation']['workspaces'] else [],'identity_mappings':[{'entity_type':'native_session','source_id':'source-native','target_id':'source-native','target_namespace':'example-cloud-runtime'}] if d['continuation']['native_imports'] else [],'transformations':[],'model_assessment':{'source':model,'target':model,'tokenizer':'example-tokenizer/1','input_tokens':700,'input_limit':8000,'output_reserve':1000,'fit':'fits'},'blocking_reasons':[],'evidence':[{'id':'scenario','producer':'asif-examples','time':'2026-09-26T12:00:00Z','kind':'synthetic','detail':'Authored assumptions only. This receipt cannot authorize import or continuation.'}],'import_result':{'status':'not_attempted','evidence_ids':[],'detail':'No import was executed.'},'continuation_result':{'status':'not_tested','evidence_ids':[],'detail':'No agent was started.'}}
 
 def write(slug,d,change_report=lambda r:None):
  raw=(json.dumps(d,indent=2)+'\n').encode();(OUT/(slug+'.session.json')).write_bytes(raw)
  report=report_for(d,raw,slug);change_report(report)
+ (OUT/(slug+'.capabilities.json')).write_bytes(bind_snapshot(d,report))
  (OUT/(slug+'.report.json')).write_text(json.dumps(report,indent=2)+'\n')
 
 def adapt(r,kind,id,target,rule,owner=None):
@@ -64,7 +66,6 @@ def adapt(r,kind,id,target,rule,owner=None):
 def cross_report(r):
  r['destination']['id']='example-agent-b-runtime';r['destination']['runtime']['agent']={'id':'example-agent-b','version':'2','state_format':'example-b/2'}
  r['destination']['runtime']['adapter']={'id':'example-a-to-b','version':'1'}
- r['destination']['capabilities_sha256']=hashlib.sha256(b'invented agent-b capability snapshot').hexdigest()
  r['model_assessment']['target']={'provider':'example','id':'model-b','revision':'2'}
  r['identity_mappings'][0].update(target_id='target-native-b',target_namespace='example-agent-b-runtime')
  adapt(r,'dependency','agent-runtime','example-agent-b/2','Translate runtime requirements to the destination agent with an explicit compatibility mapping.')

@@ -15,6 +15,7 @@ import {
   casefold,
 } from "./common.ts";
 import { validateDocument, shape, SUPPORTED, type Validated } from "./core.ts";
+import { inspectCapabilities } from "./capabilities.ts";
 import { planRequirements } from "./requirements.ts";
 import { workspaceStates, checkGit } from "./workspace.ts";
 const FEATURE = "asif.portable-continuation/0.1";
@@ -371,6 +372,7 @@ export function inspectReport(
   folder: string,
   now = Date.now(),
   validated?: Validated,
+  currentSnapshot?: Buffer,
 ): Obj {
   const expected = inspectSession(doc, folder, validated);
   shape(report, true);
@@ -687,9 +689,11 @@ export function inspectReport(
   );
   if (!blockers.length)
     need(!reasons.size, "nonblocking report has blocking reasons");
+  const current = inspectCapabilities(report, plan, now, currentSnapshot, doc);
   return {
     outcome: predicted,
     operational_authorization: false,
     evaluation_mode: report.evaluation_mode,
+    current_snapshot_matches: current,
   };
 }

@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from reference.continuation import inspect_session
+from capability_fixtures import bind_snapshot
 OUT=ROOT/'examples/continuation'
 d=json.loads((OUT/'another-computer.session.json').read_text())
 d['session'].update(id='session-action-specific',title='One capture assessed for five different next actions')
@@ -65,5 +66,6 @@ for plan in p['plans']:
         if required and a['status']=='unresolved':r['blocking_reasons'].append({'subject':s,'reason':a['detail']})
     r['outcome']='blocked' if r['blocking_reasons'] else 'ready'
     filename='action-specific.report.json' if action=='await_user' else 'action-specific-'+action+'.report.json'
+    (OUT/filename.replace('.report.json','.capabilities.json')).write_bytes(bind_snapshot(d,r))
     (OUT/filename).write_text(json.dumps(r,indent=2)+'\n')
 print('Built one capture with five action-specific reports (synthetic only).')

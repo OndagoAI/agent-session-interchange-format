@@ -45,7 +45,7 @@ const commands: Record<
     options: ["--patterns"],
     required: ["--patterns"],
   },
-  "validate-report": { count: 2, options: ["--at"] },
+  "validate-report": { count: 2, options: ["--at", "--current-capabilities"] },
   pack: { count: 2 },
   "verify-package": { count: 1 },
   sign: {
@@ -59,7 +59,7 @@ const commands: Record<
     required: ["--signature", "--trusted-public-key"],
   },
 };
-const HELP = `ASIF 0.3 TypeScript reference (Node.js 24+)\n\nUsage: node asif.ts <command> [arguments]\n\n  validate <session>\n  validate-report <session> <report> [--at <ISO timestamp>]\n  request <session> <context_id>\n  restore-workspace <session> <workspace_id> <destination> [--case-insensitive] [--normalization none|NFC|NFD]\n  audit-redaction <session> --patterns <JSON file>\n  pack <session> <output>\n  verify-package <package>\n  sign <package> --private-key <raw key> --output <signature file>\n  verify-signature <package> --signature <file> --trusted-public-key <raw key>\n\nJSON output; exit 0 checked/completed, 1 redaction matches, 2 invalid/failure, 3 unsupported.\n`;
+const HELP = `ASIF 0.3 TypeScript reference (Node.js 24+)\n\nUsage: node asif.ts <command> [arguments]\n\n  validate <session>\n  validate-report <session> <report> [--at <ISO timestamp>] [--current-capabilities <snapshot>]\n  request <session> <context_id>\n  restore-workspace <session> <workspace_id> <destination> [--case-insensitive] [--normalization none|NFC|NFD]\n  audit-redaction <session> --patterns <JSON file>\n  pack <session> <output>\n  verify-package <package>\n  sign <package> --private-key <raw key> --output <signature file>\n  verify-signature <package> --signature <file> --trusted-public-key <raw key>\n\nJSON output; exit 0 checked/completed, 1 redaction matches, 2 invalid/failure, 3 unsupported.\n`;
 export function run(argv: string[]): {
   code: number;
   result?: Obj;
@@ -152,6 +152,9 @@ export function run(argv: string[]): {
           folder,
           opts["--at"] ? date(option("--at")) : Date.now(),
           v,
+          opts["--current-capabilities"]
+            ? read(option("--current-capabilities"), 1024 * 1024)
+            : undefined,
         );
       else if (command === "request")
         result = reconstructRequest(doc, v, pos[1]);

@@ -40,6 +40,17 @@ const reportValidator = ajv.compile(
     ),
   ),
 );
+const snapshotValidator = ajv.compile({
+  $ref:
+    String(reportValidator.schema && (reportValidator.schema as Obj).$id) +
+    "#/$defs/capability_snapshot",
+});
+export function snapshotShape(doc: Obj): void {
+  if (!snapshotValidator(doc))
+    throw new SchemaInvalid(
+      (snapshotValidator.errors?.[0].schemaPath ?? "").split("/").slice(1),
+    );
+}
 export function shape(doc: Obj, report = false): void {
   const v = report ? reportValidator : sessionValidator;
   if (!v(doc))

@@ -855,6 +855,27 @@
   },
   {
     "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/capability_component",
+    "example_key": "continuation-report:/$defs/capability_component",
+    "page": "report-objects.md",
+    "anchor": "capability-component-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/capability_snapshot",
+    "example_key": "continuation-report:/$defs/capability_snapshot",
+    "page": "report-objects.md",
+    "anchor": "capability-snapshot-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
+    "pointer": "/$defs/snapshot_evidence",
+    "example_key": "continuation-report:/$defs/snapshot_evidence",
+    "page": "report-objects.md",
+    "anchor": "snapshot-evidence-object"
+  },
+  {
+    "schema": "continuation-report.schema.json",
     "pointer": "/$defs/evidence",
     "example_key": "continuation-report:/$defs/evidence",
     "page": "report-objects.md",

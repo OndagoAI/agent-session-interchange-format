@@ -21,6 +21,7 @@ def main():
             p.add_argument('--case-insensitive',action='store_true');p.add_argument('--normalization',choices=['none','NFC','NFD'],default='none')
         elif name=='audit-redaction':p.add_argument('--patterns',type=Path,required=True,help='JSON array of exact strings; values are never included in findings')
     p=sub.add_parser('validate-report');p.add_argument('session',type=Path);p.add_argument('report',type=Path);p.add_argument('--at',help='Assessment time, ISO 8601 with timezone; defaults to current time')
+    p.add_argument('--current-capabilities',type=Path,help='Exact current snapshot bytes supplied by the caller for report reuse checking')
     p=sub.add_parser('pack');p.add_argument('session',type=Path);p.add_argument('output',type=Path)
     for name in ('verify-package','sign','verify-signature'):
         p=sub.add_parser(name);p.add_argument('package',type=Path)
@@ -46,7 +47,7 @@ def main():
             elif args.command=='validate-report':
                 report,_=load(args.report);now=datetime.fromisoformat(args.at.replace('Z','+00:00')) if args.at else datetime.now(timezone.utc)
                 if now.tzinfo is None:raise Invalid('assessment time needs timezone')
-                result=inspect_report(doc,raw,report,args.session.parent,now=now)
+                result=inspect_report(doc,raw,report,args.session.parent,now=now,current_snapshot=read(args.current_capabilities,1024*1024) if args.current_capabilities else None)
             elif args.command=='request':
                 from reference.context import reconstruct_request
                 result=reconstruct_request(doc,validated,args.context_id)

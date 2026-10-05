@@ -5,7 +5,7 @@ import base64,copy,inspect,json,runpy,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));sys.path.insert(0,str(ROOT/'tests'))
 import continuation_checks
-from reference.common import encode,Invalid
+from reference.common import encode,Invalid,Unsupported
 from jsonschema.exceptions import ValidationError
 cases=[]
 def wrap(kind,original):
@@ -13,9 +13,10 @@ def wrap(kind,original):
   name=next((f.frame.f_locals['name'] for f in inspect.stack() if f.function in ('negative_source','negative_report')),kind+'-'+str(len(cases)+1))
   case={'name':name,'kind':kind,'document':copy.deepcopy(args[0]),'folder':'examples/continuation'}
   if kind=='report':case.update(raw=base64.b64encode(args[1]).decode(),report=copy.deepcopy(args[2]),now=kwargs['now'].isoformat())
+  if kwargs.get('current_snapshot') is not None:case['current_snapshot']=base64.b64encode(kwargs['current_snapshot']).decode()
   try:result=original(*args,**kwargs)
   except (Invalid,ValidationError) as exc:
-   case['expected']={'accepted':False,'schema_error':isinstance(exc,ValidationError)};cases.append(case);raise
+   case['expected']={'accepted':False,'schema_error':isinstance(exc,ValidationError),'unsupported':isinstance(exc,Unsupported)};cases.append(case);raise
   else:
    case['expected']={'accepted':True,'result':copy.deepcopy(result)};cases.append(case);return result
  return invoke

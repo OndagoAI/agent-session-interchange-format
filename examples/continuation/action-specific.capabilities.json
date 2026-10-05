@@ -1,0 +1,219 @@
+{
+  "snapshot_version": "0.1",
+  "id": "snapshot-assessment-await_user",
+  "destination_id": "example-cloud-runtime",
+  "producer": "asif-examples",
+  "evaluation_mode": "synthetic",
+  "observed_at": "2026-09-26T12:00:00Z",
+  "expires_at": "2026-09-26T13:00:00Z",
+  "runtime": {
+    "agent": {
+      "id": "example-agent-a",
+      "version": "1",
+      "state_format": "example-native/1"
+    },
+    "adapter": {
+      "id": "example-adapter",
+      "version": "1"
+    },
+    "os": "linux",
+    "architecture": "x86_64"
+  },
+  "runtime_revision": "synthetic-runtime-1",
+  "supported_features": [
+    "asif.portable-continuation/0.1"
+  ],
+  "components": [
+    {
+      "id": "component-1",
+      "kind": "model",
+      "identity": "example/model-a",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "model": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "tokenizer": null,
+      "input_limit": null,
+      "media_types": [
+        "text/csv",
+        "text/markdown"
+      ],
+      "capabilities": [
+        "text",
+        "tool_calls"
+      ]
+    },
+    {
+      "id": "component-2",
+      "kind": "model",
+      "identity": "example/model-a",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "model": {
+        "provider": "example",
+        "id": "model-a",
+        "revision": "1"
+      },
+      "tokenizer": null,
+      "input_limit": null,
+      "media_types": [
+        "text/csv",
+        "text/markdown"
+      ],
+      "capabilities": [
+        "text",
+        "tool_calls"
+      ]
+    },
+    {
+      "id": "component-3",
+      "kind": "configuration",
+      "identity": "example.configuration.effective",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-4",
+      "kind": "configuration",
+      "identity": "example.instruction.workspace-rule",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-5",
+      "kind": "capability",
+      "identity": "example.capability.summary-skill",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-6",
+      "kind": "capability",
+      "identity": "example.capability.optional-formatting",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-7",
+      "kind": "policy",
+      "identity": "example.policy.workspace-only",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-8",
+      "kind": "dependency",
+      "identity": "agent-runtime",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-9",
+      "kind": "dependency",
+      "identity": "summary-tool",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-10",
+      "kind": "dependency",
+      "identity": "summary-skill",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-11",
+      "kind": "dependency",
+      "identity": "media-decoder",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-12",
+      "kind": "workspace",
+      "identity": "example.workspace.workspace-head",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "root_id": "project",
+      "destination_path": "/work/project",
+      "case_sensitive": true,
+      "unicode_normalization": "none"
+    },
+    {
+      "id": "component-13",
+      "kind": "environment",
+      "identity": "example.environment.project-env",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-14",
+      "kind": "service",
+      "identity": "example.service.job-service",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "account": {
+        "provider": "example",
+        "subject": "account-A"
+      },
+      "audience": "example.jobs",
+      "scopes": [],
+      "secret_handles": [],
+      "endpoint": "https://jobs.example.invalid"
+    },
+    {
+      "id": "component-15",
+      "kind": "operation",
+      "identity": "example.operation.remote-job",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available",
+      "recovery_strategy": "reconcile",
+      "external_identity": {
+        "namespace": "example.jobs/account-A",
+        "value": "job-42"
+      }
+    },
+    {
+      "id": "component-16",
+      "kind": "native_import",
+      "identity": "example-adapter",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-17",
+      "kind": "environment",
+      "identity": "example.checkpoint_requirement.viewer",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    },
+    {
+      "id": "component-18",
+      "kind": "environment",
+      "identity": "example.checkpoint_requirement.media-input",
+      "version": "1",
+      "revision": "synthetic-state-1",
+      "status": "available"
+    }
+  ]
+}

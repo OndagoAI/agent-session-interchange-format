@@ -28,6 +28,7 @@ The reference is organized by named objects. Each object has a purpose, a fixed-
 | [Continuation object reference](docs/continuation-objects.md) | Optional workspace, dependency, configuration, service, recovery and plan objects. |
 | [Continuation semantics](CONTINUATION.md) | Rules for selecting and assessing a continuation boundary. |
 | [Destination report reference](docs/report-objects.md) | Assessment, evidence, transformation and result objects. |
+| [Destination capability snapshots](CAPABILITIES.md) | Supplied destination state, exact-byte fingerprints, component bindings and report reuse. |
 | [Streaming and external bindings](STREAMING.md) | Optional fragment assembly and earlier-capture invocation/request bindings. |
 | [Package transport](TRANSPORT.md) | Optional exact-byte envelope, integrity inventory and detached signature convention. |
 | [Profiles](PROFILES.md) | Core requirements versus optional capabilities. |
