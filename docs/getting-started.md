@@ -1,6 +1,6 @@
 # Getting started
 
-ASIF describes an agent session as a portable JSON document. Start by validating a worked example, then explore the records behind it. Version **0.3** is a proposal with local reference implementations; a valid document does not establish that an agent can continue it.
+ASIF describes an agent session as a portable JSON document. Start by validating a worked example, then explore the records behind it. Version **0.5** is a proposal with local reference implementations; a valid document does not establish that an agent can continue it.
 
 ## Choose a reading path
 

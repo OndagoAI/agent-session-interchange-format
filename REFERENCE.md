@@ -1,6 +1,6 @@
 # ASIF local reference implementations
 
-ASIF **0.3** includes locally authored [Python](asif.py) and [TypeScript](asif.ts) reference CLIs implementing a documented subset. Both are vendor-neutral and expose the same nine commands. The TypeScript CLI runs directly on Node.js without invoking Python. Neither imports native agent stores, encodes provider requests, obtains credentials, calls external services or executes an agent. The two implementations share authorship and do not count as independent interoperability evidence.
+ASIF **0.5** includes locally authored [Python](asif.py) and [TypeScript](asif.ts) reference CLIs implementing a documented subset. Both are vendor-neutral and expose the same nine commands. The TypeScript CLI runs directly on Node.js without invoking Python. Neither imports native agent stores, encodes provider requests, obtains credentials, calls external services or executes an agent. The two implementations share authorship and do not count as independent interoperability evidence.
 
 ## Installation and commands
 

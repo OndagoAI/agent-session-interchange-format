@@ -1,5 +1,5 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.5",
   "scope": "Local vendor-neutral reference implementation checks",
   "checks": 135,
   "passed": 135,

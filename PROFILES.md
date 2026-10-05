@@ -2,7 +2,7 @@
 
 The core defines the shared session record and explicit coverage of every domain. A profile adds exact semantics to a specialized capability; it cannot redefine core records or conceal missing data.
 
-The [portable-continuation profile](CONTINUATION.md), `asif.portable-continuation/0.1`, is now specified in draft form with schemas and synthetic checks. Its fields cover the previously undeclared continuation contracts below. This is specification coverage, not a claim of working runtime adapters.
+The [portable-continuation profile](CONTINUATION.md), `asif.portable-continuation/0.3`, is now specified in draft form with schemas and synthetic checks. Its fields cover the previously undeclared continuation contracts below. This is specification coverage, not a claim of working runtime adapters.
 
 | Area | Core requirement | Additional profile work |
 |---|---|---|

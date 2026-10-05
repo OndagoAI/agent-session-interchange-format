@@ -1,6 +1,6 @@
 # Compatibility and evidence
 
-ASIF **0.3** is a proposal with two locally authored reference implementations. This page separates executable checks, authored scenarios and integration work. It is not a list of certified providers. Both reference implementations share authorship; independent exchange evidence remains **zero**.
+ASIF **0.5** is a proposal with two locally authored reference implementations. This page separates executable checks, authored scenarios and integration work. It is not a list of certified providers. Both reference implementations share authorship; independent exchange evidence remains **zero**.
 
 ## Capability matrix
 

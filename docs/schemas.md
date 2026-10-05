@@ -1,6 +1,6 @@
 # JSON schemas
 
-These ASIF **0.3** schemas validate document structure. Semantic requirements in the [session rules](../SEMANTICS.md) and [continuation profile](../CONTINUATION.md) also apply.
+These ASIF **0.5** schemas validate document structure. Semantic requirements in the [session rules](../SEMANTICS.md) and [continuation profile](../CONTINUATION.md) also apply.
 
 | Schema | Use | Object reference |
 |---|---|---|

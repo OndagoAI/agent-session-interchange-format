@@ -21,7 +21,7 @@
   },
   "runtime_revision": "synthetic-runtime-1",
   "supported_features": [
-    "asif.portable-continuation/0.1"
+    "asif.portable-continuation/0.3"
   ],
   "components": [
     {

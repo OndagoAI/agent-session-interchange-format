@@ -1,8 +1,8 @@
 {
-  "asif_version": "0.3",
+  "asif_version": "0.5",
   "scope": "Object reference schema coverage, examples, generated-field freshness and local Markdown links",
   "objects": 128,
   "validated_examples": 140,
-  "local_links": 826,
+  "local_links": 839,
   "passed": true
 }

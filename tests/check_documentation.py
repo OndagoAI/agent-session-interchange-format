@@ -35,5 +35,5 @@ for file in files:
   if not destination.exists():errors.append((str(file.relative_to(ROOT)),target,'missing file'))
   elif fragment and destination.suffix=='.md' and fragment not in anchors(destination.read_text()):errors.append((str(file.relative_to(ROOT)),target,'missing anchor'))
 assert not errors,json.dumps(errors,indent=2)
-result={'asif_version':'0.3','scope':'Object reference schema coverage, examples, generated-field freshness and local Markdown links','objects':len(OBJECTS),'validated_examples':count,'local_links':links,'passed':True}
+result={'asif_version':'0.5','scope':'Object reference schema coverage, examples, generated-field freshness and local Markdown links','objects':len(OBJECTS),'validated_examples':count,'local_links':links,'passed':True}
 (ROOT/'tests/documentation-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

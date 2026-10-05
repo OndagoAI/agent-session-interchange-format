@@ -1,7 +1,8 @@
 # Agent Session Interchange Format
 
-**ASIF 0.3 — 26 September 2026**  
-Status: proposed standard; not a released or independently validated standard.
+**ASIF 0.5 — review draft, 5 October 2026**
+
+Status: review draft for implementer feedback; not a released or independently validated standard. See [changes and migration from 0.4](MIGRATION.md).
 
 ## Introduction
 
@@ -55,7 +56,7 @@ An ASIF document is UTF-8 JSON. Object field names and IDs are case-sensitive. D
 | `JSON value` | Any JSON value; a declared schema or dialect can impose further requirements. |
 | `enum` | One of the explicitly listed values; unknown values are not silently mapped. |
 
-ASIF 0.3 defines JSON serialization. Other syntaxes require a separately specified mapping. Schema `$ref` links describe the specification's types; instance references use typed IDs rather than arbitrary JSON Schema references.
+ASIF 0.5 defines JSON serialization. Other syntaxes require a separately specified mapping. Schema `$ref` links describe the specification's types; instance references use typed IDs rather than arbitrary JSON Schema references.
 
 ## Specification objects
 
@@ -89,7 +90,7 @@ Optional semantic features are identified in `required_features`. A consumer tha
 
 | Feature | Data and rules |
 |---|---|
-| `asif.portable-continuation/0.1` | Root `continuation`; [profile rules](CONTINUATION.md) and [objects](docs/continuation-objects.md). |
+| `asif.portable-continuation/0.3` | Root `continuation`; [profile rules](CONTINUATION.md) and [objects](docs/continuation-objects.md). |
 | `asif.streams/0.1` | Root `streams`; [assembly rules](STREAMING.md) and [Stream Object](docs/objects.md#stream-object). |
 | `asif.external-bindings/0.1` | Root `external_bindings`; [binding rules](STREAMING.md#external-bindings) and [External Binding Object](docs/objects.md#external-binding-object). |
 

@@ -1,9 +1,9 @@
 {
-  "asif_version": "0.3",
-  "profile": "asif.portable-continuation/0.1",
+  "asif_version": "0.5",
+  "profile": "asif.portable-continuation/0.3",
   "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
-  "checks": 110,
-  "passed": 110,
+  "checks": 120,
+  "passed": 120,
   "real_runtime_tests": 0,
   "independent_implementations": 0,
   "operational_authorization": false,
@@ -27,6 +27,56 @@
       "case": "pending-remote-operation",
       "passed": true,
       "outcome": "blocked"
+    },
+    {
+      "case": "0.4-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "0.2-profile-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "0.2-profile-feature-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "0.2-report-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "future-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-core-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-profile-version-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-profile-feature-refused",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "previous-report-version-refused",
+      "passed": true,
+      "outcome": "rejected"
     },
     {
       "case": "profile-not-gated",

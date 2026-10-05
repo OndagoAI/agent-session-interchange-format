@@ -1,6 +1,6 @@
 # Destination capability snapshots 0.1
 
-Contract: `asif.destination-capabilities/0.1`. Status: normative review proposal for the next 0.4 draft. This change does not bump the current core, continuation or report version identifiers; the coordinated 0.4 update follows separately.
+Contract: `asif.destination-capabilities/0.1`. Status: normative review proposal in the ASIF 0.5 draft, with portable continuation and destination reports at 0.3. This snapshot format begins at 0.1.
 
 A destination report binds both the immutable source capture and the destination state against which its assessments were made. `destination.capabilities_sha256` is SHA-256 over the exact supplied snapshot bytes defined here. It is not a digest of a runtime name, selected fields, a parsed object or an unspecified adapter cache. Fingerprints bind evidence; they do not authenticate its producer or prove the destination still has that state.
 
@@ -70,4 +70,4 @@ The reference `validate-report` command verifies the supplied archive by default
 
 ## Draft compatibility
 
-Old reports containing only an invented or unspecified fingerprint cannot meet this contract. Reinspect the destination, supply a snapshot and component bindings, and issue a new report; do not retrofit new claims into an immutable historical report. Source captures themselves need no change for this destination-only contract. Incorporate these report changes into the separately planned 0.4 migration and continuation/report version bump. Existing archived reports may be preserved under their original interpretation, but must not be reused as current validated evidence.
+Old reports containing only an invented or unspecified fingerprint cannot meet this contract. Reinspect the destination, supply a snapshot and component bindings, and issue a new report; do not retrofit new claims into an immutable historical report. Captured event and task semantics are unchanged by this destination contract; adopting the new core version still requires a derived capture under the migration rules. The [0.5 migration](MIGRATION.md) advances the continuation and report contracts to 0.3 for these changes. Existing archived reports may be preserved under their original interpretation, but must not be reused as current validated evidence.

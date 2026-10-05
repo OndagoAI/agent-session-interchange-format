@@ -170,5 +170,5 @@ def capability_vector(vector):
     SNAPSHOT.validate(decode(raw))
 for vector in json.loads((ROOT/'tests/capability-snapshot-vectors.json').read_text())['vectors']:
     check('capability-hash-vector-'+vector['name'],lambda v=vector:capability_vector(v))
-summary={'asif_version':'0.3','scope':'Local vendor-neutral reference implementation checks','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
+summary={'asif_version':'0.5','scope':'Local vendor-neutral reference implementation checks','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
 (ROOT/'tests/reference-results.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps({k:v for k,v in summary.items() if k!='results'},indent=2))

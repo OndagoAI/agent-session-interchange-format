@@ -69,7 +69,7 @@ after(() => {
     path.join(ROOT, "tests/typescript-results.json"),
     JSON.stringify(
       {
-        asif_version: "0.3",
+        asif_version: "0.5",
         scope:
           "Local TypeScript port, shared Python expectations, CLI and package checks",
         checks: results.length,

@@ -42,6 +42,16 @@ def negative_report(name,mutate,expected,fixture='another-computer',mutate_sourc
     else:raise AssertionError('invalid report accepted: '+name)
     results.append({'case':name,'passed':True,'outcome':'rejected'})
 
+negative_source('0.4-core-version-refused',lambda d:d.update(asif_version='0.4'),None)
+negative_source('0.2-profile-version-refused',lambda d:d['continuation'].update(profile_version='0.2'),None)
+negative_source('0.2-profile-feature-refused',lambda d:d.update(required_features=['asif.portable-continuation/0.2']),None)
+negative_report('0.2-report-version-refused',lambda r:r.update(report_version='0.2'),None)
+negative_source('previous-core-version-refused',lambda d:d.update(asif_version='0.3'),None)
+negative_source('future-core-version-refused',lambda d:d.update(asif_version='0.6'),None)
+negative_source('missing-core-version-refused',lambda d:d.pop('asif_version'),None)
+negative_source('previous-profile-version-refused',lambda d:d['continuation'].update(profile_version='0.1'),None)
+negative_source('previous-profile-feature-refused',lambda d:d.update(required_features=['asif.portable-continuation/0.1']),None)
+negative_report('previous-report-version-refused',lambda r:r.update(report_version='0.1'),None)
 negative_source('profile-not-gated',lambda d:d.update(required_features=[]),None)
 negative_source('profile-declaration-without-data',lambda d:d.pop('continuation'),None)
 negative_source('untyped-context',lambda d:d['contexts'][0]['inputs'][0].pop('kind'),None)
@@ -219,6 +229,6 @@ for kind in ['runtime','dependency','policy','model','service','workspace']:
     except Invalid as exc:assert 'destination capabilities changed' in str(exc)
     else:raise AssertionError('reused report after '+kind+' changed')
     results.append({'case':'current-'+kind+'-change-invalidates-report','passed':True,'outcome':'rejected'})
-summary={'asif_version':'0.3','profile':'asif.portable-continuation/0.1','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
+summary={'asif_version':'0.5','profile':'asif.portable-continuation/0.3','scope':'Synthetic profile shape, selected semantic invariants and destination report outcomes','checks':len(results),'passed':len(results),'real_runtime_tests':0,'independent_implementations':0,'operational_authorization':False,'results':results}
 (ROOT/'tests/continuation-results.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='results'},indent=2))

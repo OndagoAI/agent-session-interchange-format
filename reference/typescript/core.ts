@@ -59,7 +59,7 @@ export function shape(doc: Obj, report = false): void {
     );
 }
 export const SUPPORTED = new Set([
-  "asif.portable-continuation/0.1",
+  "asif.portable-continuation/0.3",
   "asif.streams/0.1",
   "asif.external-bindings/0.1",
 ]);

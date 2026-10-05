@@ -1,6 +1,6 @@
 # Core object reference
 
-Version: **0.3**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
+Version: **0.5**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
 
 Every example below is JSON Schema checked. Object fragments use IDs resolved by an enclosing session or report; they are not standalone session documents. Full scenarios are in [examples](../examples/README.md). Required means unconditionally required; conditional rules follow each table. Normative [session semantics](../SEMANTICS.md) and [continuation rules](../CONTINUATION.md) also apply.
 
@@ -86,7 +86,7 @@ Root of an immutable session capture. Collections describe identity, history, ef
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| <a id="asif-document-object-asif_version"></a>`asif_version` | `"0.3"` | Yes | Exact ASIF draft version used by this document. |
+| <a id="asif-document-object-asif_version"></a>`asif_version` | `"0.5"` | Yes | Exact ASIF draft version used by this document. |
 | <a id="asif-document-object-capture"></a>`capture` | [Capture Object](objects.md#capture-object) | Yes | Immutable capture identity and observation boundary. |
 | <a id="asif-document-object-session"></a>`session` | [Session Object](objects.md#session-object) | Yes | Logical session identity, objective and lineage. |
 | <a id="asif-document-object-participants"></a>`participants` | array of [Participant Object](objects.md#participant-object) | Yes | Declared actors referenced by the captured interaction. |
@@ -111,8 +111,8 @@ Root of an immutable session capture. Collections describe identity, history, ef
 
 See [session semantics](../SEMANTICS.md).
 
-- When `continuation` is present, `required_features` MUST contain `asif.portable-continuation/0.1`.
-- When `required_features` contains `asif.portable-continuation/0.1`, require `continuation`.
+- When `continuation` is present, `required_features` MUST contain `asif.portable-continuation/0.3`.
+- When `required_features` contains `asif.portable-continuation/0.3`, require `continuation`.
 - When `streams` is present, `required_features` MUST contain `asif.streams/0.1`.
 - When `required_features` contains `asif.streams/0.1`, require `streams`.
 - When `external_bindings` is present, `required_features` MUST contain `asif.external-bindings/0.1`.
@@ -124,12 +124,12 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 
 ```json
 {
-  "asif_version": "0.3",
+  "asif_version": "0.5",
   "capture": {
     "id": "capture-hello",
     "producer": {
       "name": "ASIF examples",
-      "version": "0.3"
+      "version": "0.5"
     },
     "consistency": "consistent",
     "boundary": "One authored greeting; no agent request was captured."

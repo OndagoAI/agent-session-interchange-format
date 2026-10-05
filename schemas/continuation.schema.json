@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:asif:portable-continuation:0.1",
-  "title": "ASIF portable continuation 0.1",
+  "$id": "urn:asif:portable-continuation:0.3",
+  "title": "ASIF portable continuation 0.3",
   "type": "object",
   "properties": {
     "profile_version": {
-      "const": "0.1"
+      "const": "0.3"
     },
     "source_runtime": {
       "$ref": "#/$defs/runtime"

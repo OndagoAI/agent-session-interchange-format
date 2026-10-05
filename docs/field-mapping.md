@@ -2,11 +2,11 @@
 
 Research date: 2026-09-26. This compares the earlier ASIF design's requirements against specific source revisions. It is a document/schema review, not runtime certification or a proof of ecosystem adoption.
 
-The comparison columns retain that research snapshot. The **ASIF 0.3 disposition** column now refers to the active [0.3 session specification](../SPEC.md), superseding the preservation-only experiment. Linked field names lead to their definitions; future profiles are explicitly identified.
+The comparison columns retain that research snapshot. The **ASIF 0.5 disposition** column now refers to the active [0.5 session specification](../SPEC.md), superseding the preservation-only experiment. Linked field names lead to their definitions; future profiles are explicitly identified.
 
 Legend: **D** directly modeled; **P** partially modeled or different semantics; **E** possible via extension/custom payload, without a portable core contract; **N** no equivalent core contract found. E/N means extension work, not impossibility. “Native” below refers to the captured vendor representation, not merely a model API item.
 
-| Earlier ASIF field/requirement | Agent Session Format | ATIF | VAC / vCon | ASIF 0.3 disposition |
+| Earlier ASIF field/requirement | Agent Session Format | ATIF | VAC / vCon | ASIF 0.5 disposition |
 |---|---|---|---|---|
 | Format version | D `format` | D `schema_version` | D `version` | [`asif_version`](../docs/objects.md#asif-document-object-asif_version) identifies the session contract. |
 | Logical session identity | D header `id` | P run `session_id` | D `session-id` | [`session.id` and `session.native_ids`](../docs/objects.md#session-object) separate logical and provider-scoped identities. |
@@ -52,6 +52,6 @@ Legend: **D** directly modeled; **P** partially modeled or different semantics; 
 
 The comparison establishes no requirement that is impossible to carry in the existing formats' extension mechanisms. The actual gap is agreement: common meanings for source-artifact preservation, coverage, loss, resource closure, and consumer capability claims.
 
-The earlier preservation-only design treated these agreements as a companion package. The active [0.3 specification](../SPEC.md) instead defines ASIF session semantics directly, including events, branches, context and checkpoints. Its [remaining gaps](../GAPS.md) distinguish defined records from unresolved portability and implementation evidence. The comparison above does not establish conformance to that newer contract.
+The earlier preservation-only design treated these agreements as a companion package. The active [0.5 specification](../SPEC.md) instead defines ASIF session semantics directly, including events, branches, context and checkpoints. Its [remaining gaps](../GAPS.md) distinguish defined records from unresolved portability and implementation evidence. The comparison above does not establish conformance to that newer contract.
 
 A signature authenticates a record under a key; it does not prove that the recorder observed all behavior. A request hash checks a reconstructed request; it does not prove that a native store will resume. These distinctions remain in ASIF regardless of the final container.
