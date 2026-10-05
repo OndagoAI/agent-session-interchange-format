@@ -40,6 +40,8 @@ The checker conservatively assesses every selected dependency/resource as requir
 | Interchange | Missing terminal tool result | Outcome unknown; no automatic repeat of a possible side effect. |
 | Interchange | Approval without answer | Pending only with evidence; otherwise outcome unknown. |
 | Interchange | Task revisions and plan approval | Resolution applies to the exact named revision. |
+| Interchange | Task prerequisites, reopened/retired tasks and divergent branches | Resolve task IDs to current selected revisions, retain dependent statuses, reject dangling/self/cyclic dependencies, and keep unknown or cross-branch prerequisite state explicit. |
+| Interchange | Partial task revision history | Require partial task coverage for an omitted predecessor; preserve the gap and refuse complete transition reconstruction. |
 | Context | Transcript includes records absent from request | Reconstruct ordered context inputs without replaying every event. |
 | Context | Compaction | Preserve summary, retained inputs, source coverage and prior context. |
 | Context | Scoped instructions and unknown policy | Report unresolved equivalence; do not claim exact configuration. |

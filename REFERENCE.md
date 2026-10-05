@@ -48,7 +48,7 @@ Use the context and workspace IDs recorded in the document. Output is JSON. Exit
 | Area | Implemented | Limits |
 |---|---|---|
 | Parsing | Bounded UTF-8 JSON and duplicate-key rejection; Python preserves decimal values, while TypeScript refuses numbers outside its supported exact round-trip range. | No unbounded-size or streaming parser claim. See language differences below. |
-| Core semantics | IDs/references, causal and supersession graphs, selected-history state, incomplete-call amendments and retry identity, checkpoint consistency, provenance spans, resource hashes. | Some lifecycle, requirement, task-dependency and coverage semantics still need complete validation. |
+| Core semantics | IDs/references, causal and supersession graphs, selected-history state, incomplete-call amendments and retry identity, task dependency references/cycles/revisions and partial-history gaps, checkpoint consistency, provenance spans, resource hashes. | Some lifecycle, requirement and coverage semantics still need complete validation. Task dependencies do not implement scheduling or runtime authorization. |
 | Continuation | Selected dependency closure, configuration bindings, typed calls/results, workspace bases, Git declaration checks, report source hash/expiry and readiness consistency. | Reports remain declarations; no live checks or complete cryptographic verification of runtime evidence. |
 | Request projection | Ordered typed inputs, selected tool definitions, model settings and required content references. | JSON output is a neutral projection. Provider encoding, token measurement and adaptation are not implemented. |
 | Configuration | Explicit order, scope matching, neutral predicates, merge groups and declarative policy precedence. | Only the neutral dialect below is evaluated. No equivalence claim for vendor dialects or runtime enforcement. |
@@ -72,6 +72,10 @@ The TypeScript port implements the same selected session/report checks and opera
 The TypeScript [test results](tests/typescript-results.json) cover the existing 44 Python continuation outcomes, core fixtures, numeric refusal, parsing, state, streams, configuration, restoration, package integrity, signatures and all nine CLI commands. [Live local exchange checks](tests/typescript-exchange-results.json) invoke both CLIs, exchange newly generated packages/signatures in both directions, and compare request, report, redaction and restored-file outputs. These are local tests with shared authorship; no real agent or independent implementation is involved.
 
 The port uses [Ajv's JSON Schema 2020-12 implementation](https://ajv.js.org/json-schema.html#draft-2020-12-breaking), Node's [crypto APIs](https://nodejs.org/api/crypto.html), and a bounded ZIP32 reader/writer based on the [ZIP format specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT). It performs no runtime schema downloads.
+
+## Task state interpretation
+
+The Python `history_state` and TypeScript `historyState` helpers return `task_history_gaps` (task ID → omitted predecessor revision) and `task_dependencies` alongside recorded task states. Each dependency resolves to `{revision, state}`, with nullable revision and state `satisfied`, `unsatisfied` or `unknown`. A task's dependency map is null when its list was omitted, and empty when it explicitly declared no dependencies. Their optional fourth argument enables partial task histories; document validation enables it only when the task coverage record has `status: partial`. These are local derived results, not new fields in the ASIF document or a scheduler's readiness decision.
 
 ## Workspace restoration
 

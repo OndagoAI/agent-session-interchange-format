@@ -22,7 +22,7 @@ def equal(a,b):assert a==b,(a,b)
 for file in sorted((ROOT/'examples').rglob('*.session.json')):
     check('validate-'+file.stem,lambda f=file:validate_document(load(f)[0],f.parent))
 
-def progression_case(case):
+def session_case(case):
     d=load(ROOT/'examples'/case['fixture'])[0]
     for edit in case['edits']:
         target=d
@@ -31,18 +31,33 @@ def progression_case(case):
         if edit.get('remove'):del target[key]
         elif isinstance(target,list) and key==len(target):target.append(copy.deepcopy(edit['value']))
         else:target[key]=copy.deepcopy(edit['value'])
-    if 'error' in case:
+    if case.get('schema_error'):
+        try:validate_document(d,ROOT/'examples')
+        except ValidationError:pass
+        else:raise AssertionError('accepted structurally invalid task event')
+    elif 'error' in case:
         rejects(lambda:validate_document(d,ROOT/'examples'),case['error'])
     else:
         validate_document(d,ROOT/'examples')
         events={e['id']:e for e in d['events']}
+        if 'task_states' in case:
+            partial=next(c['status'] for c in d['coverage'] if c['scope']=='tasks')=='partial'
+            for branch in d['branches']:
+                if branch['id'] not in case['task_states']:continue
+                state=history_state([events[id] for id in branch['event_ids']],partial_tasks=partial)
+                actual={key:state[key] for key in ('task_dependencies','task_history_gaps')}
+                actual['tasks']={id:{k:task[k] for k in ('revision','status')} for id,task in state['tasks'].items()}
+                equal(actual,case['task_states'][branch['id']])
+            return
         external_calls={b['id']:b['descriptor'] for b in d.get('external_bindings',[]) if b['kind']=='call'}
         state=history_state([events[id] for id in d['branches'][0]['event_ids']],external_calls)
         actual={'calls':{id:{k:call[k] for k in ('arguments','arguments_status')} for id,call in state['calls'].items()},'closed_calls':state['closed_calls']}
         equal(actual,case['expected'])
 
 for case in json.loads((ROOT/'tests/tool-call-progression-cases.json').read_text())['cases']:
-    check('call-progression-'+case['name'],lambda c=case:progression_case(c))
+    check('call-progression-'+case['name'],lambda c=case:session_case(c))
+for case in json.loads((ROOT/'tests/task-semantics-cases.json').read_text())['cases']:
+    check('task-semantics-'+case['name'],lambda c=case:session_case(c))
 
 def preserved_partial_capture():
     partial=load(ROOT/'examples/tool-call-partial.session.json')[0]

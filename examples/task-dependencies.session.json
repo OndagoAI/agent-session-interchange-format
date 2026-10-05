@@ -1,0 +1,415 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-task-dependencies",
+    "producer": {
+      "name": "asif-task-examples",
+      "version": "1"
+    },
+    "consistency": "consistent",
+    "boundary": "Synthetic branch selections showing completion, reopening and retirement. No scheduling or runtime execution is implied."
+  },
+  "session": {
+    "id": "session-task-dependencies",
+    "title": "task-dependencies",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "gather-1",
+      "sequence": 0,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "gather",
+        "revision": 1,
+        "status": "completed",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Collect the workshop notes."
+          }
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "id": "write-1",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "write",
+        "revision": 1,
+        "status": "completed",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Write a summary of the notes."
+          }
+        ],
+        "dependencies": [
+          "gather"
+        ]
+      }
+    },
+    {
+      "id": "gather-2",
+      "sequence": 2,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "gather",
+        "revision": 2,
+        "status": "pending",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Collect the workshop notes."
+          }
+        ],
+        "dependencies": [],
+        "previous_revision": 1,
+        "reopen_reason": "More meeting notes arrived."
+      }
+    },
+    {
+      "id": "write-2",
+      "sequence": 3,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "write",
+        "revision": 2,
+        "status": "pending",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Write a summary of the notes."
+          }
+        ],
+        "dependencies": [
+          "gather"
+        ],
+        "previous_revision": 1,
+        "reopen_reason": "The new notes require an updated summary."
+      }
+    },
+    {
+      "id": "gather-3",
+      "sequence": 4,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "gather",
+        "revision": 3,
+        "status": "completed",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Collect the workshop notes."
+          }
+        ],
+        "dependencies": [],
+        "previous_revision": 2
+      }
+    },
+    {
+      "id": "gather-4",
+      "sequence": 5,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "gather",
+        "revision": 4,
+        "status": "superseded",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Collect the workshop notes."
+          }
+        ],
+        "dependencies": [],
+        "previous_revision": 1
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "baseline",
+      "event_ids": [
+        "gather-1",
+        "write-1"
+      ],
+      "head_event_id": "write-1"
+    },
+    {
+      "id": "reopened",
+      "event_ids": [
+        "gather-1",
+        "write-1",
+        "gather-2"
+      ],
+      "head_event_id": "gather-2"
+    },
+    {
+      "id": "main",
+      "event_ids": [
+        "gather-1",
+        "write-1",
+        "gather-2",
+        "write-2",
+        "gather-3"
+      ],
+      "head_event_id": "gather-3"
+    },
+    {
+      "id": "retired",
+      "event_ids": [
+        "gather-1",
+        "write-1",
+        "gather-4"
+      ],
+      "head_event_id": "gather-4"
+    },
+    {
+      "id": "dependent-only",
+      "event_ids": [
+        "write-1"
+      ],
+      "head_event_id": "write-1"
+    }
+  ],
+  "executions": [],
+  "contexts": [],
+  "configurations": [],
+  "tools": [],
+  "resources": [],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "checkpoint-baseline",
+      "branch_id": "baseline",
+      "at_event_id": "write-1",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "gather",
+          "revision": 1
+        },
+        {
+          "task_id": "write",
+          "revision": 1
+        }
+      ],
+      "requirements": []
+    },
+    {
+      "id": "checkpoint-reopened",
+      "branch_id": "reopened",
+      "at_event_id": "gather-2",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "gather",
+          "revision": 2
+        },
+        {
+          "task_id": "write",
+          "revision": 1
+        }
+      ],
+      "requirements": []
+    },
+    {
+      "id": "checkpoint-main",
+      "branch_id": "main",
+      "at_event_id": "gather-3",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "gather",
+          "revision": 3
+        },
+        {
+          "task_id": "write",
+          "revision": 2
+        }
+      ],
+      "requirements": []
+    },
+    {
+      "id": "checkpoint-retired",
+      "branch_id": "retired",
+      "at_event_id": "gather-4",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "gather",
+          "revision": 4
+        },
+        {
+          "task_id": "write",
+          "revision": 1
+        }
+      ],
+      "requirements": []
+    },
+    {
+      "id": "checkpoint-dependent-only",
+      "branch_id": "dependent-only",
+      "at_event_id": "write-1",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "write",
+          "revision": 1
+        }
+      ],
+      "requirements": []
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "Complete for the authored synthetic selections."
+    },
+    {
+      "scope": "conversation",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "Complete for the authored synthetic selections."
+    },
+    {
+      "scope": "executions",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "contexts",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "configuration",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "complete",
+      "detail": "Synthetic branch selections showing completion, reopening and retirement. No scheduling or runtime execution is implied."
+    },
+    {
+      "scope": "resources",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "environment",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "native",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "usage",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

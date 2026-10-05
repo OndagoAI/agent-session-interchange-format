@@ -1,0 +1,1160 @@
+{
+  "scope": "Shared task-reference, branch, revision, dependency and partial-history checks; no scheduler or runtime execution",
+  "cases": [
+    {
+      "name": "branch-local dependency revisions and descriptive status",
+      "fixture": "task-dependencies.session.json",
+      "edits": [],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        },
+        "baseline": {
+          "tasks": {
+            "gather": {
+              "revision": 1,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 1,
+              "status": "completed"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 1,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        },
+        "reopened": {
+          "tasks": {
+            "gather": {
+              "revision": 2,
+              "status": "pending"
+            },
+            "write": {
+              "revision": 1,
+              "status": "completed"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 2,
+                "state": "unsatisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        },
+        "retired": {
+          "tasks": {
+            "gather": {
+              "revision": 4,
+              "status": "superseded"
+            },
+            "write": {
+              "revision": 1,
+              "status": "completed"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 4,
+                "state": "unsatisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        },
+        "dependent-only": {
+          "tasks": {
+            "write": {
+              "revision": 1,
+              "status": "completed"
+            }
+          },
+          "task_dependencies": {
+            "write": {
+              "gather": {
+                "revision": null,
+                "state": "unknown"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "partial task histories retain predecessor gaps",
+      "fixture": "task-partial-history.session.json",
+      "edits": [],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 7,
+              "status": "unknown"
+            },
+            "write": {
+              "revision": 3,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": null,
+            "write": {
+              "gather": {
+                "revision": 7,
+                "state": "unknown"
+              }
+            }
+          },
+          "task_history_gaps": {
+            "gather": 6,
+            "write": 2
+          }
+        }
+      }
+    },
+    {
+      "name": "dangling dependency",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "missing-task"
+          ]
+        }
+      ],
+      "error": "missing task dependency"
+    },
+    {
+      "name": "partial coverage does not excuse dangling identity",
+      "fixture": "task-partial-history.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "missing-task"
+          ]
+        }
+      ],
+      "error": "missing task dependency"
+    },
+    {
+      "name": "external-looking string is still a local task ID",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "other-session/gather"
+          ]
+        }
+      ],
+      "error": "missing task dependency"
+    },
+    {
+      "name": "dependency cannot name an event ID",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "gather-1"
+          ]
+        }
+      ],
+      "error": "missing task dependency"
+    },
+    {
+      "name": "self dependency",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "gather"
+          ]
+        }
+      ],
+      "error": "task self dependency"
+    },
+    {
+      "name": "two-task selected cycle",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "write"
+          ]
+        }
+      ],
+      "error": "task dependency cycle"
+    },
+    {
+      "name": "later removal cannot conceal an earlier cycle",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "write"
+          ]
+        },
+        {
+          "path": [
+            "branches"
+          ],
+          "value": [
+            {
+              "id": "main",
+              "event_ids": [
+                "gather-1",
+                "write-1",
+                "gather-2",
+                "write-2",
+                "gather-3"
+              ],
+              "head_event_id": "gather-3"
+            }
+          ]
+        },
+        {
+          "path": [
+            "checkpoints"
+          ],
+          "value": [
+            {
+              "id": "checkpoint-main",
+              "branch_id": "main",
+              "at_event_id": "gather-3",
+              "knowledge": "derived",
+              "status": "unknown",
+              "context_id": null,
+              "configuration_id": null,
+              "open_calls": [],
+              "open_decisions": [],
+              "tasks": [
+                {
+                  "task_id": "gather",
+                  "revision": 3
+                },
+                {
+                  "task_id": "write",
+                  "revision": 2
+                }
+              ],
+              "requirements": []
+            }
+          ]
+        }
+      ],
+      "error": "task dependency cycle"
+    },
+    {
+      "name": "three-task cycle including a forward declaration",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "third"
+          ]
+        },
+        {
+          "path": [
+            "events",
+            "6"
+          ],
+          "value": {
+            "id": "third-1",
+            "sequence": 6,
+            "actor_id": "agent",
+            "kind": "task_update",
+            "causes": [],
+            "provenance": {
+              "mode": "synthetic",
+              "producer": "asif-task-examples",
+              "method": "authored task state; no agent executed",
+              "inputs": []
+            },
+            "data": {
+              "task_id": "third",
+              "revision": 1,
+              "status": "pending",
+              "parts": [
+                {
+                  "kind": "text",
+                  "text": "Collect the workshop notes."
+                }
+              ],
+              "dependencies": [
+                "write"
+              ]
+            }
+          }
+        },
+        {
+          "path": [
+            "branches",
+            "2",
+            "event_ids"
+          ],
+          "value": [
+            "gather-1",
+            "write-1",
+            "third-1",
+            "gather-2",
+            "write-2",
+            "gather-3"
+          ]
+        }
+      ],
+      "error": "task dependency cycle"
+    },
+    {
+      "name": "revision edges are not unioned across history",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "write"
+          ]
+        },
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": []
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "duplicate dependency ID",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            "gather",
+            "gather"
+          ]
+        }
+      ],
+      "schema_error": true
+    },
+    {
+      "name": "empty dependency ID",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "1",
+            "data",
+            "dependencies"
+          ],
+          "value": [
+            ""
+          ]
+        }
+      ],
+      "schema_error": true
+    },
+    {
+      "name": "task revisions cannot supersede event envelopes",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "supersedes"
+          ],
+          "value": {
+            "event_id": "gather-1"
+          }
+        }
+      ],
+      "schema_error": true
+    },
+    {
+      "name": "task revisions cannot supersede external events",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "supersedes"
+          ],
+          "value": {
+            "event_id": "gather-old",
+            "capture_id": "old",
+            "session_id": "other"
+          }
+        }
+      ],
+      "schema_error": true
+    },
+    {
+      "name": "predecessor revision must decrease",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "previous_revision"
+          ],
+          "value": 2
+        }
+      ],
+      "error": "task predecessor revision must be earlier"
+    },
+    {
+      "name": "missing predecessor is invalid with complete coverage",
+      "fixture": "task-partial-history.session.json",
+      "edits": [
+        {
+          "path": [
+            "coverage",
+            "8",
+            "status"
+          ],
+          "value": "complete"
+        }
+      ],
+      "error": "task predecessor absent without partial coverage"
+    },
+    {
+      "name": "uninspected coverage does not declare a partial transition",
+      "fixture": "task-partial-history.session.json",
+      "edits": [
+        {
+          "path": [
+            "coverage",
+            "8",
+            "status"
+          ],
+          "value": "not_inspected"
+        }
+      ],
+      "error": "task predecessor absent without partial coverage"
+    },
+    {
+      "name": "missing selected predecessor cannot be borrowed from another branch",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "branches",
+            "2",
+            "event_ids"
+          ],
+          "value": [
+            "gather-1",
+            "gather-2",
+            "write-2",
+            "gather-3"
+          ]
+        }
+      ],
+      "error": "task predecessor not in selected history"
+    },
+    {
+      "name": "partial selection explicitly retains cross-branch predecessor gap",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "coverage",
+            "8",
+            "status"
+          ],
+          "value": "partial"
+        },
+        {
+          "path": [
+            "branches",
+            "2",
+            "event_ids"
+          ],
+          "value": [
+            "gather-1",
+            "gather-2",
+            "write-2",
+            "gather-3"
+          ]
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {
+            "write": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "known selected predecessor cannot be skipped even with partial coverage",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "coverage",
+            "8",
+            "status"
+          ],
+          "value": "partial"
+        },
+        {
+          "path": [
+            "events",
+            "4",
+            "data",
+            "previous_revision"
+          ],
+          "value": 1
+        }
+      ],
+      "error": "task revision transition"
+    },
+    {
+      "name": "known predecessor must be named",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "previous_revision"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task revision transition"
+    },
+    {
+      "name": "duplicate task revision",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "5",
+            "data",
+            "revision"
+          ],
+          "value": 3
+        }
+      ],
+      "error": "duplicate task revision"
+    },
+    {
+      "name": "reopen requires explanation",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "reopen_reason"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task reopen reason missing"
+    },
+    {
+      "name": "reopen into proposed requires explanation",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "status"
+          ],
+          "value": "proposed"
+        },
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "reopen_reason"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task reopen reason missing"
+    },
+    {
+      "name": "retired task requires explanation to reactivate",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "status"
+          ],
+          "value": "superseded"
+        },
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "reopen_reason"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task reopen reason missing"
+    },
+    {
+      "name": "failed task requires explanation to reactivate",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "status"
+          ],
+          "value": "failed"
+        },
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "reopen_reason"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task reopen reason missing"
+    },
+    {
+      "name": "cancelled task requires explanation to reactivate",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "status"
+          ],
+          "value": "cancelled"
+        },
+        {
+          "path": [
+            "events",
+            "2",
+            "data",
+            "reopen_reason"
+          ],
+          "remove": true
+        }
+      ],
+      "error": "task reopen reason missing"
+    },
+    {
+      "name": "explicit reactivation of superseded task",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "0",
+            "data",
+            "status"
+          ],
+          "value": "superseded"
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "omitted dependencies do not inherit earlier list",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "3",
+            "data",
+            "dependencies"
+          ],
+          "remove": true
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": null
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "empty dependencies replace earlier list",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "3",
+            "data",
+            "dependencies"
+          ],
+          "value": []
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {}
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "unknown target status does not satisfy dependency",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "4",
+            "data",
+            "status"
+          ],
+          "value": "unknown"
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "unknown"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "unknown"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "revision numbers need not be contiguous",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "4",
+            "data",
+            "revision"
+          ],
+          "value": 9
+        },
+        {
+          "path": [
+            "checkpoints",
+            "2",
+            "tasks",
+            "0",
+            "revision"
+          ],
+          "value": 9
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 9,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 9,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    },
+    {
+      "name": "later contiguous revisions do not erase predecessor gaps",
+      "fixture": "task-partial-history.session.json",
+      "edits": [
+        {
+          "path": [
+            "events",
+            "2"
+          ],
+          "value": {
+            "id": "write-4",
+            "sequence": 2,
+            "actor_id": "agent",
+            "kind": "task_update",
+            "causes": [],
+            "provenance": {
+              "mode": "synthetic",
+              "producer": "asif-task-examples",
+              "method": "authored task state; no agent executed",
+              "inputs": []
+            },
+            "data": {
+              "task_id": "write",
+              "revision": 4,
+              "status": "completed",
+              "parts": [
+                {
+                  "kind": "text",
+                  "text": "Write a summary of the notes."
+                }
+              ],
+              "dependencies": [
+                "gather"
+              ],
+              "previous_revision": 3
+            }
+          }
+        },
+        {
+          "path": [
+            "branches",
+            "0",
+            "event_ids"
+          ],
+          "value": [
+            "gather-7",
+            "write-3",
+            "write-4"
+          ]
+        },
+        {
+          "path": [
+            "branches",
+            "0",
+            "head_event_id"
+          ],
+          "value": "write-4"
+        },
+        {
+          "path": [
+            "checkpoints",
+            "0",
+            "at_event_id"
+          ],
+          "value": "write-4"
+        },
+        {
+          "path": [
+            "checkpoints",
+            "0",
+            "tasks",
+            "1",
+            "revision"
+          ],
+          "value": 4
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 7,
+              "status": "unknown"
+            },
+            "write": {
+              "revision": 4,
+              "status": "completed"
+            }
+          },
+          "task_dependencies": {
+            "gather": null,
+            "write": {
+              "gather": {
+                "revision": 7,
+                "state": "unknown"
+              }
+            }
+          },
+          "task_history_gaps": {
+            "gather": 6,
+            "write": 2
+          }
+        }
+      }
+    },
+    {
+      "name": "checkpoint before reopening retains earlier task revisions",
+      "fixture": "task-dependencies.session.json",
+      "edits": [
+        {
+          "path": [
+            "checkpoints",
+            "5"
+          ],
+          "value": {
+            "id": "checkpoint-earlier-main",
+            "branch_id": "main",
+            "at_event_id": "write-1",
+            "knowledge": "derived",
+            "status": "unknown",
+            "context_id": null,
+            "configuration_id": null,
+            "open_calls": [],
+            "open_decisions": [],
+            "tasks": [
+              {
+                "task_id": "gather",
+                "revision": 1
+              },
+              {
+                "task_id": "write",
+                "revision": 1
+              }
+            ],
+            "requirements": []
+          }
+        }
+      ],
+      "task_states": {
+        "main": {
+          "tasks": {
+            "gather": {
+              "revision": 3,
+              "status": "completed"
+            },
+            "write": {
+              "revision": 2,
+              "status": "pending"
+            }
+          },
+          "task_dependencies": {
+            "gather": {},
+            "write": {
+              "gather": {
+                "revision": 3,
+                "state": "satisfied"
+              }
+            }
+          },
+          "task_history_gaps": {}
+        }
+      }
+    }
+  ]
+}

@@ -70,6 +70,7 @@ export function historyState(
   events: Obj[],
   externalCalls: Obj = object(),
   externalRequests: Obj = object(),
+  partialTasks = false,
 ): Obj {
   const calls = Object.assign(object(), externalCalls),
     requests = Object.assign(object(), externalRequests),
@@ -78,7 +79,8 @@ export function historyState(
     tasks = object(),
     indices = object(),
     executions = object(),
-    callEvents = object();
+    callEvents = object(),
+    taskGaps = object();
   const selected = new Set(effective(events).map((e) => e.id));
   for (const event of events) {
     // Keep calls in their recorded positions so late amendments do not orphan
@@ -135,6 +137,15 @@ export function historyState(
         break;
       case "task_update": {
         const prior = tasks[d.task_id];
+        need(
+          !own(event, "supersedes"),
+          "task revisions use previous_revision, not supersedes",
+        );
+        if (own(d, "previous_revision"))
+          need(
+            d.previous_revision < d.revision,
+            "task predecessor revision must be earlier",
+          );
         if (prior) {
           need(
             d.previous_revision === prior.revision &&
@@ -142,16 +153,27 @@ export function historyState(
             "task revision transition",
           );
           if (
-            ["completed", "failed", "cancelled"].includes(prior.status) &&
-            ["pending", "in_progress"].includes(d.status)
+            ["completed", "failed", "cancelled", "superseded"].includes(
+              prior.status,
+            ) &&
+            ["proposed", "pending", "in_progress"].includes(d.status)
           )
             need(d.reopen_reason, "task reopen reason missing");
-        } else
-          need(
-            !own(d, "previous_revision"),
-            "task predecessor not in selected history",
-          );
+        } else if (own(d, "previous_revision")) {
+          need(partialTasks, "task predecessor not in selected history");
+          taskGaps[d.task_id] = d.previous_revision;
+        }
         tasks[d.task_id] = d;
+        const pending = [...(d.dependencies ?? [])],
+          seen = new Set<string>();
+        while (pending.length) {
+          const dependency = pending.pop()!;
+          need(dependency !== d.task_id, "task dependency cycle");
+          if (!seen.has(dependency)) {
+            seen.add(dependency);
+            pending.push(...(tasks[dependency]?.dependencies ?? []));
+          }
+        }
         break;
       }
       case "execution_transition":
@@ -165,6 +187,23 @@ export function historyState(
         break;
     }
   }
+  const dependencyStates = object();
+  for (const [id, task] of Object.entries<Obj>(tasks)) {
+    dependencyStates[id] = own(task, "dependencies") ? object() : null;
+    for (const dependency of task.dependencies ?? []) {
+      const target = tasks[dependency] ?? object();
+      const status = target.status ?? "unknown";
+      dependencyStates[id][dependency] = {
+        revision: target.revision ?? null,
+        state:
+          status === "completed"
+            ? "satisfied"
+            : status === "unknown"
+              ? "unknown"
+              : "unsatisfied",
+      };
+    }
+  }
   return {
     calls,
     closed_calls: closed,
@@ -172,10 +211,14 @@ export function historyState(
     decisions,
     tasks,
     executions,
+    task_history_gaps: taskGaps,
+    task_dependencies: dependencyStates,
   };
 }
 export function validateDocument(doc: Obj, folder: string): Validated {
   shape(doc);
+  const partialTasks =
+    doc.coverage.find((c: Obj) => c.scope === "tasks").status === "partial";
   const collections = object();
   for (const name of [
     "participants",
@@ -362,6 +405,16 @@ export function validateDocument(doc: Obj, folder: string): Validated {
       const key = JSON.stringify([d.task_id, d.revision]);
       need(!taskRevisions.has(key), "duplicate task revision");
       taskRevisions.add(key);
+      need(
+        !own(e, "supersedes"),
+        "task revisions use previous_revision, not supersedes",
+      );
+      need(!(d.dependencies ?? []).includes(d.task_id), "task self dependency");
+      if (own(d, "previous_revision"))
+        need(
+          d.previous_revision < d.revision,
+          "task predecessor revision must be earlier",
+        );
     } else if (
       [
         "context_checkpoint",
@@ -397,7 +450,25 @@ export function validateDocument(doc: Obj, folder: string): Validated {
   }
   acyclic(causes, "causal");
   acyclic(supersessions, "supersession");
+  const taskIds = new Set(
+    Object.values<Obj>(events)
+      .filter((e) => e.kind === "task_update")
+      .map((e) => e.data.task_id),
+  );
   for (const e of Object.values<Obj>(events)) {
+    if (e.kind === "task_update") {
+      need(
+        (e.data.dependencies ?? []).every((id: string) => taskIds.has(id)),
+        "missing task dependency",
+      );
+      if (own(e.data, "previous_revision"))
+        need(
+          taskRevisions.has(
+            JSON.stringify([e.data.task_id, e.data.previous_revision]),
+          ) || partialTasks,
+          "task predecessor absent without partial coverage",
+        );
+    }
     if (e.kind === "tool_result")
       need(
         own(calls, e.data.call_id) || own(externalCalls, e.data.call_id),
@@ -543,6 +614,7 @@ export function validateDocument(doc: Obj, folder: string): Validated {
         ids.map((id: string) => events[id]),
         externalCalls,
         externalRequests,
+        partialTasks,
       );
     unique(cp.open_calls, "call_id");
     unique(cp.open_decisions, "request_id");
@@ -597,6 +669,7 @@ export function validateDocument(doc: Obj, folder: string): Validated {
       b.event_ids.map((id: string) => events[id]),
       externalCalls,
       externalRequests,
+      partialTasks,
     );
   const nonempty = object();
   for (const name of [

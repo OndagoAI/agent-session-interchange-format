@@ -8,7 +8,12 @@ def obj(props,required=None):return {'type':'object','properties':props,'require
 def arr(x):return {'type':'array','items':x}
 def ref(name):return {'$ref':'#/$defs/'+name}
 def when(field,value,then):return {'if':{'properties':{field:{'const':value}},'required':[field]},'then':then}
-s['$defs']['event']['allOf'][5]['then']['properties']['data']['properties']['reopen_reason']=S
+task=s['$defs']['event']['allOf'][5]['then']
+task['not']={'required':['supersedes']}
+task_properties=task['properties']['data']['properties']
+task_properties['reopen_reason']={**S,'description':'Explanation required when a terminal task (including superseded) becomes proposed, pending or in_progress.'}
+task_properties['dependencies']['description']='Session-scoped task IDs; each resolves to its latest selected revision at the assessed branch boundary. Omission is unknown, an empty array declares none, and later revisions replace the list. Dependencies describe prerequisites without scheduling or cascading status changes.'
+task_properties['previous_revision']['description']='Exact preceding selected revision of this task, strictly less than revision. A missing selected predecessor requires partial task coverage and remains a reconstruction gap.'
 s['$defs']['stream_segment']=obj({'index':N,'resource_id':S,'offset':N,'length':N,'terminal':{'type':'boolean'}})
 s['$defs']['stream']=obj({'id':S,'kind':{'enum':['tool_arguments','tool_result_text']},'event_id':S,'call_id':S,'result_index':N,'status':{'enum':['partial','complete']},'segments':arr(ref('stream_segment'))},['id','kind','event_id','call_id','status','segments'])
 s['$defs']['stream']['allOf']=[when('kind','tool_result_text',{'required':['result_index']})]

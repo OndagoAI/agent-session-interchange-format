@@ -1,8 +1,8 @@
 {
   "asif_version": "0.3",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 120,
-  "passed": 120,
+  "checks": 157,
+  "passed": 157,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
@@ -33,6 +33,14 @@
     },
     {
       "case": "core fixture redacted-attachment.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture task-dependencies.session.json",
+      "passed": true
+    },
+    {
+      "case": "core fixture task-partial-history.session.json",
       "passed": true
     },
     {
@@ -173,6 +181,146 @@
     },
     {
       "case": "call progression: unchanged external invocation accepts a late result",
+      "passed": true
+    },
+    {
+      "case": "task semantics: branch-local dependency revisions and descriptive status",
+      "passed": true
+    },
+    {
+      "case": "task semantics: partial task histories retain predecessor gaps",
+      "passed": true
+    },
+    {
+      "case": "task semantics: dangling dependency",
+      "passed": true
+    },
+    {
+      "case": "task semantics: partial coverage does not excuse dangling identity",
+      "passed": true
+    },
+    {
+      "case": "task semantics: external-looking string is still a local task ID",
+      "passed": true
+    },
+    {
+      "case": "task semantics: dependency cannot name an event ID",
+      "passed": true
+    },
+    {
+      "case": "task semantics: self dependency",
+      "passed": true
+    },
+    {
+      "case": "task semantics: two-task selected cycle",
+      "passed": true
+    },
+    {
+      "case": "task semantics: later removal cannot conceal an earlier cycle",
+      "passed": true
+    },
+    {
+      "case": "task semantics: three-task cycle including a forward declaration",
+      "passed": true
+    },
+    {
+      "case": "task semantics: revision edges are not unioned across history",
+      "passed": true
+    },
+    {
+      "case": "task semantics: duplicate dependency ID",
+      "passed": true
+    },
+    {
+      "case": "task semantics: empty dependency ID",
+      "passed": true
+    },
+    {
+      "case": "task semantics: task revisions cannot supersede event envelopes",
+      "passed": true
+    },
+    {
+      "case": "task semantics: task revisions cannot supersede external events",
+      "passed": true
+    },
+    {
+      "case": "task semantics: predecessor revision must decrease",
+      "passed": true
+    },
+    {
+      "case": "task semantics: missing predecessor is invalid with complete coverage",
+      "passed": true
+    },
+    {
+      "case": "task semantics: uninspected coverage does not declare a partial transition",
+      "passed": true
+    },
+    {
+      "case": "task semantics: missing selected predecessor cannot be borrowed from another branch",
+      "passed": true
+    },
+    {
+      "case": "task semantics: partial selection explicitly retains cross-branch predecessor gap",
+      "passed": true
+    },
+    {
+      "case": "task semantics: known selected predecessor cannot be skipped even with partial coverage",
+      "passed": true
+    },
+    {
+      "case": "task semantics: known predecessor must be named",
+      "passed": true
+    },
+    {
+      "case": "task semantics: duplicate task revision",
+      "passed": true
+    },
+    {
+      "case": "task semantics: reopen requires explanation",
+      "passed": true
+    },
+    {
+      "case": "task semantics: reopen into proposed requires explanation",
+      "passed": true
+    },
+    {
+      "case": "task semantics: retired task requires explanation to reactivate",
+      "passed": true
+    },
+    {
+      "case": "task semantics: failed task requires explanation to reactivate",
+      "passed": true
+    },
+    {
+      "case": "task semantics: cancelled task requires explanation to reactivate",
+      "passed": true
+    },
+    {
+      "case": "task semantics: explicit reactivation of superseded task",
+      "passed": true
+    },
+    {
+      "case": "task semantics: omitted dependencies do not inherit earlier list",
+      "passed": true
+    },
+    {
+      "case": "task semantics: empty dependencies replace earlier list",
+      "passed": true
+    },
+    {
+      "case": "task semantics: unknown target status does not satisfy dependency",
+      "passed": true
+    },
+    {
+      "case": "task semantics: revision numbers need not be contiguous",
+      "passed": true
+    },
+    {
+      "case": "task semantics: later contiguous revisions do not erase predecessor gaps",
+      "passed": true
+    },
+    {
+      "case": "task semantics: checkpoint before reopening retains earlier task revisions",
       "passed": true
     },
     {

@@ -1,0 +1,188 @@
+{
+  "asif_version": "0.3",
+  "capture": {
+    "id": "capture-task-partial-history",
+    "producer": {
+      "name": "asif-task-examples",
+      "version": "1"
+    },
+    "consistency": "partial",
+    "boundary": "Synthetic partial history: gather revision 6 and write revision 2 are unavailable; transitions across these gaps are unknown."
+  },
+  "session": {
+    "id": "session-task-partial-history",
+    "title": "task-partial-history",
+    "native_ids": [],
+    "lineage": []
+  },
+  "participants": [
+    {
+      "id": "agent",
+      "kind": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": "gather-7",
+      "sequence": 0,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "gather",
+        "revision": 7,
+        "status": "unknown",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Collect the workshop notes."
+          }
+        ],
+        "previous_revision": 6
+      }
+    },
+    {
+      "id": "write-3",
+      "sequence": 1,
+      "actor_id": "agent",
+      "kind": "task_update",
+      "causes": [],
+      "provenance": {
+        "mode": "synthetic",
+        "producer": "asif-task-examples",
+        "method": "authored task state; no agent executed",
+        "inputs": []
+      },
+      "data": {
+        "task_id": "write",
+        "revision": 3,
+        "status": "pending",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Write a summary of the notes."
+          }
+        ],
+        "dependencies": [
+          "gather"
+        ],
+        "previous_revision": 2
+      }
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "event_ids": [
+        "gather-7",
+        "write-3"
+      ],
+      "head_event_id": "write-3"
+    }
+  ],
+  "executions": [],
+  "contexts": [],
+  "configurations": [],
+  "tools": [],
+  "resources": [],
+  "environments": [],
+  "checkpoints": [
+    {
+      "id": "checkpoint-main",
+      "branch_id": "main",
+      "at_event_id": "write-3",
+      "knowledge": "derived",
+      "status": "unknown",
+      "context_id": null,
+      "configuration_id": null,
+      "open_calls": [],
+      "open_decisions": [],
+      "tasks": [
+        {
+          "task_id": "gather",
+          "revision": 7
+        },
+        {
+          "task_id": "write",
+          "revision": 3
+        }
+      ],
+      "requirements": []
+    }
+  ],
+  "coverage": [
+    {
+      "scope": "participants",
+      "status": "complete",
+      "detail": "Complete for the authored synthetic selections."
+    },
+    {
+      "scope": "conversation",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "branches",
+      "status": "complete",
+      "detail": "Complete for the authored synthetic selections."
+    },
+    {
+      "scope": "executions",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "contexts",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "configuration",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "tools",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "decisions",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "tasks",
+      "status": "partial",
+      "detail": "Synthetic partial history: gather revision 6 and write revision 2 are unavailable; transitions across these gaps are unknown."
+    },
+    {
+      "scope": "resources",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "environment",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "native",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    },
+    {
+      "scope": "usage",
+      "status": "known_empty",
+      "detail": "No records in this authored scenario."
+    }
+  ],
+  "losses": [],
+  "required_features": []
+}

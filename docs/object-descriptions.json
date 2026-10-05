@@ -532,7 +532,7 @@
     "rules": "See [normative session rules](../SEMANTICS.md#11-checkpoints-and-unresolved-work)."
   },
   "session:/$defs/event": {
-    "rules": "See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events."
+    "rules": "See [event rules](../SEMANTICS.md#5-event-envelope-ordering-and-content). The enclosing `kind` selects one of the event-data objects below. Local causal edges MUST be acyclic and point to earlier serialized events. Task updates MUST omit envelope `supersedes`; corrections use new task revisions and `previous_revision`."
   },
   "session:/$defs/event/properties/data": {
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
@@ -559,7 +559,14 @@
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
   },
   "session:/$defs/event/allOf/5/then/properties/data": {
-    "rules": "See [selected-history state transitions](../SEMANTICS.md#15-selected-history-state-transitions). Revisions increase and name their selected predecessor. Reopening a terminal task as pending or in progress requires `reopen_reason`."
+    "rules": "See [task revision and dependency semantics](../SEMANTICS.md#16-task-revisions-and-dependencies). Dependencies are session-scoped task IDs interpreted at the selected boundary, with no implicit scheduling or status cascade. Every target must be declared locally, selected dependency graphs must remain acyclic, and absent predecessor history requires partial task coverage. Task updates use `previous_revision`, never envelope `supersedes`. Reopening completed, failed, cancelled or superseded tasks as proposed, pending or in_progress requires `reopen_reason`.",
+    "fields": {
+      "task_id": "Session-scoped identity of the logical task.",
+      "revision": "Revision number unique within this task identity; numbers need not be contiguous.",
+      "previous_revision": "Exact preceding selected revision, strictly smaller than revision. An omitted predecessor event requires partial task coverage.",
+      "dependencies": "Complete declared prerequisite task IDs for this revision. Resolve to latest selected revisions at the assessed boundary. Omission is unknown; [] declares none. No implicit inheritance, execution ordering or status cascade.",
+      "reopen_reason": "Required nonempty explanation when a completed, failed, cancelled or superseded task becomes proposed, pending or in_progress."
+    }
   },
   "session:/$defs/event/allOf/6/then/properties/data": {
     "rules": "See [normative session rules](../SEMANTICS.md#6-core-event-meanings)."
