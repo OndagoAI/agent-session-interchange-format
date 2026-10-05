@@ -83,7 +83,7 @@ def session(slug, title, events, resources, *, contexts=(), tools=(), losses=(),
     participants = [{'id': 'person', 'kind': 'human'}, {'id': 'agent', 'kind': 'agent'}]
     if tools:
         participants.append({'id': 'tool-runner', 'kind': 'tool'})
-    return {'asif_version': '0.5',
+    return {'asif_version': '0.4',
             'capture': {'id': 'capture-' + slug, 'producer': {'name': 'asif-examples', 'version': '1'},
                         'consistency': 'consistent', 'boundary': 'Invented example through ' + head + '; no real model or tool ran.'},
             'session': {'id': 'session-' + slug, 'title': title, 'native_ids': [], 'lineage': []},

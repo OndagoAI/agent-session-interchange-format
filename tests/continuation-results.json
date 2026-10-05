@@ -1,9 +1,9 @@
 {
-  "asif_version": "0.5",
-  "profile": "asif.portable-continuation/0.3",
+  "asif_version": "0.4",
+  "profile": "asif.portable-continuation/0.2",
   "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
-  "checks": 120,
-  "passed": 120,
+  "checks": 119,
+  "passed": 119,
   "real_runtime_tests": 0,
   "independent_implementations": 0,
   "operational_authorization": false,
@@ -29,22 +29,17 @@
       "outcome": "blocked"
     },
     {
-      "case": "0.4-core-version-refused",
+      "case": "future-profile-version-refused",
       "passed": true,
       "outcome": "rejected"
     },
     {
-      "case": "0.2-profile-version-refused",
+      "case": "future-profile-feature-refused",
       "passed": true,
       "outcome": "rejected"
     },
     {
-      "case": "0.2-profile-feature-refused",
-      "passed": true,
-      "outcome": "rejected"
-    },
-    {
-      "case": "0.2-report-version-refused",
+      "case": "future-report-version-refused",
       "passed": true,
       "outcome": "rejected"
     },

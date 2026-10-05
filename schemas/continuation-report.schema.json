@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:asif:continuation-report:0.3",
+  "$id": "urn:asif:continuation-report:0.2",
   "title": "ASIF destination continuation report",
   "type": "object",
   "properties": {
     "report_version": {
-      "const": "0.3"
+      "const": "0.2"
     },
     "evaluation_mode": {
       "enum": [

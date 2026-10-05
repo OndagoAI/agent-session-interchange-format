@@ -1,6 +1,6 @@
 # Continuation object reference
 
-Version: **0.5**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
+Version: **0.4**. [Specification](../SPEC.md) · [Core](objects.md) · [Continuation](continuation-objects.md) · [Reports](report-objects.md)
 
 Every example below is JSON Schema checked. Object fragments use IDs resolved by an enclosing session or report; they are not standalone session documents. Full scenarios are in [examples](../examples/README.md). Required means unconditionally required; conditional rules follow each table. Normative [session semantics](../SEMANTICS.md) and [continuation rules](../CONTINUATION.md) also apply.
 
@@ -52,7 +52,7 @@ Optional declarations needed to assess continuation from a session checkpoint. I
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| <a id="continuation-profile-object-profile_version"></a>`profile_version` | `"0.3"` | Yes | Version of the portable-continuation profile. |
+| <a id="continuation-profile-object-profile_version"></a>`profile_version` | `"0.2"` | Yes | Version of the portable-continuation profile. |
 | <a id="continuation-profile-object-source_runtime"></a>`source_runtime` | [Runtime Object](continuation-objects.md#runtime-object) | Yes | Agent, adapter and platform recorded at the source. |
 | <a id="continuation-profile-object-workspaces"></a>`workspaces` | array of [Workspace Object](continuation-objects.md#workspace-object) | Yes | Workspace state declarations, including referenced delta bases. Minimum items: `0`. |
 | <a id="continuation-profile-object-dependencies"></a>`dependencies` | array of [Dependency Object](continuation-objects.md#dependency-object) | Yes | Declared dependencies; interpretation is determined by the enclosing object. Minimum items: `0`. |
@@ -72,7 +72,7 @@ Additional properties are permitted and MUST be preserved when relaying supporte
 
 ```json
 {
-  "profile_version": "0.3",
+  "profile_version": "0.2",
   "source_runtime": {
     "agent": {
       "id": "example-agent-a",

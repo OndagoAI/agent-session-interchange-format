@@ -1,5 +1,5 @@
 {
-  "asif_version": "0.5",
+  "asif_version": "0.4",
   "capture": {
     "id": "capture-task-partial-history",
     "producer": {

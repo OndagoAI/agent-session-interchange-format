@@ -1,9 +1,9 @@
 {
-  "asif_version": "0.5",
+  "asif_version": "0.4",
   "scope": "JSON Schema structure only",
   "schema_valid": true,
-  "checks": 31,
-  "passed": 31,
+  "checks": 30,
+  "passed": 30,
   "semantic_conformance_tested": false,
   "interoperability_tested": false,
   "continuation_tested": false,
@@ -16,11 +16,6 @@
     {
       "case": "unknown-optional-property",
       "expected_shape": "valid",
-      "passed": true
-    },
-    {
-      "case": "0.4-version-rejected",
-      "expected_shape": "invalid",
       "passed": true
     },
     {

@@ -79,7 +79,6 @@ nav:
   - Specification:
       - Introduction: SPEC.md
       - Changes and migration: MIGRATION.md
-      - Earlier 0.4 migration: MIGRATION-0.4.md
       - Session semantics: SEMANTICS.md
       - Profiles: PROFILES.md
       - Portable continuation: CONTINUATION.md

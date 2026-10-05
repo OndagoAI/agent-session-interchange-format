@@ -1,41 +1,42 @@
-# ASIF 0.5 review draft: changes and migration
+# ASIF 0.4 review draft: changes and migration
 
-Review draft dated 5 October 2026. Version 0.5 adds a reproducible destination capability fingerprint contract to the [0.4 baseline](MIGRATION-0.4.md). This is a breaking draft update, not a stable-standard release or a claim of independent interoperability.
+Published for review on 5 October 2026. This is a compatibility boundary for the evolving draft, not a stable-standard release or a claim of independent interoperability. The local Python and TypeScript implementations share authorship. [Governance](GOVERNANCE.md) still defines the review and evidence gates.
 
 ## Version matrix
 
 | Contract | Previous | This draft |
 |---|---|---|
-| Core `asif_version` | `0.4` | `0.5` |
-| Session schema ID | `urn:asif:0.4:session` | `urn:asif:0.5:session` |
-| Required continuation feature | `asif.portable-continuation/0.2` | `asif.portable-continuation/0.3` |
-| Continuation `profile_version` / schema ID | `0.2` / `urn:asif:portable-continuation:0.2` | `0.3` / `urn:asif:portable-continuation:0.3` |
-| Destination `report_version` / schema ID | `0.2` / `urn:asif:continuation-report:0.2` | `0.3` / `urn:asif:continuation-report:0.3` |
+| Core `asif_version` | `0.3` | `0.4` |
+| Session schema ID | `urn:asif:0.3:session` | `urn:asif:0.4:session` |
+| Required continuation feature | `asif.portable-continuation/0.1` | `asif.portable-continuation/0.2` |
+| Continuation `profile_version` / schema ID | `0.1` / `urn:asif:portable-continuation:0.1` | `0.2` / `urn:asif:portable-continuation:0.2` |
+| Destination `report_version` / schema ID | `0.1` / `urn:asif:continuation-report:0.1` | `0.2` / `urn:asif:continuation-report:0.2` |
 | Destination snapshot contract | Not defined | `asif.destination-capabilities/0.1`, `snapshot_version: 0.1` |
-| Local reference package | `0.4.0` | `0.5.0` |
+| Local reference package | `0.3.0` | `0.4.0` |
 
-The continuation contract advances with its destination report requirements. Streams, external bindings, package transport/signatures and local activation/policy dialects retain their existing 0.1 identifiers. Core and profile versions remain exact, independent interpretation contracts. Before 1.0, breaking draft changes increment the minor version under the [governance policy](GOVERNANCE.md).
+The continuation profile and report advance because action-specific requiredness, report subjects and destination fingerprint requirements changed. Streams, external bindings, package transport/signatures, and the local activation/policy dialects retain their `0.1` identifiers and contracts. Core and profile versions are independent: changing one does not implicitly reinterpret another.
 
-## Changes from 0.4
+## Changes since the earlier 0.3 draft
 
-[Issue #4](https://github.com/OndagoAI/agent-session-interchange-format/issues/4) replaces unspecified destination fingerprints with [supplied capability snapshots](CAPABILITIES.md):
+- [Tool-call progression](https://github.com/OndagoAI/agent-session-interchange-format/issues/1): immutable partial/unknown calls can progress through an explicit selected supersession chain, preserving logical call identity and previously recorded results. Complete calls cannot be amended this way; retries keep separate identities. Context must retain evidence of the original partial inputs.
+- [Task revisions and dependencies](https://github.com/OndagoAI/agent-session-interchange-format/issues/2): dependencies name local tasks at the selected branch boundary. Revision snapshots replace prior dependency lists; omitted and empty have distinct meanings. Cycles are rejected, incomplete predecessor history needs explicit partial coverage, and terminal-task reopening needs an explanation. Task corrections use `previous_revision`, not event-envelope supersession.
+- [Action-specific continuation](https://github.com/OndagoAI/agent-session-interchange-format/issues/3): a deterministic prerequisite closure computes exact assessment subjects and required flags for each next action. Environment and core requirement subjects, recovery evidence, optional deferral and action-scoped readiness now have defined interpretation. The [same-capture examples](examples/continuation/README.md#one-capture-five-next-actions) demonstrate the differences.
 
-- Every report supplies immutable snapshot evidence, its exact decoded byte count and SHA-256. The snapshot declares destination/runtime identity, observation/expiry, supported features and component state. No canonicalization or implicit reserialization occurs.
-- Every assessment records `component_ids`. Claimed destination support must bind to available components and agree with their typed facts, including model limits, account/access, workspace mapping and recovery identity.
-- Unsupported or unavailable snapshots cannot establish report validity. Missing evidence, mismatched bytes, invalid bindings and expired reports are refused.
-- Any destination state change invalidates the whole report. Caller-supplied current bytes can be checked with `validate-report --current-capabilities`; this does not probe or authorize a live runtime.
+- [Destination capability snapshots](https://github.com/OndagoAI/agent-session-interchange-format/issues/4): reports supply exact snapshot bytes, byte counts, observation evidence and component bindings. The [snapshot contract](CAPABILITIES.md) defines fingerprint verification, refusal and whole-report invalidation after destination changes. Placeholder fingerprints cannot substitute for snapshot evidence.
 
-The core tool-call and task semantics introduced for 0.4 remain in effect. See the [earlier migration](MIGRATION-0.4.md) when translating older captures.
+These changes are grouped into the 0.4 review draft. See [session semantics](SEMANTICS.md) and [continuation semantics](CONTINUATION.md) for the normative contract, and [reference limits](REFERENCE.md) for the implemented subset.
 
-## Migration procedure
+## Producer and consumer migration
 
-1. Preserve original capture, snapshot, report and package bytes with their declared versions. Current validators refuse earlier or future contracts; retain the earlier reader/schema for archived data. Do not relabel an immutable historical record.
-2. Interpret the source under its original contract, then emit a new derived 0.5 capture with a new capture ID and explicit provenance/lineage. Preserve unchanged source evidence, event identities and uncertainty. Record actual transformations and losses. This update does not require inventing new source history.
-3. If using continuation, update both its feature identifier and profile version to 0.3 after validating the resulting document. Do not pair an older continuation contract with a new report and assume equivalent interpretation.
-4. Reinspect the destination and supply a snapshot under `asif.destination-capabilities/0.1`. Record the required identities, revisions, capabilities and non-secret access facts. A previous placeholder fingerprint cannot recover this evidence or prove the destination still has its earlier state.
-5. Produce a new report at version 0.3, binding the new capture's exact bytes, selected plan, current destination snapshot and refreshed evidence/expiry. Recompute the action-specific inventory, component bindings, required flags, blockers and transformation acceptance. Do not carry old import/continuation success into the new report as evidence of a new action.
-6. Rebuild manifests and obtain new signatures for changed package bytes. The unchanged 0.1 package/signature formats still bind exact bytes; old signatures remain evidence only for the original packages.
+1. Preserve original captures and their exact bytes. Do not relabel an existing capture or overwrite its report. Keep the previous reader/schema with archived data when needed; the current reference validators accept the exact current version and refuse earlier, future and missing versions.
+2. Interpret a source under its declared version before translating it. Check tool-call progression, task references/revisions/coverage, context evidence and checkpoint state against the new rules. If the source lacks evidence, preserve the uncertainty or refuse the translation; a version-string replacement cannot repair invalid or ambiguous semantics.
+3. Emit a new derived capture with a new capture ID and explicit provenance/lineage connecting it to the original. Preserve source evidence and immutable event identities where meanings remain unchanged. Record any transformed records and losses rather than silently changing their meaning. Update the core identifier only after validating the resulting 0.4 document.
+4. For continuation, update both the required feature identifier and profile version to 0.2 after checking the new action-specific contract. Recompute the complete subject inventory, required flags, destination bindings, transformation acceptance and blockers. A previous all-required report is not automatically a valid 0.2 assessment.
+5. Issue a new report with `report_version: 0.2`, binding the new capture's exact serialized bytes, plan and destination state. Supply a new destination snapshot under `asif.destination-capabilities/0.1`, bind assessments through `component_ids`, and refresh assessment evidence and expiry. A previous fingerprint-only report cannot be relabeled as a current assessment. Any changed source bytes invalidate the old report hash; imported or continued outcomes cannot be copied as evidence for a different action or capture.
+6. Rebuild package manifests for changed bytes and produce new signatures through the appropriate signing authority. Old package signatures remain evidence for their original packages only. The transport and signature formats themselves stay at 0.1.
 
-Consumers without support for the declared core version, required feature or snapshot format must refuse the corresponding interpretation and continuation claims. Opaque preservation does not establish compatibility. No automatic migration command or agent execution is added.
+A consumer that does not understand the declared core version or a required feature MUST refuse interpretation and continuation claims. Opaque preservation does not confer support. The reference tools do not provide an automatic migration command or execute agents.
 
-Current examples are rebuilt synthetic fixtures, not migrated user captures. Reports, supplied snapshot copies, object examples, manifests and the public-test-key package signature are regenerated together. Fixed snapshot hash vectors retain their original exact bytes and expected hashes; their declared supported-feature strings are test data, not claims about the current reader. Historical fixture assessment times remain test inputs, not live readiness statements.
+The checked-in examples are rebuilt synthetic fixtures for this draft, not migrated user captures. Their reports, destination snapshot copies, package inventory, public-test-key signature and generated object examples are regenerated together. Their fixed historical assessment times remain test inputs, not live readiness statements.
+
+Fixed snapshot hash vectors retain their original exact bytes and expected hashes. Their feature strings are test data, not claims about the current reader. The new snapshot format begins at 0.1 independently of the core and report versions.

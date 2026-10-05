@@ -1,8 +1,8 @@
 {
-  "asif_version": "0.5",
+  "asif_version": "0.4",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 238,
-  "passed": 238,
+  "checks": 237,
+  "passed": 237,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
@@ -364,19 +364,15 @@
       "passed": true
     },
     {
-      "case": "Python parity: 0.4-core-version-refused",
+      "case": "Python parity: future-profile-version-refused",
       "passed": true
     },
     {
-      "case": "Python parity: 0.2-profile-version-refused",
+      "case": "Python parity: future-profile-feature-refused",
       "passed": true
     },
     {
-      "case": "Python parity: 0.2-profile-feature-refused",
-      "passed": true
-    },
-    {
-      "case": "Python parity: 0.2-report-version-refused",
+      "case": "Python parity: future-report-version-refused",
       "passed": true
     },
     {
@@ -564,6 +560,10 @@
       "passed": true
     },
     {
+      "case": "Python parity: report-54",
+      "passed": true
+    },
+    {
       "case": "Python parity: report-55",
       "passed": true
     },
@@ -580,7 +580,7 @@
       "passed": true
     },
     {
-      "case": "Python parity: report-59",
+      "case": "Python parity: session-59",
       "passed": true
     },
     {
@@ -597,10 +597,6 @@
     },
     {
       "case": "Python parity: session-63",
-      "passed": true
-    },
-    {
-      "case": "Python parity: session-64",
       "passed": true
     },
     {
@@ -636,15 +632,15 @@
       "passed": true
     },
     {
+      "case": "Python parity: report-72",
+      "passed": true
+    },
+    {
       "case": "Python parity: report-73",
       "passed": true
     },
     {
-      "case": "Python parity: report-74",
-      "passed": true
-    },
-    {
-      "case": "Python parity: session-75",
+      "case": "Python parity: session-74",
       "passed": true
     },
     {
@@ -796,6 +792,10 @@
       "passed": true
     },
     {
+      "case": "Python parity: report-112",
+      "passed": true
+    },
+    {
       "case": "Python parity: report-113",
       "passed": true
     },
@@ -821,10 +821,6 @@
     },
     {
       "case": "Python parity: report-119",
-      "passed": true
-    },
-    {
-      "case": "Python parity: report-120",
       "passed": true
     },
     {

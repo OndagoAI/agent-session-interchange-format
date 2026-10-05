@@ -18,7 +18,7 @@ import { validateDocument, shape, SUPPORTED, type Validated } from "./core.ts";
 import { inspectCapabilities } from "./capabilities.ts";
 import { planRequirements } from "./requirements.ts";
 import { workspaceStates, checkGit } from "./workspace.ts";
-const FEATURE = "asif.portable-continuation/0.3";
+const FEATURE = "asif.portable-continuation/0.2";
 export const subject = (kind: string, id: string, owner?: string): Obj =>
   owner === undefined ? { kind, id } : { kind, id, owner_id: owner };
 const key = (s: Obj): string =>

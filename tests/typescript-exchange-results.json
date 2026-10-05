@@ -1,5 +1,5 @@
 {
-  "asif_version": "0.5",
+  "asif_version": "0.4",
   "scope": "Python/TypeScript CLI and package exchange, shared authorship",
   "checks": 15,
   "passed": 15,

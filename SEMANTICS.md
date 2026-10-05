@@ -2,7 +2,7 @@
 
 [Specification](SPEC.md) · [Object reference](docs/objects.md)
 
-Version: **0.5**, 2026-10-05. Status: review draft of the session data model; not a released standard. This draft replaces the preservation-only experiment and develops the session model in the earlier v0.1 document. It is independent of any application, agent vendor, execution location, or transfer mechanism.
+Version: **0.4**, 2026-10-05. Status: review draft of the session data model; not a released standard. This draft replaces the preservation-only experiment and develops the session model in the earlier v0.1 document. It is independent of any application, agent vendor, execution location, or transfer mechanism.
 
 ## 1. What a session is
 
@@ -218,7 +218,7 @@ Remaining release work: complete semantic validation; implementation and testing
 
 The [portable-continuation profile](CONTINUATION.md) adds contracts for another computer, cloud runtime or agent: consistent checkpoint bindings; typed request context; workspace and path mappings; runtime/tool/model dependencies; effective instructions and policy; service/authentication bindings; in-flight operation recovery; native import; and destination assessment/import receipts.
 
-A document opting in includes `continuation` and `asif.portable-continuation/0.3` in `required_features`. Both are mandatory for that profile. Consumers unable to interpret it cannot claim continuation support. Source declarations are immutable; destination assessments bind the exact source bytes and runtime capabilities. Readiness, import and demonstrated continuation remain independent outcomes.
+A document opting in includes `continuation` and `asif.portable-continuation/0.2` in `required_features`. Both are mandatory for that profile. Consumers unable to interpret it cannot claim continuation support. Source declarations are immutable; destination assessments bind the exact source bytes and runtime capabilities. Readiness, import and demonstrated continuation remain independent outcomes.
 
 Draft.3 requires explicit `kind` on context inputs; draft.2 documents are not silently reinterpreted. Migrating ordinary message inputs adds `kind: message`. Migrating tool exchanges requires recovering their actual call/result fields or declaring incomplete context. A producer must not label an opaque tool exchange as plain text and claim equivalent continuation.
 

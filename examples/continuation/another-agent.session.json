@@ -1,5 +1,5 @@
 {
-  "asif_version": "0.5",
+  "asif_version": "0.4",
   "capture": {
     "id": "capture-another-agent",
     "producer": {
@@ -536,10 +536,10 @@
   ],
   "losses": [],
   "required_features": [
-    "asif.portable-continuation/0.3"
+    "asif.portable-continuation/0.2"
   ],
   "continuation": {
-    "profile_version": "0.3",
+    "profile_version": "0.2",
     "source_runtime": {
       "agent": {
         "id": "example-agent-a",

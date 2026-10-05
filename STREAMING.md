@@ -1,6 +1,6 @@
 # ASIF streaming and external bindings
 
-Version: **0.5**. [Specification](SPEC.md) · [Stream Object](docs/objects.md#stream-object) · [External Binding Object](docs/objects.md#external-binding-object)
+Version: **0.4**. [Specification](SPEC.md) · [Stream Object](docs/objects.md#stream-object) · [External Binding Object](docs/objects.md#external-binding-object)
 
 These optional features describe captured protocol evidence. They do not start streams, fetch older captures or execute tools.
 

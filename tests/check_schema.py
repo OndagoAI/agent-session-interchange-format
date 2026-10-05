@@ -20,9 +20,8 @@ def check(name, mutate, expected):
 
 check('awaiting-approval-example', lambda x: None, True)
 check('unknown-optional-property', lambda x: x.update(future={'unknown': [1, 'שלום']}), True)
-check('0.4-version-rejected', lambda x: x.update(asif_version='0.4'), False)
 check('0.3-version-rejected', lambda x: x.update(asif_version='0.3'), False)
-check('future-version-rejected', lambda x: x.update(asif_version='0.6'), False)
+check('future-version-rejected', lambda x: x.update(asif_version='0.5'), False)
 check('missing-version-rejected', lambda x: x.pop('asif_version'), False)
 check('previous-version-rejected', lambda x: x.update(asif_version='0.2-draft.4'), False)
 check('missing-state-declaration', lambda x: x.pop('checkpoints'), False)
@@ -54,6 +53,6 @@ check('embedded-resource-missing-integrity', lambda x: resource(x, availability=
 check('embedded-two-encodings', lambda x: resource(x, availability='embedded', text='abc', data='YWJj', bytes=3, sha256='0'*64), False)
 check('external-with-embedded-content', lambda x: resource(x, availability='external', locator='urn:example:r1', explanation='External content.', text='abc'), False)
 
-result = {'asif_version':'0.5', 'scope':'JSON Schema structure only', 'schema_valid':True, 'checks':len(results), 'passed':len(results), 'semantic_conformance_tested':False, 'interoperability_tested':False, 'continuation_tested':False, 'results':results}
+result = {'asif_version':'0.4', 'scope':'JSON Schema structure only', 'schema_valid':True, 'checks':len(results), 'passed':len(results), 'semantic_conformance_tested':False, 'interoperability_tested':False, 'continuation_tested':False, 'results':results}
 (ROOT / 'tests/results.json').write_text(json.dumps(result, indent=2) + '\n')
 print(json.dumps({k:v for k,v in result.items() if k != 'results'}, indent=2))

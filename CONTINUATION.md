@@ -1,6 +1,6 @@
 # ASIF portable-continuation profile
 
-Profile: `asif.portable-continuation/0.3`. ASIF version: **0.5**. Status: normative proposal with structural schemas and synthetic validation fixtures; no real agent interoperability or runtime restoration is claimed.
+Profile: `asif.portable-continuation/0.2`. ASIF version: **0.4**. Status: normative proposal with structural schemas and synthetic validation fixtures; no real agent interoperability or runtime restoration is claimed.
 
 Object reference: [profile objects](docs/continuation-objects.md) · [report objects](docs/report-objects.md). Each object has a field table, rules and a checked JSON example.
 

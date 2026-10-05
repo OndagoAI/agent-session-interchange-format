@@ -52,5 +52,5 @@ with tempfile.TemporaryDirectory() as tmp:
  receipt=json.loads(source.with_name('another-computer.report.json').read_text());e=receipt['destination']['capabilities_snapshot'];e.pop('data');e.pop('bytes');e.update(availability='unavailable',explanation='Evidence not supplied.')
  r=Path(tmp)/'unavailable.json';r.write_text(json.dumps(receipt))
  compare('unavailable-snapshot-exit-3','validate-report',source,r,'--at','2026-09-26T12:30:00Z',expected=3)
-result={'asif_version':'0.5','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
+result={'asif_version':'0.4','scope':'Python/TypeScript CLI and package exchange, shared authorship','checks':len(results),'passed':len(results),'independent_implementations':0,'real_runtime_tests':0,'results':results}
 (ROOT/'tests/typescript-exchange-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='results'},indent=2))
