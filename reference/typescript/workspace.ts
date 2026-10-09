@@ -57,17 +57,19 @@ export function workspaceStates(profile: Obj): Obj {
         );
       for (const deletion of w.deletions) {
         relative(deletion);
-        need(
-          !w.selection.exclude.some(
-            (p: string) =>
-              matches(deletion, p) ||
-              deletion === p.replace(/\/+$/, "") ||
-              deletion.startsWith(p.replace(/\/+$/, "") + "/"),
-          ),
-          "deleting excluded path",
-        );
         const targets = Object.keys(entries).filter(
           (p) => p === deletion || p.startsWith(deletion + "/"),
+        );
+        need(
+          ![deletion, ...targets].some((target) =>
+            w.selection.exclude.some(
+              (p: string) =>
+                matches(target, p) ||
+                target === p.replace(/\/+$/, "") ||
+                target.startsWith(p.replace(/\/+$/, "") + "/"),
+            ),
+          ),
+          "deleting excluded path",
         );
         need(targets.length, "deletion absent from base");
         for (const p of targets) delete entries[p];
@@ -91,6 +93,32 @@ export function workspaceStates(profile: Obj): Obj {
     }
   return result;
 }
+export function validateDestinationPaths(
+  entries: Obj,
+  caseSensitive = true,
+  normalization = "none",
+): void {
+  need(
+    ["none", "NFC", "NFD"].includes(normalization),
+    "unsupported normalization",
+  );
+  const seen = new Map<string, string>();
+  for (const [p, e] of Object.entries<Obj>(entries)) {
+    let folded = normalization === "none" ? p : p.normalize(normalization);
+    if (!caseSensitive) folded = casefold(folded);
+    need(!seen.has(folded), "destination path collision");
+    seen.set(folded, e.kind);
+  }
+  for (const p of seen.keys()) {
+    const parts = p.split("/");
+    for (let i = 1; i < parts.length; i++)
+      need(
+        (seen.get(parts.slice(0, i).join("/")) ?? "directory") === "directory",
+        "destination prefix collision",
+      );
+  }
+}
+
 export function checkGit(
   w: Obj,
   resources: Resources,
@@ -192,8 +220,7 @@ export function restore(
     "incomplete selected-tree snapshot",
   );
   const norm = options.normalization ?? "none";
-  need(["none", "NFC", "NFD"].includes(norm), "unsupported normalization");
-  const seen = new Map<string, string>();
+  validateDestinationPaths(entries, options.case_sensitive ?? true, norm);
   for (const [p, e] of Object.entries<Obj>(entries)) {
     if (e.kind === "symlink")
       throw new Unsupported(
@@ -204,19 +231,7 @@ export function restore(
       !p.split("/").some((c) => casefold(c) === ".git"),
       "workspace cannot inject Git administrative files",
     );
-    let folded = norm === "none" ? p : p.normalize(norm);
-    if (options.case_sensitive === false) folded = casefold(folded);
-    need(!seen.has(folded), "destination path collision");
-    seen.set(folded, e.kind);
     if (e.kind === "file") v.resources.bytes(e.resource_id);
-  }
-  for (const p of seen.keys()) {
-    const parts = p.split("/");
-    for (let i = 1; i < parts.length; i++)
-      need(
-        (seen.get(parts.slice(0, i).join("/")) ?? "directory") === "directory",
-        "destination prefix collision",
-      );
   }
   need(!lexists(destination), "destination already exists");
   const parent = path.dirname(destination);

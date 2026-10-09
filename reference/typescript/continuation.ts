@@ -12,12 +12,15 @@ import {
   setEqual,
   equal,
   hash,
-  casefold,
 } from "./common.ts";
 import { validateDocument, shape, SUPPORTED, type Validated } from "./core.ts";
 import { inspectCapabilities } from "./capabilities.ts";
 import { planRequirements } from "./requirements.ts";
-import { workspaceStates, checkGit } from "./workspace.ts";
+import {
+  workspaceStates,
+  checkGit,
+  validateDestinationPaths,
+} from "./workspace.ts";
 const FEATURE = "asif.portable-continuation/0.2";
 export const subject = (kind: string, id: string, owner?: string): Obj =>
   owner === undefined ? { kind, id } : { kind, id, owner_id: owner };
@@ -622,16 +625,12 @@ export function inspectReport(
   const flattened = workspaceStates(p);
   for (const w of p.workspaces)
     if (plan.workspace_ids.includes(w.id) && own(mappings, w.root_id)) {
-      const mapping = mappings[w.root_id],
-        paths = new Set<string>();
-      for (const e of Object.values<Obj>(flattened[w.id])) {
-        let value = e.path;
-        if (mapping.unicode_normalization !== "none")
-          value = value.normalize(mapping.unicode_normalization);
-        if (!mapping.case_sensitive) value = casefold(value);
-        need(!paths.has(value), "destination path collision");
-        paths.add(value);
-      }
+      const mapping = mappings[w.root_id];
+      validateDestinationPaths(
+        flattened[w.id],
+        mapping.case_sensitive,
+        mapping.unicode_normalization,
+      );
     }
   const model = report.model_assessment;
   need(

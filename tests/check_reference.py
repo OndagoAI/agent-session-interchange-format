@@ -84,6 +84,56 @@ check('pointer-invalid-escape',lambda:rejects(lambda:pointer({},'/a~2'),'invalid
 for path in ['../a','/tmp/a','a\\b','C:a','NUL','a/../b','a.']:
     check('path-'+path,lambda p=path:rejects(lambda:relative(p),'path'))
 check('request-typed-inputs',lambda:equal(reconstruct_request(doc,validated,doc['contexts'][0]['id'])['inputs'],doc['contexts'][0]['inputs']))
+regressions=json.loads((ROOT/'tests/validation-regression-cases.json').read_text())
+def request_resource_case(case):
+    d=copy.deepcopy(doc);tool=d['tools'][0]
+    if case.get('unselected'):
+        tool=copy.deepcopy(tool);tool['id']='unused-tool';d['tools'].append(tool)
+    tool['resource_ids']=case['tool_resources']
+    if case.get('lookalikes'):tool['input_schema'].update(resource_id='missing',resource_ids=['missing'])
+    if 'availability' in case:
+        resource={'id':'tool-asset','media_type':'text/plain','purpose':'input','availability':case['availability']}
+        resource['explanation']='Not captured.'
+        if case['availability']=='external':resource['locator']='https://example.invalid/tool-asset'
+        d['resources'].append(resource)
+    def project():return reconstruct_request(d,validate_document(d,folder),d['contexts'][0]['id'])
+    if 'error' in case:rejects(project,case['error'])
+    else:equal([r['id'] for r in project()['resources']],case['expected'])
+for case in regressions['request_resources']:
+    check('request-'+case['name'],lambda c=case:request_resource_case(c))
+
+def deletion_case(case):
+    d=copy.deepcopy(doc);w=d['continuation']['workspaces'][0]
+    w['entries']=[{**w['entries'][0],'path':p} for p in ['folder/public','folder/private','folder/secret/child']]
+    w['selection']['include']=['folder/**']
+    # A no-op intermediate delta exercises deletion through a base chain.
+    middle=copy.deepcopy(w);middle.update(id='middle',mode='delta',base_snapshot_id=w['id'],entries=[],deletions=[])
+    delta=copy.deepcopy(middle);delta.update(id='delta',base_snapshot_id='middle',deletions=[case['deletion']])
+    delta['selection']['exclude']=case['exclude'];d['continuation']['workspaces']+=[middle,delta]
+    d['continuation']['plans'][0]['workspace_ids']=['delta'];before=copy.deepcopy(d)
+    if 'error' in case:rejects(lambda:inspect_session(d,folder),case['error'])
+    else:
+        inspect_session(d,folder);states=workspace_states(d['continuation'])
+        equal(states['delta'],{});equal(states[w['id']],states['middle'])
+    equal(d,before)
+for case in regressions['workspace_deletions']:
+    check('delta-'+case['name'],lambda c=case:deletion_case(c))
+
+def destination_case(case):
+    d=copy.deepcopy(doc);w=d['continuation']['workspaces'][0]
+    w['entries']=[{'path':p,'kind':'directory','mode':493} if p==case.get('directory') else {**w['entries'][0],'path':p} for p in case['paths']]
+    with tempfile.TemporaryDirectory() as temp:
+        destination=Path(temp)/'restored'
+        def run():return restore(d,validated,w['id'],destination,case_sensitive=case['case_sensitive'],normalization=case['normalization'])
+        if 'error' in case:
+            rejects(run,case['error']);equal(list(Path(temp).iterdir()),[])
+        elif case['name'].startswith(('case-sensitive','unnormalized')):
+            # The host filesystem may not support these declared destination semantics.
+            from reference.workspace import validate_destination_paths
+            validate_destination_paths(workspace_states(d['continuation'])[w['id']],case_sensitive=case['case_sensitive'],normalization=case['normalization'])
+        else:run();assert (destination/'dir/child').is_file()
+for case in regressions['destination_paths']:
+    check('restore-'+case['name'],lambda c=case:destination_case(c))
 check('configuration-order',lambda:equal(resolve_configuration(doc,doc['configurations'][0]['id'],{'root_id':doc['continuation']['workspaces'][0]['root_id'],'relative_path':''})['instruction_ids'],doc['continuation']['configuration_bindings'][0]['effective_order']))
 check('predicate-component-prefix',lambda:equal(predicate({'path_prefix':'src'},{'relative_path':'src-other/file'}),False))
 check('predicate-combination',lambda:equal(predicate({'all':[{'event_kind_in':['tool_call']},{'not':{'root_is':'other'}}]},{'event_kind':'tool_call','root_id':'work'}),True))

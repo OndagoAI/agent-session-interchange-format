@@ -1,8 +1,8 @@
 {
   "asif_version": "0.4",
   "scope": "Local vendor-neutral reference implementation checks",
-  "checks": 135,
-  "passed": 135,
+  "checks": 158,
+  "passed": 158,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -384,6 +384,98 @@
     },
     {
       "case": "request-typed-inputs",
+      "passed": true
+    },
+    {
+      "case": "request-tool-only-resource",
+      "passed": true
+    },
+    {
+      "case": "request-shared-tool-input-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unavailable-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-external-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unselected-unavailable-tool",
+      "passed": true
+    },
+    {
+      "case": "request-schema-reference-lookalikes",
+      "passed": true
+    },
+    {
+      "case": "request-missing-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-child",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-directory",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-glob",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-root",
+      "passed": true
+    },
+    {
+      "case": "delta-allowed-subtree",
+      "passed": true
+    },
+    {
+      "case": "delta-unrelated-exclusion",
+      "passed": true
+    },
+    {
+      "case": "delta-missing-target",
+      "passed": true
+    },
+    {
+      "case": "restore-case-prefix",
+      "passed": true
+    },
+    {
+      "case": "restore-case-prefix-reversed",
+      "passed": true
+    },
+    {
+      "case": "restore-NFC-prefix",
+      "passed": true
+    },
+    {
+      "case": "restore-NFD-prefix-reversed",
+      "passed": true
+    },
+    {
+      "case": "restore-case-duplicate",
+      "passed": true
+    },
+    {
+      "case": "restore-case-sensitive-distinct",
+      "passed": true
+    },
+    {
+      "case": "restore-unnormalized-distinct",
+      "passed": true
+    },
+    {
+      "case": "restore-directory-ancestor",
+      "passed": true
+    },
+    {
+      "case": "restore-directory-ancestor-reversed",
       "passed": true
     },
     {
