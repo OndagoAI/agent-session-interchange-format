@@ -75,6 +75,8 @@ def reconstruct_request(doc,validated,context_id):
         for part in item['parts']:
             if part['kind'] in ('resource','opaque'):resource_ids.add(part['resource_id'])
             if part['kind'] in ('opaque','structured'):raise Unsupported('opaque/structured content requires a declared request encoder')
-    for id in resource_ids:validated['resources'].bytes(id)
+    tools=[copy.deepcopy(t) for id in context['tool_ids'] for t in doc['tools'] if t['id']==id]
+    for tool in tools:resource_ids.update(tool.get('resource_ids',[]))
+    for id in sorted(resource_ids):validated['resources'].bytes(id)
     # The normalized form does not guess a provider's wire encoding or tokenize it.
-    return {'request_version':'0.1','source':{'session_id':doc['session']['id'],'capture_id':doc['capture']['id'],'context_id':context_id},'fidelity':context['fidelity'],'inputs':copy.deepcopy(context['inputs']),'tools':[copy.deepcopy(t) for id in context['tool_ids'] for t in doc['tools'] if t['id']==id],'model':copy.deepcopy(context.get('model')),'request_parameters':copy.deepcopy(context.get('request_parameters',{})),'configuration_id':context.get('configuration_id'),'resources':[copy.deepcopy(validated['resources'].records[id]) for id in sorted(resource_ids)],'provider_encoding':'not_selected','token_budget':'unmeasured','losses':[]}
+    return {'request_version':'0.1','source':{'session_id':doc['session']['id'],'capture_id':doc['capture']['id'],'context_id':context_id},'fidelity':context['fidelity'],'inputs':copy.deepcopy(context['inputs']),'tools':tools,'model':copy.deepcopy(context.get('model')),'request_parameters':copy.deepcopy(context.get('request_parameters',{})),'configuration_id':context.get('configuration_id'),'resources':[copy.deepcopy(validated['resources'].records[id]) for id in sorted(resource_ids)],'provider_encoding':'not_selected','token_budget':'unmeasured','losses':[]}

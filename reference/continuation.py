@@ -4,13 +4,12 @@ from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
-import unicodedata
 from jsonschema import Draft202012Validator
 from .common import Invalid, need, unique, relative, acyclic, pointer
 from .core import validate_document, Validator, SUPPORTED
 from .requirements import plan_requirements
 from .capabilities import inspect_capabilities
-from .workspace import workspace_states, check_git
+from .workspace import workspace_states, check_git, validate_destination_paths
 
 ROOT=Path(__file__).resolve().parents[1]
 SESSION=Draft202012Validator(json.loads((ROOT/'schemas/session.schema.json').read_text()))
@@ -239,12 +238,8 @@ def inspect_report(doc,raw,report,folder,*,now,current_snapshot=None):
     flattened=workspace_states(p)
     for w in p['workspaces']:
         if w['id'] not in plan['workspace_ids'] or w['root_id'] not in mappings:continue
-        mapping=mappings[w['root_id']];paths=[]
-        for e in flattened[w['id']].values():
-            value=e['path'];norm=mapping['unicode_normalization']
-            if norm!='none':value=unicodedata.normalize(norm,value)
-            if not mapping['case_sensitive']:value=value.casefold()
-            need(value not in paths,'destination path collision');paths.append(value)
+        mapping=mappings[w['root_id']]
+        validate_destination_paths(flattened[w['id']],case_sensitive=mapping['case_sensitive'],normalization=mapping['unicode_normalization'])
     model=report['model_assessment'];need(model['source']==plan['model_requirements']['source_model'],'model source mismatch')
     if model['fit']=='fits':
         need(model['tokenizer'] is not None and model['input_tokens'] is not None and model['input_limit'] is not None,'unmeasured context fit')

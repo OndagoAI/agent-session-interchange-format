@@ -169,6 +169,23 @@ def supply(r,raw):
 def snapshot_change(r,mutate):
     value=json.loads(supplied(r));mutate(value);supply(r,(json.dumps(value,ensure_ascii=False)+'\n').encode())
 def component(s,kind):return next(c for c in s['components'] if c['kind']==kind)
+# Keep path bindings and their hashed snapshot evidence consistent so failures
+# exercise destination path validation rather than stale evidence checks.
+for case in json.loads((ROOT/'tests/validation-regression-cases.json').read_text())['destination_paths']:
+    doc,source,receipt=copy.deepcopy(fixtures['another-computer'])
+    w=doc['continuation']['workspaces'][0]
+    w['entries']=[{'path':p,'kind':'directory','mode':493} if p==case.get('directory') else {**w['entries'][0],'path':p} for p in case['paths']]
+    w['selection']['include']=['**']
+    source=(json.dumps(doc,ensure_ascii=False)+'\n').encode();receipt['source']['document_sha256']=hashlib.sha256(source).hexdigest()
+    mapping={'case_sensitive':case['case_sensitive'],'unicode_normalization':case['normalization']}
+    receipt['path_bindings'][0].update(mapping)
+    snapshot_change(receipt,lambda s:component(s,'workspace').update(mapping))
+    if 'error' in case:
+        try:inspect_report(doc,source,receipt,FOLDER,now=NOW)
+        except Invalid as exc:assert case['error'] in str(exc),(case['name'],exc)
+        else:raise AssertionError('destination collision accepted: '+case['name'])
+    else:assert inspect_report(doc,source,receipt,FOLDER,now=NOW)['outcome']=='ready'
+    results.append({'case':'destination-'+case['name'],'passed':True,'outcome':'rejected' if 'error' in case else 'ready'})
 negative_report('snapshot-required',lambda r:r['destination'].pop('capabilities_snapshot'),None)
 negative_report('snapshot-digest-mismatch',lambda r:r['destination'].update(capabilities_sha256='0'*64),'capability snapshot digest mismatch')
 negative_report('snapshot-noncanonical-base64',lambda r:r['destination']['capabilities_snapshot'].update(data='e31=',bytes=2),'noncanonical snapshot base64')

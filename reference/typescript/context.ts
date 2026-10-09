@@ -164,7 +164,12 @@ export function reconstructRequest(doc: Obj, v: Validated, id: string): Obj {
         );
     }
   }
-  for (const id of ids) v.resources.bytes(id);
+  const tools = ctx.tool_ids.flatMap((id: string) =>
+    doc.tools.filter((t: Obj) => t.id === id),
+  );
+  for (const tool of tools)
+    for (const id of tool.resource_ids ?? []) ids.add(id);
+  for (const id of [...ids].sort()) v.resources.bytes(id);
   return structuredClone({
     request_version: "0.1",
     source: {
@@ -174,9 +179,7 @@ export function reconstructRequest(doc: Obj, v: Validated, id: string): Obj {
     },
     fidelity: ctx.fidelity,
     inputs: ctx.inputs,
-    tools: ctx.tool_ids.flatMap((id: string) =>
-      doc.tools.filter((t: Obj) => t.id === id),
-    ),
+    tools,
     model: ctx.model ?? null,
     request_parameters: ctx.request_parameters ?? {},
     configuration_id: ctx.configuration_id ?? null,

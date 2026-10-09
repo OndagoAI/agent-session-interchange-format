@@ -18,6 +18,23 @@ compare('report','validate-report',source,source.with_name('another-computer.rep
 compare('current-snapshot-matches','validate-report',source,source.with_name('another-computer.report.json'),'--at','2026-09-26T12:30:00Z','--current-capabilities',source.with_name('another-computer.capabilities.json'))
 with tempfile.TemporaryDirectory() as tmp:
  tmp=Path(tmp);private=tmp/'private.key';private.write_bytes(bytes(range(32)));public=ROOT/'examples/package-test-public.key'
+ # Assert the resource closure, not just agreement between two implementations.
+ for case in json.loads((ROOT/'tests/validation-regression-cases.json').read_text())['request_resources']:
+  value=json.loads(source.read_text());tool=value['tools'][0]
+  if case.get('unselected'):
+   tool=json.loads(json.dumps(tool));tool['id']='unused-tool';value['tools'].append(tool)
+  tool['resource_ids']=case['tool_resources']
+  if case.get('lookalikes'):tool['input_schema'].update(resource_id='missing',resource_ids=['missing'])
+  if 'availability' in case:
+   resource={'id':'tool-asset','media_type':'text/plain','purpose':'input','availability':case['availability'],'explanation':'Not captured.'}
+   if case['availability']=='external':resource['locator']='https://example.invalid/tool-asset'
+   value['resources'].append(resource)
+  fixture=tmp/'tool-resource.session.json';fixture.write_text(json.dumps(value))
+  outputs=[invoke(language,'request',fixture,value['contexts'][0]['id'],expected=2 if 'error' in case else 0) for language in ['python','typescript']]
+  assert outputs[0]==outputs[1],case['name']
+  if 'error' in case:assert case['error'] in json.dumps(outputs[0]),outputs[0]
+  else:assert [r['id'] for r in outputs[0]['resources']]==case['expected'],outputs[0]
+  results.append({'case':'request-'+case['name'],'passed':True})
  image=ROOT/'examples/image-and-document.session.json'
  for producer,consumer in [('python','typescript'),('typescript','python')]:
   archive=tmp/(producer+'.zip');sig=tmp/(producer+'.sig.json')

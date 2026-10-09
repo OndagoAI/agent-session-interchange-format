@@ -1,12 +1,104 @@
 {
   "asif_version": "0.4",
   "scope": "Local TypeScript port, shared Python expectations, CLI and package checks",
-  "checks": 237,
-  "passed": 237,
+  "checks": 269,
+  "passed": 269,
   "node_version": "v24.21.0",
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
+    {
+      "case": "request-tool-only-resource",
+      "passed": true
+    },
+    {
+      "case": "request-shared-tool-input-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unavailable-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-external-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unselected-unavailable-tool",
+      "passed": true
+    },
+    {
+      "case": "request-schema-reference-lookalikes",
+      "passed": true
+    },
+    {
+      "case": "request-missing-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-child",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-directory",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-glob",
+      "passed": true
+    },
+    {
+      "case": "delta-excluded-root",
+      "passed": true
+    },
+    {
+      "case": "delta-allowed-subtree",
+      "passed": true
+    },
+    {
+      "case": "delta-unrelated-exclusion",
+      "passed": true
+    },
+    {
+      "case": "delta-missing-target",
+      "passed": true
+    },
+    {
+      "case": "restore-case-prefix",
+      "passed": true
+    },
+    {
+      "case": "restore-case-prefix-reversed",
+      "passed": true
+    },
+    {
+      "case": "restore-NFC-prefix",
+      "passed": true
+    },
+    {
+      "case": "restore-NFD-prefix-reversed",
+      "passed": true
+    },
+    {
+      "case": "restore-case-duplicate",
+      "passed": true
+    },
+    {
+      "case": "restore-case-sensitive-distinct",
+      "passed": true
+    },
+    {
+      "case": "restore-unnormalized-distinct",
+      "passed": true
+    },
+    {
+      "case": "restore-directory-ancestor",
+      "passed": true
+    },
+    {
+      "case": "restore-directory-ancestor-reversed",
+      "passed": true
+    },
     {
       "case": "core fixture attachment-availability.session.json",
       "passed": true
@@ -644,6 +736,42 @@
       "passed": true
     },
     {
+      "case": "Python parity: report-75",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-76",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-77",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-78",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-79",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-80",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-81",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-82",
+      "passed": true
+    },
+    {
+      "case": "Python parity: report-83",
+      "passed": true
+    },
+    {
       "case": "Python parity: snapshot-required",
       "passed": true
     },
@@ -792,35 +920,35 @@
       "passed": true
     },
     {
-      "case": "Python parity: report-112",
+      "case": "Python parity: report-121",
       "passed": true
     },
     {
-      "case": "Python parity: report-113",
+      "case": "Python parity: report-122",
       "passed": true
     },
     {
-      "case": "Python parity: report-114",
+      "case": "Python parity: report-123",
       "passed": true
     },
     {
-      "case": "Python parity: report-115",
+      "case": "Python parity: report-124",
       "passed": true
     },
     {
-      "case": "Python parity: report-116",
+      "case": "Python parity: report-125",
       "passed": true
     },
     {
-      "case": "Python parity: report-117",
+      "case": "Python parity: report-126",
       "passed": true
     },
     {
-      "case": "Python parity: report-118",
+      "case": "Python parity: report-127",
       "passed": true
     },
     {
-      "case": "Python parity: report-119",
+      "case": "Python parity: report-128",
       "passed": true
     },
     {

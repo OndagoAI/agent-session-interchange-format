@@ -19,8 +19,8 @@ def workspace_states(profile):
             if base:need(records[base]['root_id']==w['root_id'],'workspace base root mismatch')
             for deletion in w['deletions']:
                 relative(deletion)
-                need(not any(fnmatch.fnmatchcase(deletion,p) or deletion==p.rstrip('/') or deletion.startswith(p.rstrip('/')+'/') for p in w['selection']['exclude']),'deleting excluded path')
                 targets=[p for p in entries if p==deletion or p.startswith(deletion+'/')]
+                need(not any(fnmatch.fnmatchcase(target,p) or target==p.rstrip('/') or target.startswith(p.rstrip('/')+'/') for target in [deletion,*targets] for p in w['selection']['exclude']),'deleting excluded path')
                 need(targets,'deletion absent from base')
                 for p in targets:del entries[p]
             for entry in w['entries']:
@@ -60,6 +60,19 @@ def check_git(workspace,resources,dependencies):
     need(set(g['lfs_dependency_ids'])<=dependencies.keys(),'missing LFS dependency')
 
 
+def validate_destination_paths(entries,*,case_sensitive=True,normalization='none'):
+    """Check the selected tree under the destination's path equivalence rules."""
+    need(normalization in ('none','NFC','NFD'),'unsupported normalization')
+    seen={}
+    for path,entry in entries.items():
+        folded=unicodedata.normalize(normalization,path) if normalization!='none' else path
+        if not case_sensitive:folded=folded.casefold()
+        need(folded not in seen,'destination path collision');seen[folded]=entry['kind']
+    for path in seen:
+        pieces=path.split('/')
+        for i in range(1,len(pieces)):need(seen.get('/'.join(pieces[:i]),'directory')=='directory','destination prefix collision')
+
+
 def restore(document,validated,workspace_id,destination,*,case_sensitive=True,normalization='none',fail_after=None):
     profile=document['continuation'];records=unique(profile['workspaces']);need(workspace_id in records,'unknown workspace')
     w=records[workspace_id];states=workspace_states(profile);entries=states[workspace_id];resources=validated['resources']
@@ -71,18 +84,11 @@ def restore(document,validated,workspace_id,destination,*,case_sensitive=True,no
         current=records[current['base_snapshot_id']]
     if any(x['mode']=='refs' or 'git' in x for x in chain):raise Unsupported('Git administration/index restoration is not implemented; use a verified Git adapter')
     need(all(x['selection']['complete_for_selection'] for x in chain),'incomplete selected-tree snapshot')
-    need(normalization in ('none','NFC','NFD'),'unsupported normalization')
-    seen={}
+    validate_destination_paths(entries,case_sensitive=case_sensitive,normalization=normalization)
     for path,entry in entries.items():
         if entry['kind']=='symlink':raise Unsupported('workspace symlink restoration requires an explicit link policy')
         relative(path);need('.git' not in [p.casefold() for p in path.split('/')],'workspace cannot inject Git administrative files')
-        folded=unicodedata.normalize(normalization,path) if normalization!='none' else path
-        if not case_sensitive:folded=folded.casefold()
-        need(folded not in seen,'destination path collision');seen[folded]=entry['kind']
         if entry['kind']=='file':resources.bytes(entry['resource_id'])
-    for path in seen:
-        pieces=path.split('/')
-        for i in range(1,len(pieces)):need(seen.get('/'.join(pieces[:i]),'directory')=='directory','destination prefix collision')
     destination=Path(destination);need(not os.path.lexists(destination),'destination already exists')
     parent=destination.parent;need(parent.is_dir() and not parent.is_symlink(),'destination parent must be a controlled directory')
     # This lock coordinates this implementation's writers. The parent must not be

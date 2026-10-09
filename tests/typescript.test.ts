@@ -30,7 +30,11 @@ import {
   inspectReport,
   date,
 } from "../reference/typescript/continuation.ts";
-import { restore, workspaceStates } from "../reference/typescript/workspace.ts";
+import {
+  restore,
+  workspaceStates,
+  validateDestinationPaths,
+} from "../reference/typescript/workspace.ts";
 import {
   predicate,
   resolveConfiguration,
@@ -63,6 +67,116 @@ const check = (name: string, fn: () => void) =>
     }
   });
 const rejects = (fn: () => any, pattern: RegExp) => assert.throws(fn, pattern);
+const regressions = JSON.parse(
+  fs.readFileSync(
+    path.join(ROOT, "tests/validation-regression-cases.json"),
+    "utf8",
+  ),
+);
+for (const c of regressions.request_resources)
+  check("request-" + c.name, () => {
+    const d = structuredClone(doc);
+    let tool = d.tools[0];
+    if (c.unselected) {
+      tool = structuredClone(tool);
+      tool.id = "unused-tool";
+      d.tools.push(tool);
+    }
+    tool.resource_ids = c.tool_resources;
+    if (c.lookalikes)
+      Object.assign(tool.input_schema, {
+        resource_id: "missing",
+        resource_ids: ["missing"],
+      });
+    if (c.availability)
+      d.resources.push({
+        id: "tool-asset",
+        media_type: "text/plain",
+        purpose: "input",
+        availability: c.availability,
+        explanation: "Not captured.",
+        ...(c.availability === "external"
+          ? { locator: "https://example.invalid/tool-asset" }
+          : {}),
+      });
+    const project = () =>
+      reconstructRequest(d, validateDocument(d, folder), d.contexts[0].id);
+    if (c.error) rejects(project, new RegExp(c.error));
+    else
+      assert.deepEqual(
+        project().resources.map((r: Obj) => r.id),
+        c.expected,
+      );
+  });
+for (const c of regressions.workspace_deletions)
+  check("delta-" + c.name, () => {
+    const d = structuredClone(doc),
+      w = d.continuation.workspaces[0];
+    w.entries = ["folder/public", "folder/private", "folder/secret/child"].map(
+      (p) => ({ ...w.entries[0], path: p }),
+    );
+    w.selection.include = ["folder/**"];
+    const middle = {
+      ...structuredClone(w),
+      id: "middle",
+      mode: "delta",
+      base_snapshot_id: w.id,
+      entries: [],
+      deletions: [],
+    };
+    const delta = {
+      ...structuredClone(middle),
+      id: "delta",
+      base_snapshot_id: "middle",
+      deletions: [c.deletion],
+    };
+    delta.selection.exclude = c.exclude;
+    d.continuation.workspaces.push(middle, delta);
+    d.continuation.plans[0].workspace_ids = ["delta"];
+    const before = structuredClone(d);
+    if (c.error) rejects(() => inspectSession(d, folder), new RegExp(c.error));
+    else {
+      inspectSession(d, folder);
+      const states = workspaceStates(d.continuation);
+      assert.equal(Object.keys(states.delta).length, 0);
+      assert.deepEqual(states[w.id], states.middle);
+    }
+    assert.deepEqual(d, before);
+  });
+for (const c of regressions.destination_paths)
+  check("restore-" + c.name, () => {
+    const d = structuredClone(doc),
+      w = d.continuation.workspaces[0];
+    w.entries = c.paths.map((p: string) =>
+      p === c.directory
+        ? { path: p, kind: "directory", mode: 493 }
+        : { ...w.entries[0], path: p },
+    );
+    const parent = fs.mkdtempSync(path.join(temp, "paths-")),
+      destination = path.join(parent, "restored");
+    const run = () =>
+      restore(d, v, w.id, destination, {
+        case_sensitive: c.case_sensitive,
+        normalization: c.normalization,
+      });
+    if (c.error) {
+      rejects(run, new RegExp(c.error));
+      assert.deepEqual(fs.readdirSync(parent), []);
+    } else if (
+      c.name.startsWith("case-sensitive") ||
+      c.name.startsWith("unnormalized")
+    ) {
+      // Host filesystem semantics need not match the declared destination.
+      validateDestinationPaths(
+        workspaceStates(d.continuation)[w.id],
+        c.case_sensitive,
+        c.normalization,
+      );
+    } else {
+      run();
+      assert(fs.statSync(path.join(destination, "dir/child")).isFile());
+    }
+  });
 after(() => {
   fs.rmSync(temp, { recursive: true, force: true });
   fs.writeFileSync(

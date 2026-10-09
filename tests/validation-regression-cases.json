@@ -1,0 +1,217 @@
+{
+  "destination_paths": [
+    {
+      "name": "case-prefix",
+      "paths": [
+        "Dir",
+        "dir/child"
+      ],
+      "case_sensitive": false,
+      "normalization": "none",
+      "error": "destination prefix collision"
+    },
+    {
+      "name": "case-prefix-reversed",
+      "paths": [
+        "dir/child",
+        "Dir"
+      ],
+      "case_sensitive": false,
+      "normalization": "none",
+      "error": "destination prefix collision"
+    },
+    {
+      "name": "NFC-prefix",
+      "paths": [
+        "café",
+        "café/child"
+      ],
+      "case_sensitive": true,
+      "normalization": "NFC",
+      "error": "destination prefix collision"
+    },
+    {
+      "name": "NFD-prefix-reversed",
+      "paths": [
+        "café/child",
+        "café"
+      ],
+      "case_sensitive": true,
+      "normalization": "NFD",
+      "error": "destination prefix collision"
+    },
+    {
+      "name": "case-duplicate",
+      "paths": [
+        "Dir",
+        "dir"
+      ],
+      "case_sensitive": false,
+      "normalization": "none",
+      "error": "destination path collision"
+    },
+    {
+      "name": "case-sensitive-distinct",
+      "paths": [
+        "Dir",
+        "dir/child"
+      ],
+      "case_sensitive": true,
+      "normalization": "none"
+    },
+    {
+      "name": "unnormalized-distinct",
+      "paths": [
+        "café",
+        "café/child"
+      ],
+      "case_sensitive": true,
+      "normalization": "none"
+    },
+    {
+      "name": "directory-ancestor",
+      "paths": [
+        "Dir",
+        "dir/child"
+      ],
+      "case_sensitive": false,
+      "normalization": "none",
+      "directory": "Dir"
+    },
+    {
+      "name": "directory-ancestor-reversed",
+      "paths": [
+        "dir/child",
+        "Dir"
+      ],
+      "case_sensitive": false,
+      "normalization": "none",
+      "directory": "Dir"
+    }
+  ],
+  "workspace_deletions": [
+    {
+      "name": "excluded-child",
+      "exclude": [
+        "folder/private"
+      ],
+      "deletion": "folder",
+      "error": "deleting excluded path"
+    },
+    {
+      "name": "excluded-directory",
+      "exclude": [
+        "folder/secret/"
+      ],
+      "deletion": "folder",
+      "error": "deleting excluded path"
+    },
+    {
+      "name": "excluded-glob",
+      "exclude": [
+        "*/private*"
+      ],
+      "deletion": "folder",
+      "error": "deleting excluded path"
+    },
+    {
+      "name": "excluded-root",
+      "exclude": [
+        "folder/"
+      ],
+      "deletion": "folder",
+      "error": "deleting excluded path"
+    },
+    {
+      "name": "allowed-subtree",
+      "exclude": [],
+      "deletion": "folder"
+    },
+    {
+      "name": "unrelated-exclusion",
+      "exclude": [
+        "elsewhere/"
+      ],
+      "deletion": "folder"
+    },
+    {
+      "name": "missing-target",
+      "exclude": [],
+      "deletion": "missing",
+      "error": "deletion absent from base"
+    }
+  ],
+  "request_resources": [
+    {
+      "name": "tool-only-resource",
+      "tool_resources": [
+        "skill-template"
+      ],
+      "expected": [
+        "output-csv",
+        "report",
+        "skill-template",
+        "source-csv"
+      ]
+    },
+    {
+      "name": "shared-tool-input-resource",
+      "tool_resources": [
+        "source-csv",
+        "skill-template"
+      ],
+      "expected": [
+        "output-csv",
+        "report",
+        "skill-template",
+        "source-csv"
+      ]
+    },
+    {
+      "name": "unavailable-tool-resource",
+      "tool_resources": [
+        "tool-asset"
+      ],
+      "availability": "unavailable",
+      "error": "resource bytes unavailable"
+    },
+    {
+      "name": "external-tool-resource",
+      "tool_resources": [
+        "tool-asset"
+      ],
+      "availability": "external",
+      "error": "resource bytes unavailable"
+    },
+    {
+      "name": "unselected-unavailable-tool",
+      "tool_resources": [
+        "tool-asset"
+      ],
+      "availability": "unavailable",
+      "unselected": true,
+      "expected": [
+        "output-csv",
+        "report",
+        "source-csv"
+      ]
+    },
+    {
+      "name": "schema-reference-lookalikes",
+      "tool_resources": [],
+      "lookalikes": true,
+      "expected": [
+        "output-csv",
+        "report",
+        "source-csv"
+      ]
+    },
+    {
+      "name": "missing-tool-resource",
+      "tool_resources": [
+        "missing"
+      ],
+      "error": "missing resource reference"
+    }
+  ]
+}

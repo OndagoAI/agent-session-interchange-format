@@ -2,8 +2,8 @@
   "asif_version": "0.4",
   "profile": "asif.portable-continuation/0.2",
   "scope": "Synthetic profile shape, selected semantic invariants and destination report outcomes",
-  "checks": 119,
-  "passed": 119,
+  "checks": 128,
+  "passed": 128,
   "real_runtime_tests": 0,
   "independent_implementations": 0,
   "operational_authorization": false,
@@ -377,6 +377,51 @@
       "case": "unavailable-unselected-history-outside-inventory",
       "passed": true,
       "outcome": "accepted"
+    },
+    {
+      "case": "destination-case-prefix",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-case-prefix-reversed",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-NFC-prefix",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-NFD-prefix-reversed",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-case-duplicate",
+      "passed": true,
+      "outcome": "rejected"
+    },
+    {
+      "case": "destination-case-sensitive-distinct",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "destination-unnormalized-distinct",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "destination-directory-ancestor",
+      "passed": true,
+      "outcome": "ready"
+    },
+    {
+      "case": "destination-directory-ancestor-reversed",
+      "passed": true,
+      "outcome": "ready"
     },
     {
       "case": "snapshot-required",

@@ -1,8 +1,8 @@
 {
   "asif_version": "0.4",
   "scope": "Python/TypeScript CLI and package exchange, shared authorship",
-  "checks": 15,
-  "passed": 15,
+  "checks": 22,
+  "passed": 22,
   "independent_implementations": 0,
   "real_runtime_tests": 0,
   "results": [
@@ -20,6 +20,34 @@
     },
     {
       "case": "current-snapshot-matches",
+      "passed": true
+    },
+    {
+      "case": "request-tool-only-resource",
+      "passed": true
+    },
+    {
+      "case": "request-shared-tool-input-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unavailable-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-external-tool-resource",
+      "passed": true
+    },
+    {
+      "case": "request-unselected-unavailable-tool",
+      "passed": true
+    },
+    {
+      "case": "request-schema-reference-lookalikes",
+      "passed": true
+    },
+    {
+      "case": "request-missing-tool-resource",
       "passed": true
     },
     {
